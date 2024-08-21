@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 namespace QLThuVien.Data.Models;
 
 public class Role: IdentityRole<Guid>
 {
-    [Required]
-    public required string Description { get; set; }
+    public string? Description { get; set; }
+    public List<User> Users { get; set; }
 };
