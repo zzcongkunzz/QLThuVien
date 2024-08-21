@@ -1,0 +1,7 @@
+<form (submit)="submit($event)"  [formGroup]="formGroup">
+	<ng-content></ng-content>
+
+	<button type="submit" class="main-btn" [disabled]="!formGroup.valid || isSaving">
+		Add
+	</button>
+</form>
