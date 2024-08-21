@@ -2,7 +2,7 @@
 using QLThuVien.Data.Data;
 using System.Linq.Expressions;
 
-namespace QuizApp.Data.Repositories
+namespace QLThuVien.Data.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
@@ -29,7 +29,10 @@ namespace QuizApp.Data.Repositories
             _dbSet.Remove(entity);
         }
 
-        public IQueryable<T> Get(Expression<Func<T, bool>>? filter = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, string includeProperties = "")
+        public IQueryable<T> Get(
+            Expression<Func<T, bool>>? filter = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+            string includeProperties = "")
         {
             IQueryable<T> query = _dbSet;
 
@@ -47,11 +50,6 @@ namespace QuizApp.Data.Repositories
             }
 
             return orderBy != null ? orderBy(query) : query;
-        }
-
-        public IEnumerable<T> GetAll()
-        {
-            return _dbSet;
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
