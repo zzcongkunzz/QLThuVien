@@ -6,4 +6,5 @@ export class Book {
   categoryId: string = 'categoryId';
   imageUrl: string = '/images/book.png';
   publishDate: Date = new Date();
+  averageRatings: number = 3;
 }
