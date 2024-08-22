@@ -1,5 +1,4 @@
-import { Component, input, Input } from '@angular/core';
-import { Form, FormGroup } from '@angular/forms';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-edit-buttons',
@@ -8,4 +7,5 @@ import { Form, FormGroup } from '@angular/forms';
   templateUrl: './edit-buttons.component.html',
   styleUrl: './edit-buttons.component.scss',
 })
-export class EditButtonsComponent {}
+export class EditButtonsComponent {
+}
