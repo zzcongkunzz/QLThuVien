@@ -10,6 +10,5 @@ public class User : IdentityUser<Guid>
     public required DateTime DateOfBirth { get; set; }
     [Required]
     public required string FullName { get; set; }
-
-    public ICollection<Role> Roles { get; set; } = [];
+    public List<Role> Roles { get; set; }
 }
