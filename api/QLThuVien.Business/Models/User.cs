@@ -11,7 +11,5 @@ public class User : IdentityUser<Guid>
     [Required]
     public required string FullName { get; set; }
 
-
-    public Guid RoleId { get; set; }
-    public Role Role { get; set; }
+    public ICollection<Role> Roles { get; set; } = [];
 }

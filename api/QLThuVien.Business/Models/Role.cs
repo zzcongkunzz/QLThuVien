@@ -6,4 +6,6 @@ public class Role: IdentityRole<Guid>
 {
     [Required]
     public required string Description { get; set; }
+
+    public ICollection<User> Users { get; set; } = [];
 };
