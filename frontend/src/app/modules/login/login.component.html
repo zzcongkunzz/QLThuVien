@@ -1,1 +1,19 @@
-<p>login works!</p>
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>Login</title>
+  </head>
+  <body>
+    <div class="login-form">
+      <form class="login-form">
+        <label for="username">USERNAME</label><br>
+        <input id="username" name="username" type="text" [(ngModel)]="username"><br>
+
+        <label for="password">PASSWORD</label><br>
+        <input id="password" name="password" type="password" [(ngModel)]="password"><br>
+
+        <button (click)="onSubmit()" name="button-submit" type="button">SUBMIT</button>
+      </form>
+    </div>
+  </body>
+</html>
