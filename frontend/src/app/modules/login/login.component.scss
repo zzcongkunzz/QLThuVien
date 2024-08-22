@@ -1,45 +1,67 @@
-$bgcolor: lightblue;
-
-body {
-  background-color: $bgcolor
-}
-
 div.login-form {
   border-radius: 3mm;
   border-width: 3mm;
   border-color: grey;
 
-  background-color: lightgrey;
+  background-color: white;
+
+  padding: 0% 6%;
+  padding-bottom: 4%;
 
   position: absolute;
   top: 50%;
   left: 50%;
 
-  height: 50%;
+  // height: 80%;
 
   transform: translate(-50%, -50%);
 }
 
-form.login-form {
-  margin-left: 12mm;
-  margin-right: 12mm;
-  margin-top: 12mm;
+div.login-form > header {
+  text-align: center;
 
-  font-size: 6mm;
+  font-size: 12mm;
+  padding-top: 8mm;
+}
+
+div.login-form > footer {
+  margin-top: 20%;
+  margin-bottom: 2%;
+}
+
+
+form.login-form {
+  margin-top: 32%;
+
+  font-size: 5mm;
+  margin-bottom: 4mm;
+}
+
+input#remember-me-checkbox {
+  margin-right: 8px;
 }
 
 form.login-form > input {
   padding: 4px;
-  border-radius: 4mm;
-  border-width: 1mm;
+  margin-bottom: 18px;
+  border-radius: 4px;
+  border-width: 2px;
+  border-color: lightgrey;
+  width: 100%;
 }
 
 form.login-form > label {
 }
 
+form.login-form > button {
+  border-radius: 2mm;
+
+  margin-top: 18px;
+  width: 100%;
+}
+
 body {
-  background: rgb(131,58,180);
-  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+  background: linear-gradient(160.86deg, #FA7C54 -8.64%, #EC2C5A 121.84%);
 
   position: fixed;
 

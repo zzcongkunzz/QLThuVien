@@ -9,10 +9,11 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  username: string = "username"
-  password: string = "password"
+  username: string     = "username"
+  password: string     = "password"
+  remember_me: boolean = false
 
   onSubmit(): void {
-    alert(`username: ${this.username}\npassword: ${this.password}`)
+    alert(`username: ${this.username}\npassword: ${this.password}\nremember me: ${this.remember_me}`)
   }
 }
