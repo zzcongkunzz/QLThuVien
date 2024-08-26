@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QLThuVien", "QLThuVien\QLThuVien.csproj", "{1C764653-7C3F-4B54-9E7B-C6920D36988C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QLThuVien.Data", "QLThuVien.Data\QLThuVien.Data.csproj", "{C9E75786-B88D-4C69-B7CB-A2B6D953B01D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QLThuVien.Business", "QLThuVien.Business\QLThuVien.Business.csproj", "{CCBF95AA-4FDD-4C91-96EA-22DEB30E787F}"
@@ -16,10 +14,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1C764653-7C3F-4B54-9E7B-C6920D36988C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C764653-7C3F-4B54-9E7B-C6920D36988C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C764653-7C3F-4B54-9E7B-C6920D36988C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C764653-7C3F-4B54-9E7B-C6920D36988C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9E75786-B88D-4C69-B7CB-A2B6D953B01D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9E75786-B88D-4C69-B7CB-A2B6D953B01D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9E75786-B88D-4C69-B7CB-A2B6D953B01D}.Release|Any CPU.ActiveCfg = Release|Any CPU
