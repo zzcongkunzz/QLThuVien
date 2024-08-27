@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace QLThuVien.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class tmp : Migration
+    public partial class AddBorrowPenalty : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -79,7 +79,7 @@ namespace QLThuVien.Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BorrowId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Fees = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Fees = table.Column<float>(type: "real", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -98,8 +98,8 @@ namespace QLThuVien.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("102e340c-858c-410e-8874-bceee165055b"), null, "Thành viên", "member", "member" },
-                    { new Guid("57aafe5e-862a-4a35-ae32-1026719bcd1a"), null, "Thủ thư", "admin", "admin" }
+                    { new Guid("9dd84572-e545-4fb8-8d28-ea5ecf5e137d"), null, "Thủ thư", "admin", "admin" },
+                    { new Guid("a6f258bf-6ef8-4159-97aa-9aa14610bcea"), null, "Thành viên", "member", "member" }
                 });
 
             migrationBuilder.InsertData(
@@ -107,8 +107,8 @@ namespace QLThuVien.Data.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FullName", "Gender", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { new Guid("001ebc8a-d42c-438b-8146-aca9555b4676"), 0, "3fcf597b-1db5-4a80-841d-d7bd5548a94e", new DateOnly(2024, 8, 27), "admin@gmail.com", false, "admin 123", "male", false, null, null, null, null, null, false, null, false, null },
-                    { new Guid("6033db60-33f6-4919-afc8-aec02633f9d0"), 0, "28d3609a-e4e7-4a00-ae42-64307de3e16a", new DateOnly(2024, 8, 27), "member1@gmail.com", false, "Member1 Name", "female", false, null, null, null, null, null, false, null, false, null }
+                    { new Guid("3917d549-0582-448d-be51-4b53b90842c8"), 0, "791d1311-369d-4000-8d49-e1625cfc3aa9", new DateOnly(2024, 8, 27), "member1@gmail.com", false, "Member1 Name", "female", false, null, null, null, null, null, false, null, false, null },
+                    { new Guid("8b7e0cc7-7a11-4854-bdef-39455912be81"), 0, "1508d3a9-7c47-4861-8b3d-645f02394fde", new DateOnly(2024, 8, 27), "admin@gmail.com", false, "admin 123", "male", false, null, null, null, null, null, false, null, false, null }
                 });
 
             migrationBuilder.InsertData(
@@ -116,8 +116,8 @@ namespace QLThuVien.Data.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("57aafe5e-862a-4a35-ae32-1026719bcd1a"), new Guid("001ebc8a-d42c-438b-8146-aca9555b4676") },
-                    { new Guid("102e340c-858c-410e-8874-bceee165055b"), new Guid("6033db60-33f6-4919-afc8-aec02633f9d0") }
+                    { new Guid("a6f258bf-6ef8-4159-97aa-9aa14610bcea"), new Guid("3917d549-0582-448d-be51-4b53b90842c8") },
+                    { new Guid("9dd84572-e545-4fb8-8d28-ea5ecf5e137d"), new Guid("8b7e0cc7-7a11-4854-bdef-39455912be81") }
                 });
 
             migrationBuilder.CreateIndex(
@@ -148,32 +148,32 @@ namespace QLThuVien.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetUserRoles",
                 keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { new Guid("57aafe5e-862a-4a35-ae32-1026719bcd1a"), new Guid("001ebc8a-d42c-438b-8146-aca9555b4676") });
+                keyValues: new object[] { new Guid("a6f258bf-6ef8-4159-97aa-9aa14610bcea"), new Guid("3917d549-0582-448d-be51-4b53b90842c8") });
 
             migrationBuilder.DeleteData(
                 table: "AspNetUserRoles",
                 keyColumns: new[] { "RoleId", "UserId" },
-                keyValues: new object[] { new Guid("102e340c-858c-410e-8874-bceee165055b"), new Guid("6033db60-33f6-4919-afc8-aec02633f9d0") });
+                keyValues: new object[] { new Guid("9dd84572-e545-4fb8-8d28-ea5ecf5e137d"), new Guid("8b7e0cc7-7a11-4854-bdef-39455912be81") });
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: new Guid("102e340c-858c-410e-8874-bceee165055b"));
+                keyValue: new Guid("9dd84572-e545-4fb8-8d28-ea5ecf5e137d"));
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: new Guid("57aafe5e-862a-4a35-ae32-1026719bcd1a"));
+                keyValue: new Guid("a6f258bf-6ef8-4159-97aa-9aa14610bcea"));
 
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: new Guid("001ebc8a-d42c-438b-8146-aca9555b4676"));
+                keyValue: new Guid("3917d549-0582-448d-be51-4b53b90842c8"));
 
             migrationBuilder.DeleteData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
-                keyValue: new Guid("6033db60-33f6-4919-afc8-aec02633f9d0"));
+                keyValue: new Guid("8b7e0cc7-7a11-4854-bdef-39455912be81"));
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",

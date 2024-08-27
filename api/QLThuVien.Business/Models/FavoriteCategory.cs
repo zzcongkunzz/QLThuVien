@@ -4,6 +4,7 @@ using QLThuVien.Data.Models;
 
 namespace QLThuVien.Business.Models;
 
+[PrimaryKey(nameof(UserId), nameof(CategoryId))]
 public class FavoriteCategory
 {
     public Guid UserId { get; set; }

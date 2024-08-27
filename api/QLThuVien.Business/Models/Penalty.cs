@@ -10,7 +10,7 @@ public class Penalty
     [Required]
     public string Note { get; set; }
     [Required]
-    public decimal Fees { get; set; }
+    public float Fees { get; set; }
     [Required]
     public string Status { get; set; }
 }

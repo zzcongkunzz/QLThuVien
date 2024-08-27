@@ -108,13 +108,13 @@ namespace QLThuVien.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("001ebc8a-d42c-438b-8146-aca9555b4676"),
-                            RoleId = new Guid("57aafe5e-862a-4a35-ae32-1026719bcd1a")
+                            UserId = new Guid("8b7e0cc7-7a11-4854-bdef-39455912be81"),
+                            RoleId = new Guid("9dd84572-e545-4fb8-8d28-ea5ecf5e137d")
                         },
                         new
                         {
-                            UserId = new Guid("6033db60-33f6-4919-afc8-aec02633f9d0"),
-                            RoleId = new Guid("102e340c-858c-410e-8874-bceee165055b")
+                            UserId = new Guid("3917d549-0582-448d-be51-4b53b90842c8"),
+                            RoleId = new Guid("a6f258bf-6ef8-4159-97aa-9aa14610bcea")
                         });
                 });
 
@@ -245,8 +245,8 @@ namespace QLThuVien.Data.Migrations
                     b.Property<Guid>("BorrowId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Fees")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<float>("Fees")
+                        .HasColumnType("real");
 
                     b.Property<string>("Note")
                         .IsRequired()
@@ -314,14 +314,14 @@ namespace QLThuVien.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("57aafe5e-862a-4a35-ae32-1026719bcd1a"),
+                            Id = new Guid("9dd84572-e545-4fb8-8d28-ea5ecf5e137d"),
                             Description = "Thủ thư",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = new Guid("102e340c-858c-410e-8874-bceee165055b"),
+                            Id = new Guid("a6f258bf-6ef8-4159-97aa-9aa14610bcea"),
                             Description = "Thành viên",
                             Name = "member",
                             NormalizedName = "member"
@@ -407,9 +407,9 @@ namespace QLThuVien.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("001ebc8a-d42c-438b-8146-aca9555b4676"),
+                            Id = new Guid("8b7e0cc7-7a11-4854-bdef-39455912be81"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3fcf597b-1db5-4a80-841d-d7bd5548a94e",
+                            ConcurrencyStamp = "1508d3a9-7c47-4861-8b3d-645f02394fde",
                             DateOfBirth = new DateOnly(2024, 8, 27),
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
@@ -421,9 +421,9 @@ namespace QLThuVien.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6033db60-33f6-4919-afc8-aec02633f9d0"),
+                            Id = new Guid("3917d549-0582-448d-be51-4b53b90842c8"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "28d3609a-e4e7-4a00-ae42-64307de3e16a",
+                            ConcurrencyStamp = "791d1311-369d-4000-8d49-e1625cfc3aa9",
                             DateOfBirth = new DateOnly(2024, 8, 27),
                             Email = "member1@gmail.com",
                             EmailConfirmed = false,
