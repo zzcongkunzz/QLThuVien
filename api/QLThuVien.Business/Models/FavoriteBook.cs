@@ -5,6 +5,8 @@ namespace QLThuVien.Business.Models;
 
 public class FavoriteBook
 {
+    public Guid UserId { get; set; }
+    public Guid BookId { get; set; }
     [Required]
     public User User { get; set; }
     [Required]

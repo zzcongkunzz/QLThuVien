@@ -6,6 +6,7 @@ using QLThuVien.Business.Services.Interfaces;
 using QLThuVien.Data.Data;
 using QLThuVien.Data.Infrastructure;
 using QLThuVien.Data.Models;
+using QLThuVien.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,16 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IBorrowService, BorrowService>();
 builder.Services.AddScoped<IPenaltyService, PenaltyService>();
 
+#region RegisterServices
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+#endregion
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

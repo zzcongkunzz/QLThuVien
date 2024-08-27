@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using QLThuVien.Data.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace QLThuVien.Business.Models;
 
@@ -13,4 +14,5 @@ public class Book
     public DateTime? PublishDate { get; set; }
     [Required]
     public Category Category { get; set; }
+    public IEnumerable<User> BorrowingUsers { get; set; }
 }

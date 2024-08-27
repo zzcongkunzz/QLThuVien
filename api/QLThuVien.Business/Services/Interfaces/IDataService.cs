@@ -6,10 +6,10 @@ namespace QLThuVien.Business.Services.Interfaces;
 public interface IDataService<T>
     where T : class
 {
-    void AddAsync(T entity);
-    void UpdateAsync(T entity);
-    void DeleteAsync(T entity);
-    void DeleteAsync(params object?[]? keys);
+    Task AddAsync(T entity);
+    Task UpdateAsync(T entity);
+    Task DeleteAsync(T entity);
+    Task DeleteAsync(params object?[]? keys);
 
     Task<T?> GetByIdAsync(Guid id);
     Task<IEnumerable<T>> GetAllAsync();
