@@ -1,0 +1,32 @@
+$row-border-radius: 18px;
+
+#entry-row {
+}
+
+td {
+  background: white;
+}
+
+td:first-child {
+  border-radius: $row-border-radius 0 0 $row-border-radius;
+}
+
+td:last-child {
+  border-radius: 0 $row-border-radius $row-border-radius 0;
+}
+
+#column-title > * {
+  display: inline-block;
+  align: center;
+
+  margin-right: 32px;
+}
+
+#book-img {
+  padding: 12px;
+  width: 142px;
+}
+
+#book-title {
+  font-size: 28px;
+}

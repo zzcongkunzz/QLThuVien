@@ -1,0 +1,35 @@
+tr > th {
+  margin: 40px;
+  font-size: 24px;
+}
+
+form#search-form {
+  height: 48px;
+  width: 100%;
+  font-size: 20px;
+}
+form#search-form > input {
+  border-width: 0;
+  border-radius: 24px 0 0 24px;
+  padding-left: 16px;
+  width: 93%;
+  height: 100%;
+  font-family: "Times New Roman", Times, serif;
+}
+form#search-form > button {
+  background: white;
+  border-width: 0;
+  border-radius: 0 24px 24px 0;
+  width: 7%;
+  height: 100%;
+}
+
+form#category-form > select {
+  margin-top: 16px;
+  padding-left: 6px;
+  height: 48px;
+  width: 24%;
+  border-radius: 24px;
+  border-width: 0;
+  background: white;
+}

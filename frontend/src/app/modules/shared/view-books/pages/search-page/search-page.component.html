@@ -1,1 +1,21 @@
-<p>search-page works!</p>
+<form id="search-form">
+  <input type="text">
+  <button id="search-button">Search</button>
+</form>
+
+<form id="category-form">
+  <select name="category">
+    <option value=null>All books</option>
+    <option value="SciFi">Science fiction</option>
+    <option value="Fantasy">Fantasy</option>
+  </select>
+</form>
+
+<table style="width:100%;border-collapse:separate;border-spacing: 0 16px;margin-top:36px">
+  <tr>
+    <th>Title</th>
+    <th>Rating</th>
+    <th>Category</th>
+  </tr>
+  <app-entry-book *ngFor="let book of exampleBooks" [book]="book" style="display:contents" />
+</table>

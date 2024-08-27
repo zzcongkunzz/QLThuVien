@@ -1,0 +1,11 @@
+<tr id="entry-row">
+  <td id="column-title">
+    <img src="{{ book.imageUrl }}" alt="{{ book.title }}" id="book-img">
+    <div>
+      <div id="book-title">{{ book.title }}</div>
+      <div id="book-author">{{ book.authorName }}, {{ book.publishDate.getFullYear() }}</div>
+    </div>
+  </td>
+  <td style="font-size:24px;color:grey">{{ book.averageRatings }}/5</td>
+  <td style="font-size:24px;color:black">{{ book.categoryId }}</td>
+</tr>
