@@ -12,7 +12,7 @@ public class DataService<T>
     : IDataService<T>
     where T : class
 {
-    public virtual async void AddAsync(T entity)
+    public virtual async Task AddAsync(T entity)
     {
         if (entity == null)
         {
@@ -33,7 +33,7 @@ public class DataService<T>
         }
     }
 
-    public virtual async void DeleteAsync(T entity)
+    public virtual async Task DeleteAsync(T entity)
     {
         if (entity == null)
         {
@@ -54,7 +54,7 @@ public class DataService<T>
         }
     }
 
-    public virtual async void DeleteAsync(params object?[]? keys)
+    public virtual async Task DeleteAsync(params object?[]? keys)
     {
         unitOfWork.GetRepository<T>().Delete(keys);
 
@@ -94,7 +94,7 @@ public class DataService<T>
         return await unitOfWork.GetRepository<T>().GetByIdAsync(id);
     }
 
-    public virtual async void UpdateAsync(T entity)
+    public virtual async Task UpdateAsync(T entity)
     {
         if (entity == null)
         {
