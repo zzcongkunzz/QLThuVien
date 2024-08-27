@@ -17,7 +17,7 @@ public interface IBookService : IDataService<Book>
             Expression<Func<Book, bool>>? filter = null,
             Func<IQueryable<Book>, IOrderedQueryable<Book>>? orderBy = null
         );
-
-    Task AddAsync(BookVm bookVm);
-    Task UpdateAsync(Guid id, BookVm bookVm);
+    Task<BookVm> GetByIdAsyncVm(Guid id);
+    Task AddAsync(BookEditVm bookEditVm);
+    Task UpdateAsync(Guid id, BookEditVm bookVm);
 }

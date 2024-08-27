@@ -6,12 +6,12 @@ namespace QLThuVien.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class BorrowController : ControllerBase
+public class BorrowsController : ControllerBase
 {
     private readonly IBorrowService _borrowService;
-    private readonly ILogger<BorrowController> _logger;
+    private readonly ILogger<BorrowsController> _logger;
 
-    public BorrowController(IBorrowService borrowService, ILogger<BorrowController> logger)
+    public BorrowsController(IBorrowService borrowService, ILogger<BorrowsController> logger)
     {
         _borrowService = borrowService;
         _logger = logger;

@@ -14,38 +14,37 @@ public class UsersController
     : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult> CreateUser(CreateUserVm createUserVm)
+    public async Task<ActionResult> CreateUser(UserCreateVm createUserVm)
     {
         await userService.CreateAsync(createUserVm);
-        return Ok();
+        return Created();
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> UpdateUser(string id, UserVm userVm)
+    public async Task<ActionResult> UpdateUser(Guid id, UserEditVm userVm)
     {
-        await userService.UpdateAsync(new Guid(id), userVm);
+        await userService.UpdateAsync(id, userVm);
         return Ok();
     }
 
     [HttpPut("{id}/change-password")]
-    public async Task<ActionResult> ChangePassword(string id, ChangePasswordVm changePasswordVm)
+    public async Task<ActionResult> ChangePassword(Guid id, ChangePasswordVm changePasswordVm)
     {
-        await userService.ChangePasswordAsync(new Guid(id), changePasswordVm.CurrentPassword, changePasswordVm.NewPassword);
+        await userService.ChangePasswordAsync(id, changePasswordVm.CurrentPassword, changePasswordVm.NewPassword);
         return Ok();
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteUser(string id)
+    public async Task<ActionResult> DeleteUser(Guid id)
     {
-        await userService.DeleteAsync(new Guid(id));
+        await userService.DeleteAsync(id);
         return Ok();
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult> GetById(string id)
+    public async Task<ActionResult<UserVm>> GetById(Guid id)
     {
-        await userService.DeleteAsync(new Guid(id));
-        return Ok();
+        return Ok(await userService.GetByIdAsyncVm(id));
     }
 
     [HttpGet]

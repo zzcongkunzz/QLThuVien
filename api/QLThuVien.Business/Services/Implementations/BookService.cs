@@ -19,15 +19,16 @@ public class BookService
         (
             int pageIndex = 1,
             int pageSize = 10,
-            string includeProperties = "",
+            string includeProperties = "Category",
             Expression<Func<Book, bool>>? filter = null,
             Func<IQueryable<Book>, IOrderedQueryable<Book>>? orderBy = null
         )
     {
         var query = unitOfWork.GetRepository<Book>()
-            .Get(filter, orderBy, "Category," + includeProperties)
+            .Get(filter, orderBy, includeProperties)
             .Select(book => new BookVm
             {
+                Id = book.Id,
                 AuthorName = book.AuthorName,
                 CategoryName = book.Category.Name,
                 Description = book.Description,
@@ -38,28 +39,41 @@ public class BookService
         return await PaginatedResult<BookVm>.CreateAsync(query, pageIndex, pageSize);
     }
 
-    public async Task AddAsync(BookVm bookVm)
+    public async Task<BookVm> GetByIdAsyncVm(Guid id)
     {
-        var category = unitOfWork.GetRepository<Category>().Get(
-            c => c.Name == bookVm.CategoryName, null, "Category"
-            )
+        var book = await GetByIdAsync(id);
+        return new BookVm()
+        {
+            Id = book.Id,
+            Title = book.Title,
+            CategoryName = book.Category.Name,
+            Description = book.Description,
+            PublishDate = book.PublishDate,
+            AuthorName = book.AuthorName,
+        };
+    }
+
+    public async Task AddAsync(BookEditVm bookEditVm)
+    {
+        var category = unitOfWork.GetRepository<Category>().Get(c => 
+                c.Name == bookEditVm.CategoryName)
             .FirstOrDefault()
             ?? throw new BadRequestException("Category not found");
 
         await AddAsync(new Book()
         {
-            AuthorName = bookVm.AuthorName,
+            AuthorName = bookEditVm.AuthorName,
             Category = category,
-            PublishDate = bookVm.PublishDate,
-            Description = bookVm.Description,
-            Title = bookVm.Title
+            PublishDate = bookEditVm.PublishDate,
+            Description = bookEditVm.Description,
+            Title = bookEditVm.Title
         });
     }
 
-    public async Task UpdateAsync(Guid id, BookVm bookVm)
+    public async Task UpdateAsync(Guid id, BookEditVm bookEditVm)
     {
         var category = unitOfWork.GetRepository<Category>().Get(
-            c => c.Name == bookVm.CategoryName, null, "Category"
+            c => c.Name == bookEditVm.CategoryName
             )
             .FirstOrDefault()
             ?? throw new BadRequestException("Category not found");
@@ -67,10 +81,10 @@ public class BookService
         await UpdateAsync(new Book()
         {
             Id = id,
-            AuthorName = bookVm.AuthorName,
-            Description = bookVm.Description,
-            PublishDate = bookVm.PublishDate,
-            Title = bookVm.Title,
+            AuthorName = bookEditVm.AuthorName,
+            Description = bookEditVm.Description,
+            PublishDate = bookEditVm.PublishDate,
+            Title = bookEditVm.Title,
             Category = category
         });
     }

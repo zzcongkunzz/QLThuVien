@@ -6,11 +6,10 @@ namespace QLThuVien.Business.Services.Interfaces;
 
 public interface IUserService : IDataService<User>
 {
-    Task CreateAsync(CreateUserVm userVm);
+    Task CreateAsync(UserCreateVm userCreateVm);
     Task DeleteAsync(Guid id);
-    Task UpdateAsync(Guid id, UserVm userVm);
+    Task UpdateAsync(Guid id, UserEditVm userEditVm);
     Task ChangePasswordAsync(Guid id, string currentPassword, string newPassword);
-    Task<IEnumerable<UserVm>> GetAllAsyncVm();
     Task<UserVm> GetByIdAsyncVm(Guid id);
     Task<PaginatedResult<UserVm>> GetAsyncVm(
         int pageIndex = 1,

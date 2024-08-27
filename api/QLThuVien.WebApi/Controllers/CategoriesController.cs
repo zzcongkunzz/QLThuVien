@@ -20,24 +20,23 @@ public class CategoriesController
     }
 
     [HttpPost]
-    public async Task<ActionResult> Add(Category category)
+    public async Task<ActionResult> Add(CategoryEditVm categoryEditVm)
     {
-        await categoryService.AddAsync(category);
+        await categoryService.AddAsync(categoryEditVm);
         return Ok();
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete(string id)
+    public async Task<ActionResult> Delete(Guid id)
     {
-        await categoryService.DeleteAsync(new Guid(id));
+        await categoryService.DeleteAsync(id);
         return Ok();
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> Update(string id, Category category)
+    public async Task<ActionResult> Update(Guid id, CategoryEditVm category)
     {
-        category.Id = new Guid(id);
-        await categoryService.UpdateAsync(category);
+        await categoryService.UpdateAsync(id, category);
         return Ok();
     }
 }

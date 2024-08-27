@@ -21,25 +21,25 @@ public class UserService
     ) 
     : DataService<User>(unitOfWork, logger), IUserService 
 {
-    public async Task CreateAsync(CreateUserVm userVm)
+    public async Task CreateAsync(UserCreateVm userCreateVm)
     {
-        if ((await userManager.FindByEmailAsync(userVm.Email)) != null)
+        if ((await userManager.FindByEmailAsync(userCreateVm.Email)) != null)
             throw new BadRequestException("Email already exists");
 
-        var role = await roleManager.FindByNameAsync(userVm.Role)
-            ?? throw new BadRequestException($"Role {userVm.Role} does not exist");
+        var role = await roleManager.FindByNameAsync(userCreateVm.Role)
+            ?? throw new BadRequestException($"Role {userCreateVm.Role} does not exist");
 
         var newUser = new User()
         {
-            UserName = userVm.Email!,
-            Email = userVm.Email,
-            DateOfBirth = userVm.DateOfBirth,
-            FullName = userVm.FullName,
-            Gender = userVm.Gender,
+            UserName = userCreateVm.Email!,
+            Email = userCreateVm.Email,
+            DateOfBirth = userCreateVm.DateOfBirth,
+            FullName = userCreateVm.FullName,
+            Gender = userCreateVm.Gender,
             Roles = [role]
         };
 
-        var result = await userManager.CreateAsync(newUser, userVm.Password);
+        var result = await userManager.CreateAsync(newUser, userCreateVm.Password);
 
         if (!result.Succeeded)
         {
@@ -59,20 +59,20 @@ public class UserService
             throw new BadRequestException("Can't delete user");
     }
 
-    public async Task UpdateAsync(Guid id, UserVm userVm)
+    public async Task UpdateAsync(Guid id, UserEditVm userEditVm)
     {
-        var role = await roleManager.FindByNameAsync(userVm.Role)
-            ?? throw new BadRequestException($"Role {userVm.Role} does not exist");
+        var role = await roleManager.FindByNameAsync(userEditVm.Role)
+            ?? throw new BadRequestException($"Role {userEditVm.Role} does not exist");
 
         await userManager.UpdateAsync(
             new User()
             {
-                UserName = userVm.Email!,
+                UserName = userEditVm.Email!,
                 Id = id,
-                Email = userVm.Email,
-                DateOfBirth = userVm.DateOfBirth,
-                FullName = userVm.FullName,
-                Gender = userVm.Gender,
+                Email = userEditVm.Email,
+                DateOfBirth = userEditVm.DateOfBirth,
+                FullName = userEditVm.FullName,
+                Gender = userEditVm.Gender,
                 Roles = [role]
             });
     }
@@ -90,26 +90,13 @@ public class UserService
             throw new BadRequestException("Can't change password");
     }
 
-    public async Task<IEnumerable<UserVm>> GetAllAsyncVm()
-    {
-        return await userManager.Users.Include(u => u.Roles).Select(user =>
-            new UserVm()
-            {
-                Email = user.Email!,
-                DateOfBirth = user.DateOfBirth,
-                FullName = user.FullName,
-                Gender = user.Gender,
-                Role = user.Roles.First().Name!
-            }
-            ).ToListAsync();
-    }
-
     public async Task<UserVm> GetByIdAsyncVm(Guid id)
     {
         var user = await userManager.Users.Include(u => u.Roles).FirstOrDefaultAsync(u => u.Id == id)
             ?? throw new NotFoundException("Id not found");
         return new UserVm()
         {
+            Id = user.Id,
             Email = user.Email!,
             DateOfBirth = user.DateOfBirth,
             FullName = user.FullName,
@@ -144,9 +131,10 @@ public class UserService
         query = (orderBy != null ? orderBy(query) : query);
 
         return await PaginatedResult<UserVm>.CreateAsync(
-            userManager.Users.Select(
+            query.Select(
                 user => new UserVm()
                 {
+                    Id = user.Id,
                     Email = user.Email,
                     DateOfBirth = user.DateOfBirth,
                     FullName = user.FullName,
