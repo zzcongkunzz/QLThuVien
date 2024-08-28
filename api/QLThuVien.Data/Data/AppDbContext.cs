@@ -6,8 +6,7 @@ using QLThuVien.Data.Models;
 
 namespace QLThuVien.Data.Data;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) 
-    : IdentityDbContext<User, Role, Guid>(options)
+public class AppDbContext : IdentityDbContext<User, Role, Guid>
 {
     #region DbSet
 
@@ -16,10 +15,19 @@ public class AppDbContext(DbContextOptions<AppDbContext> options)
     public DbSet<Rating> Ratings { get; set; }
     public DbSet<FavoriteCategory> FavoriteCategories { get; set; }
     public DbSet<Borrow> Borrows { get; set; }
-
+    public DbSet<Penalty> Penalties { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
+    
     #endregion
-
-
+    
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    {
+    }
+    
+    public AppDbContext()
+    {
+    }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -55,5 +63,13 @@ public class AppDbContext(DbContextOptions<AppDbContext> options)
         #endregion
 
         SeedData.Seed(modelBuilder, this);
+    }
+    
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-RHIBN05\SQLEXPRESS;Initial Catalog=Assignment7;Integrated Security=True;TrustServerCertificate=True;");
+        }
     }
 }

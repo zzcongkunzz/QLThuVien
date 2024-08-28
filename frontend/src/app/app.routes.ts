@@ -3,8 +3,10 @@ import { BaseLayoutComponent } from "./modules/shared/layouts/base-layout/base-l
 import { PageNotFoundComponent } from "./modules/shared/components/page-not-found/page-not-found.component";
 import { LoginComponent } from "./modules/login/login.component";
 import { RegisterComponent } from './modules/register/register.component';
+import { BookItemComponent } from './modules/shared/view-books/pages/home-page/book-item/book-item.component';
 
 export const routes: Routes = [
+  {path: 'book-item', component: BookItemComponent },
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {

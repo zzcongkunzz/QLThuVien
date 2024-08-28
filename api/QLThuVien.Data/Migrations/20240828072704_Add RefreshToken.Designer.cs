@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QLThuVien.Data.Data;
 
@@ -11,9 +12,11 @@ using QLThuVien.Data.Data;
 namespace QLThuVien.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240828072704_Add RefreshToken")]
+    partial class AddRefreshToken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,13 +111,13 @@ namespace QLThuVien.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("cd92595d-f9f5-4e5c-9973-8a4a40f1ea7a"),
-                            RoleId = new Guid("45444bae-4339-4d3e-9732-6de4b30a2729")
+                            UserId = new Guid("3906aea5-b99a-4631-92c4-95bb006d3b21"),
+                            RoleId = new Guid("832212c3-0ef1-4018-bb6b-e84b10a1dc2b")
                         },
                         new
                         {
-                            UserId = new Guid("8c69534c-0ed7-4467-96e1-466fc1745872"),
-                            RoleId = new Guid("aefb78f9-ac50-49d7-bf91-4c7dc60d3d65")
+                            UserId = new Guid("a335f4aa-492a-4644-a2a6-7aa3a8070e92"),
+                            RoleId = new Guid("a09e161c-68fa-454c-b59e-826190c609bb")
                         });
                 });
 
@@ -151,14 +154,11 @@ namespace QLThuVien.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly>("PublishDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("PublisherName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PublishDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -177,26 +177,21 @@ namespace QLThuVien.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("ActualReturnTime")
+                    b.Property<DateTime?>("ActualReturnDate")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("BookId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ExpectedReturnTime")
+                    b.Property<DateTime>("ExpectedReturnDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<float>("IssuedPenalties")
-                        .HasColumnType("real");
-
-                    b.Property<float>("PaidPenalties")
-                        .HasColumnType("real");
-
-                    b.Property<DateTime>("StartTime")
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -241,6 +236,33 @@ namespace QLThuVien.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("FavoriteCategories");
+                });
+
+            modelBuilder.Entity("QLThuVien.Business.Models.Penalty", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BorrowId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<float>("Fees")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BorrowId");
+
+                    b.ToTable("Penalties");
                 });
 
             modelBuilder.Entity("QLThuVien.Business.Models.Rating", b =>
@@ -327,14 +349,14 @@ namespace QLThuVien.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("45444bae-4339-4d3e-9732-6de4b30a2729"),
+                            Id = new Guid("832212c3-0ef1-4018-bb6b-e84b10a1dc2b"),
                             Description = "Thủ thư",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = new Guid("aefb78f9-ac50-49d7-bf91-4c7dc60d3d65"),
+                            Id = new Guid("a09e161c-68fa-454c-b59e-826190c609bb"),
                             Description = "Thành viên",
                             Name = "member",
                             NormalizedName = "member"
@@ -420,9 +442,9 @@ namespace QLThuVien.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("cd92595d-f9f5-4e5c-9973-8a4a40f1ea7a"),
+                            Id = new Guid("3906aea5-b99a-4631-92c4-95bb006d3b21"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3de5345f-adb5-4fe3-9132-0fee2207518a",
+                            ConcurrencyStamp = "85813ac9-e3af-48b8-b2aa-89926b783a74",
                             DateOfBirth = new DateOnly(2024, 8, 28),
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
@@ -434,9 +456,9 @@ namespace QLThuVien.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8c69534c-0ed7-4467-96e1-466fc1745872"),
+                            Id = new Guid("a335f4aa-492a-4644-a2a6-7aa3a8070e92"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1274ae25-c04a-43d5-b195-6150bbed91c7",
+                            ConcurrencyStamp = "918be849-1e49-4e1c-a425-fa83e6b29005",
                             DateOfBirth = new DateOnly(2024, 8, 28),
                             Email = "member1@gmail.com",
                             EmailConfirmed = false,
@@ -548,16 +570,27 @@ namespace QLThuVien.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("QLThuVien.Business.Models.Penalty", b =>
+                {
+                    b.HasOne("QLThuVien.Business.Models.Borrow", "Borrow")
+                        .WithMany()
+                        .HasForeignKey("BorrowId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Borrow");
+                });
+
             modelBuilder.Entity("QLThuVien.Business.Models.Rating", b =>
                 {
                     b.HasOne("QLThuVien.Business.Models.Book", "Book")
-                        .WithMany("Ratings")
+                        .WithMany()
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("QLThuVien.Data.Models.User", "User")
-                        .WithMany("Ratings")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -567,14 +600,15 @@ namespace QLThuVien.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("QLThuVien.Business.Models.Book", b =>
+            modelBuilder.Entity("QLThuVien.Business.Models.RefreshToken", b =>
                 {
-                    b.Navigation("Ratings");
-                });
+                    b.HasOne("QLThuVien.Data.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("QLThuVien.Data.Models.User", b =>
-                {
-                    b.Navigation("Ratings");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

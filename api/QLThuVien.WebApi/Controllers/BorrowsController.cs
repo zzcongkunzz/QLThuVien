@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using QLThuVien.Business.Exceptions;
 using QLThuVien.Business.Models;
 using QLThuVien.Business.Services.Implementations;
@@ -9,6 +10,7 @@ namespace QLThuVien.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class BorrowsController : ControllerBase
 {
     private readonly IBorrowService _borrowService;
