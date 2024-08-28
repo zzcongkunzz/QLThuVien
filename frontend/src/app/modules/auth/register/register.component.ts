@@ -2,18 +2,18 @@ import {Component} from '@angular/core';
 import {UserCreate} from '../../../view-models/user-create';
 import {FormsModule} from '@angular/forms';
 import {NgFor} from '@angular/common';
-import {UserService} from '../../../services/user.service';
+import {AuthService} from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [FormsModule, NgFor],
-  providers: [UserService],
+  providers: [AuthService],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
-  constructor(private userService: UserService) {
+  constructor(private userService: AuthService) {
   }
 
   userInfo: UserCreate =
