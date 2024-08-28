@@ -1,0 +1,43 @@
+<html lang="en-US">
+<head>
+  <title>Login</title>
+</head>
+<body>
+<div class="register-form">
+  <header>My book<br>shelf</header>
+  <h4 style="text-align:center;color:#4D4D4D">Registration</h4>
+  <h6 style="text-align:center;color:#ABABAB">For both staffs and students</h6>
+  <form class="register-form">
+    <label for="email">Email</label><br>
+    <input id="email" type="text" name="email" [(ngModel)]="userInfo.email"><br>
+
+    <label for="password">Password</label><br>
+    <input id="password" type="password" name="password" [(ngModel)]="userInfo.password"><br>
+
+    <label for="reapeat-password">Repeat password</label><br>
+    <input id="reapeat-password" type="password" name="repeat-password" [(ngModel)]="repeatPassword"><br>
+
+    <label for="dateOfBirth">Date of birth</label><br>
+    <input id="dateOfBirth" type="date" name="dateOfBirth" [(ngModel)]="userInfo.dateOfBirth"><br>
+
+    <label for="fullname">Fullname</label><br>
+    <input id="fullname" type="text" name="fullname" [(ngModel)]="userInfo.fullname"><br>
+
+    <label for="gender">Gender</label><br>
+    <input id="gender" type="text" name="gender" [(ngModel)]="userInfo.gender"><br>
+
+    <select [(ngModel)]="userInfo.role" name="role">
+      <option value="member">member</option>
+      <option value="admin">admin</option>
+    </select>
+
+    <button (click)="onSubmit()">Register</button>
+  </form>
+  <footer>
+    <div style="text-align:left;display:inline-block;margin-right: 14mm"> Already a user? <a href="/auth/login">Login
+      now</a></div>
+    <div style="text-align:right;display:inline-block;margin-left: 14mm"> Use as Guess</div>
+  </footer>
+</div>
+</body>
+</html>
