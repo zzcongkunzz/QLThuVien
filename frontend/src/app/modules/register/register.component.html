@@ -8,16 +8,30 @@
       <h4 style="text-align:center;color:#4D4D4D">Registration</h4>
       <h6 style="text-align:center;color:#ABABAB">For both staffs and students</h6>
       <form class="register-form">
-        <label for="username">Username</label><br>
-        <input type="text" name="username"><br>
         <label for="email">Email</label><br>
-        <input type="text" name="email"><br>
-        <label for="password">Password</label><br>
-        <input type="password" name="password"><br>
-        <label for="reapeat-password">Repeat password</label><br>
-        <input type="password" name="repeat-password"><br>
+        <input type="text" name="email" [(ngModel)]="userInfo.email"><br>
 
-        <button>Register</button>
+        <label for="password">Password</label><br>
+        <input type="password" name="password" [(ngModel)]="userInfo.password"><br>
+
+        <label for="reapeat-password">Repeat password</label><br>
+        <input type="password" name="repeat-password" [(ngModel)]="repeatPassword"><br>
+
+        <label for="dateOfBirth">Date of birth</label><br>
+        <input type="date" name="dateOfBirth" [(ngModel)]="userInfo.dateOfBirth"><br>
+
+        <label for="fullname">Fullname</label><br>
+        <input type="text" name="fullname" [(ngModel)]="userInfo.fullname"><br>
+
+        <label for="gender">Gender</label><br>
+        <input type="text" name="gender" [(ngModel)]="userInfo.gender"><br>
+
+        <select [(ngModel)]="userInfo.role" name="role">
+          <option value="member">member</option>
+          <option value="admin">admin</option>
+        </select>
+
+        <button (click)="onSubmit()">Register</button>
       </form>
       <footer>
         <div style="text-align:left;display:inline-block;margin-right: 14mm"> Already a user? <a href="login">Login now</a> </div>
