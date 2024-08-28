@@ -7,14 +7,19 @@
   <link rel="stylesheet" href="home-page.component.scss"> <!-- Liên kết đến tệp CSS -->
 </head>
 <body>
-  <header>
-    <h1>Thư Viện Online</h1>
-  </header>
 
-  <div class="container">
-    <div class="category">
-      <h2>Sách Đề Xuất</h2>
+  <main class="container">
+    <!-- Phần Today's Quote -->
+    <section class="quote-container">
+      <blockquote class="quote">"Có một người đi qua hoa cúc. Bỏ lại sau lưng cả tuổi thơ mình. Có hai người đi qua hoa cúc. Bỏ lại sau lưng cả một mối tình."</blockquote>
+      <cite class="author">- Nguyễn Nhật Ánh</cite>
+    </section>
+
+    <!-- Phần Recommended for you -->
+    <section class="category">
+      <h2>Recommended for you</h2>
       <ul class="book-list">
+        <!-- Các sách đề xuất -->
         <li class="book-item">
           <img src="https://via.placeholder.com/150" alt="Sách Đề Xuất 1">
           <h3>Sách Đề Xuất 1</h3>
@@ -41,11 +46,13 @@
           <p>Tác giả: Tác giả 5</p>
         </li>
       </ul>
-    </div>
+    </section>
 
-    <div class="category">
-      <h2>Sách Đang Đọc</h2>
+    <!-- Phần Recent Readings -->
+    <section class="category">
+      <h2>Recent Readings</h2>
       <ul class="book-list">
+        <!-- Các sách đang đọc -->
         <li class="book-item">
           <img src="https://via.placeholder.com/150" alt="Sách Đang Đọc 1">
           <h3>Sách Đang Đọc 1</h3>
@@ -72,11 +79,7 @@
           <p>Tác giả: Tác giả 5</p>
         </li>
       </ul>
-    </div>
-  </div>
-
-  <footer>
-    <p>&copy; 2024 Thư Viện Online. Tất cả quyền được bảo lưu.</p>
-  </footer>
+    </section>
+  </main>
 </body>
 </html>
