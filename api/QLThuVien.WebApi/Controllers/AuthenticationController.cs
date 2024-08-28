@@ -23,7 +23,7 @@ public class AuthenticationController : ControllerBase
         _authenticationService = authenticationService;
     }
 
-    [HttpPost("login-user")]
+    [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginVM payload)
     {
         if (!ModelState.IsValid)
