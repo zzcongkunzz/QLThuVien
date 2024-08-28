@@ -11,5 +11,5 @@ export const routes: Routes = [];
   ],
   exports: [RouterModule],
 })
-export class LibrarianModule {
+export class AdminModule {
 }

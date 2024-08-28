@@ -61,6 +61,7 @@ public class BookService
             PublisherName = bookEditVm.PublisherName,
             PublishDate = bookEditVm.PublishDate,
             Description = bookEditVm.Description,
+            Count = bookEditVm.Count,
             Title = bookEditVm.Title
         });
     }
@@ -81,6 +82,7 @@ public class BookService
             PublisherName = bookEditVm.PublisherName,
             PublishDate = bookEditVm.PublishDate,
             Title = bookEditVm.Title,
+            Count = bookEditVm.Count,
             Category = category
         });
     }
@@ -102,6 +104,8 @@ public class BookService
             PublisherName = book.PublisherName,
             PublishDate = book.PublishDate,
             AuthorName = book.AuthorName,
+            Count = book.Count,
+            ImageUrl = "/images/book.png",
             AverageRating = avgRating
         };
     }

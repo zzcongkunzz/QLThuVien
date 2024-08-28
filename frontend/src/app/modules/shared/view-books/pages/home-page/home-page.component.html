@@ -1,85 +1,75 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thư Viện Online</title>
-  <link rel="stylesheet" href="home-page.component.scss"> <!-- Liên kết đến tệp CSS -->
-</head>
-<body>
+<main class="container">
+  <!-- Phần Today's Quote -->
+  <section class="quote-container">
+    <blockquote class="quote">"Có một người đi qua hoa cúc. Bỏ lại sau lưng cả tuổi thơ mình. Có hai người đi qua hoa
+      cúc. Bỏ lại sau lưng cả một mối tình."
+    </blockquote>
+    <cite class="author">- Nguyễn Nhật Ánh</cite>
+  </section>
 
-  <main class="container">
-    <!-- Phần Today's Quote -->
-    <section class="quote-container">
-      <blockquote class="quote">"Có một người đi qua hoa cúc. Bỏ lại sau lưng cả tuổi thơ mình. Có hai người đi qua hoa cúc. Bỏ lại sau lưng cả một mối tình."</blockquote>
-      <cite class="author">- Nguyễn Nhật Ánh</cite>
-    </section>
+  <!-- Phần Recommended for you -->
+  <section class="category">
+    <h2>Recommended for you</h2>
+    <ul class="book-list">
+      <!-- Các sách đề xuất -->
+      <li class="book-item">
+        <img src="https://via.placeholder.com/150" alt="Sách Đề Xuất 1">
+        <h3>Sách Đề Xuất 1</h3>
+        <p>Tác giả: Tác giả 1</p>
+      </li>
+      <li class="book-item">
+        <img src="https://via.placeholder.com/150" alt="Sách Đề Xuất 2">
+        <h3>Sách Đề Xuất 2</h3>
+        <p>Tác giả: Tác giả 2</p>
+      </li>
+      <li class="book-item">
+        <img src="https://via.placeholder.com/150" alt="Sách Đề Xuất 3">
+        <h3>Sách Đề Xuất 3</h3>
+        <p>Tác giả: Tác giả 3</p>
+      </li>
+      <li class="book-item">
+        <img src="https://via.placeholder.com/150" alt="Sách Đề Xuất 4">
+        <h3>Sách Đề Xuất 4</h3>
+        <p>Tác giả: Tác giả 4</p>
+      </li>
+      <li class="book-item">
+        <img src="https://via.placeholder.com/150" alt="Sách Đề Xuất 5">
+        <h3>Sách Đề Xuất 5</h3>
+        <p>Tác giả: Tác giả 5</p>
+      </li>
+    </ul>
+  </section>
 
-    <!-- Phần Recommended for you -->
-    <section class="category">
-      <h2>Recommended for you</h2>
-      <ul class="book-list">
-        <!-- Các sách đề xuất -->
-        <li class="book-item">
-          <img src="https://via.placeholder.com/150" alt="Sách Đề Xuất 1">
-          <h3>Sách Đề Xuất 1</h3>
-          <p>Tác giả: Tác giả 1</p>
-        </li>
-        <li class="book-item">
-          <img src="https://via.placeholder.com/150" alt="Sách Đề Xuất 2">
-          <h3>Sách Đề Xuất 2</h3>
-          <p>Tác giả: Tác giả 2</p>
-        </li>
-        <li class="book-item">
-          <img src="https://via.placeholder.com/150" alt="Sách Đề Xuất 3">
-          <h3>Sách Đề Xuất 3</h3>
-          <p>Tác giả: Tác giả 3</p>
-        </li>
-        <li class="book-item">
-          <img src="https://via.placeholder.com/150" alt="Sách Đề Xuất 4">
-          <h3>Sách Đề Xuất 4</h3>
-          <p>Tác giả: Tác giả 4</p>
-        </li>
-        <li class="book-item">
-          <img src="https://via.placeholder.com/150" alt="Sách Đề Xuất 5">
-          <h3>Sách Đề Xuất 5</h3>
-          <p>Tác giả: Tác giả 5</p>
-        </li>
-      </ul>
-    </section>
-
-    <!-- Phần Recent Readings -->
-    <section class="category">
-      <h2>Recent Readings</h2>
-      <ul class="book-list">
-        <!-- Các sách đang đọc -->
-        <li class="book-item">
-          <img src="https://via.placeholder.com/150" alt="Sách Đang Đọc 1">
-          <h3>Sách Đang Đọc 1</h3>
-          <p>Tác giả: Tác giả 1</p>
-        </li>
-        <li class="book-item">
-          <img src="https://via.placeholder.com/150" alt="Sách Đang Đọc 2">
-          <h3>Sách Đang Đọc 2</h3>
-          <p>Tác giả: Tác giả 2</p>
-        </li>
-        <li class="book-item">
-          <img src="https://via.placeholder.com/150" alt="Sách Đang Đọc 3">
-          <h3>Sách Đang Đọc 3</h3>
-          <p>Tác giả: Tác giả 3</p>
-        </li>
-        <li class="book-item">
-          <img src="https://via.placeholder.com/150" alt="Sách Đang Đọc 4">
-          <h3>Sách Đang Đọc 4</h3>
-          <p>Tác giả: Tác giả 4</p>
-        </li>
-        <li class="book-item">
-          <img src="https://via.placeholder.com/150" alt="Sách Đang Đọc 5">
-          <h3>Sách Đang Đọc 5</h3>
-          <p>Tác giả: Tác giả 5</p>
-        </li>
-      </ul>
-    </section>
-  </main>
-</body>
-</html>
+  <!-- Phần Recent Readings -->
+  <section class="category">
+    <h2>Recent Readings</h2>
+    <ul class="book-list">
+      <!-- Các sách đang đọc -->
+      <li class="book-item">
+        <img src="https://via.placeholder.com/150" alt="Sách Đang Đọc 1">
+        <h3>Sách Đang Đọc 1</h3>
+        <p>Tác giả: Tác giả 1</p>
+      </li>
+      <li class="book-item">
+        <img src="https://via.placeholder.com/150" alt="Sách Đang Đọc 2">
+        <h3>Sách Đang Đọc 2</h3>
+        <p>Tác giả: Tác giả 2</p>
+      </li>
+      <li class="book-item">
+        <img src="https://via.placeholder.com/150" alt="Sách Đang Đọc 3">
+        <h3>Sách Đang Đọc 3</h3>
+        <p>Tác giả: Tác giả 3</p>
+      </li>
+      <li class="book-item">
+        <img src="https://via.placeholder.com/150" alt="Sách Đang Đọc 4">
+        <h3>Sách Đang Đọc 4</h3>
+        <p>Tác giả: Tác giả 4</p>
+      </li>
+      <li class="book-item">
+        <img src="https://via.placeholder.com/150" alt="Sách Đang Đọc 5">
+        <h3>Sách Đang Đọc 5</h3>
+        <p>Tác giả: Tác giả 5</p>
+      </li>
+    </ul>
+  </section>
+</main>

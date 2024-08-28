@@ -14,4 +14,5 @@ public class BookEditVm
     public required string PublisherName { get; set; }
     public required DateOnly PublishDate { get; set; }
     public required string CategoryName { get; set; }
+    public required int Count { get; set; }
 }

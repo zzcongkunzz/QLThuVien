@@ -1,6 +1,5 @@
-export class CreateUser {
+export class UserEdit {
   email: string = "";
-  password: string = "";
   gender: string = "";
   dateOfBirth: Date = new Date();
   fullname: string = "";

@@ -18,5 +18,7 @@ public class BookVm
     public required string PublisherName { get; set; }
     public required DateOnly PublishDate { get; set; }
     public required string CategoryName { get; set; }
-    public required float? AverageRating { get; set; }
+    public required int Count { get; set; }
+    public required string ImageUrl { get; set; }
+    public float? AverageRating { get; set; }
 }
