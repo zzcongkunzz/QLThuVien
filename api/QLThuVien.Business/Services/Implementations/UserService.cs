@@ -36,7 +36,7 @@ public class UserService
             DateOfBirth = userCreateVm.DateOfBirth,
             FullName = userCreateVm.FullName,
             Gender = userCreateVm.Gender,
-            Roles = [role]
+            Roles = [role],
         };
 
         var result = await userManager.CreateAsync(newUser, userCreateVm.Password);
