@@ -15,16 +15,11 @@ public class AppDbContext : IdentityDbContext<User, Role, Guid>
     public DbSet<Rating> Ratings { get; set; }
     public DbSet<FavoriteCategory> FavoriteCategories { get; set; }
     public DbSet<Borrow> Borrows { get; set; }
-    public DbSet<Penalty> Penalties { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
     
     #endregion
     
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-    {
-    }
-    
-    public AppDbContext()
     {
     }
     
@@ -61,15 +56,10 @@ public class AppDbContext : IdentityDbContext<User, Role, Guid>
             .HasMany(b => b.Ratings)
             .WithOne(r => r.Book);
         #endregion
-
-        SeedData.Seed(modelBuilder, this);
     }
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-RHIBN05\SQLEXPRESS;Initial Catalog=Assignment7;Integrated Security=True;TrustServerCertificate=True;");
-        }
+        base.OnConfiguring(optionsBuilder);
     }
 }

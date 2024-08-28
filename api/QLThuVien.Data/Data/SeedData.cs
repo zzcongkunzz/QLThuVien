@@ -1,66 +1,58 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using QLThuVien.Business.Models;
+using QLThuVien.Business.Services.Implementations;
+using QLThuVien.Business.ViewModels;
+using QLThuVien.Data.Infrastructure;
 using QLThuVien.Data.Models;
+using System.Data;
 
 namespace QLThuVien.Data.Data;
 
 public static class SeedData
 {
-    public static void Seed(ModelBuilder modelBuilder, AppDbContext dbContext)
+    public static async Task Initialize(IServiceProvider services)
     {
-        var adminRole = new Role()
+        await EnsureRoles(services);
+        await EnsureUsers(services);
+    }
+
+    public static async Task EnsureRoles(IServiceProvider services)
+    {
+        var roleManager = services.GetRequiredService<RoleManager<Role>>();
+
+        await roleManager.CreateAsync(new Role()
         {
-            Id = Guid.NewGuid(),
             Name = "admin",
             NormalizedName = "admin",
             Description = "Thủ thư"
-        };
-        var memberRole = new Role()
+        });
+
+        await roleManager.CreateAsync(new Role()
         {
-            Id = Guid.NewGuid(),
             Name = "member",
             NormalizedName = "member",
             Description = "Thành viên"
-        };
-        modelBuilder.Entity<Role>()
-            .HasData(adminRole);
-        modelBuilder.Entity<Role>()
-            .HasData(memberRole);
+        });
+    }
 
-        var admin = new User()
+    public static async Task EnsureUsers(IServiceProvider services)
+    {
+        var userManager = services.GetRequiredService<UserManager<User>>();
+        var roleManager = services.GetRequiredService<RoleManager<Role>>();
+
+        if (await userManager.FindByEmailAsync("admin@gmail.com") == null)
         {
-            Id = Guid.NewGuid(),
-            Email = "admin@gmail.com",
-            DateOfBirth = DateOnly.FromDateTime(DateTime.Now),
-            FullName = "admin 123",
-            Gender = "male"
-        };
-        modelBuilder.Entity<User>()
-            .HasData(admin);
-
-        modelBuilder.Entity<IdentityUserRole<Guid>>()
-            .HasData(new IdentityUserRole<Guid>()
+            await userManager.CreateAsync(new User()
             {
-                UserId = admin.Id,
-                RoleId = adminRole.Id
-            });
-
-        var member1 = new User()
-        {
-            Id = Guid.NewGuid(),
-            Email = "member1@gmail.com",
-            DateOfBirth = DateOnly.FromDateTime(DateTime.Now),
-            FullName = "Member1 Name",
-            Gender = "female"
-        };
-        modelBuilder.Entity<User>()
-            .HasData(member1);
-        modelBuilder.Entity<IdentityUserRole<Guid>>()
-            .HasData(new IdentityUserRole<Guid>()
-            {
-                UserId = member1.Id,
-                RoleId = memberRole.Id
-            });
+                UserName = "admin@gmail.com",
+                Email = "admin@gmail.com",
+                DateOfBirth = DateOnly.FromDateTime(DateTime.Now),
+                FullName = "Thủ Thư",
+                Gender = "male",
+                Roles = [await roleManager.FindByNameAsync("admin") ?? throw new Exception("Roles Uninitialized")],
+            }, "Admin_123");
+        }
     }
 }

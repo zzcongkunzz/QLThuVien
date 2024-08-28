@@ -37,7 +37,7 @@ public class UserService
 
         var newUser = new User()
         {
-            UserName = userCreateVm.Email!,
+            UserName = userCreateVm.Email,
             Email = userCreateVm.Email,
             DateOfBirth = userCreateVm.DateOfBirth,
             FullName = userCreateVm.FullName,
@@ -73,8 +73,8 @@ public class UserService
         await userManager.UpdateAsync(
             new User()
             {
-                UserName = userEditVm.Email!,
                 Id = id,
+                UserName = userEditVm.Email,
                 Email = userEditVm.Email,
                 DateOfBirth = userEditVm.DateOfBirth,
                 FullName = userEditVm.FullName,

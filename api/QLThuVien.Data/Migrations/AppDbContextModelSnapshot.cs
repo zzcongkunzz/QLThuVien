@@ -104,18 +104,6 @@ namespace QLThuVien.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("cd92595d-f9f5-4e5c-9973-8a4a40f1ea7a"),
-                            RoleId = new Guid("45444bae-4339-4d3e-9732-6de4b30a2729")
-                        },
-                        new
-                        {
-                            UserId = new Guid("8c69534c-0ed7-4467-96e1-466fc1745872"),
-                            RoleId = new Guid("aefb78f9-ac50-49d7-bf91-4c7dc60d3d65")
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -323,22 +311,6 @@ namespace QLThuVien.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("45444bae-4339-4d3e-9732-6de4b30a2729"),
-                            Description = "Thủ thư",
-                            Name = "admin",
-                            NormalizedName = "admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("aefb78f9-ac50-49d7-bf91-4c7dc60d3d65"),
-                            Description = "Thành viên",
-                            Name = "member",
-                            NormalizedName = "member"
-                        });
                 });
 
             modelBuilder.Entity("QLThuVien.Data.Models.User", b =>
@@ -416,36 +388,6 @@ namespace QLThuVien.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("cd92595d-f9f5-4e5c-9973-8a4a40f1ea7a"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "3de5345f-adb5-4fe3-9132-0fee2207518a",
-                            DateOfBirth = new DateOnly(2024, 8, 28),
-                            Email = "admin@gmail.com",
-                            EmailConfirmed = false,
-                            FullName = "admin 123",
-                            Gender = "male",
-                            LockoutEnabled = false,
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false
-                        },
-                        new
-                        {
-                            Id = new Guid("8c69534c-0ed7-4467-96e1-466fc1745872"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "1274ae25-c04a-43d5-b195-6150bbed91c7",
-                            DateOfBirth = new DateOnly(2024, 8, 28),
-                            Email = "member1@gmail.com",
-                            EmailConfirmed = false,
-                            FullName = "Member1 Name",
-                            Gender = "female",
-                            LockoutEnabled = false,
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -563,6 +505,17 @@ namespace QLThuVien.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("QLThuVien.Business.Models.RefreshToken", b =>
+                {
+                    b.HasOne("QLThuVien.Data.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
