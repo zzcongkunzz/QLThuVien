@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { Book } from '../../../../view-models/book';
+import {Component, Input} from '@angular/core';
+import {Book} from '../../../../../view-models/book';
 
 @Component({
   selector: 'app-entry-book',

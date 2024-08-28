@@ -1,6 +1,6 @@
 import {CommonModule, NgFor} from '@angular/common';
 import {Component} from '@angular/core';
-import {EntryBookComponent} from '../../../components/entry-book/entry-book.component';
+import {EntryBookComponent} from '../../components/entry-book/entry-book.component';
 import {Book} from '../../../../../view-models/book';
 
 @Component({

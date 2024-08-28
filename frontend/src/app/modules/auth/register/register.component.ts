@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
-import {UserCreate} from '../../view-models/user-create';
+import {UserCreate} from '../../../view-models/user-create';
 import {FormsModule} from '@angular/forms';
 import {NgFor} from '@angular/common';
-import {UserService} from '../../service/user.service';
+import {UserService} from '../../../services/user.service';
 
 @Component({
   selector: 'app-register',
