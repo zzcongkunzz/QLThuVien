@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using QLThuVien.Business.Services.Implementations;
 using QLThuVien.Business.Services.Interfaces;
@@ -13,9 +13,11 @@ public class UsersController
     (IUserService userService)
     : ControllerBase
 {
+    [EnableCors]
     [HttpPost]
     public async Task<ActionResult> CreateUser(UserCreateVm createUserVm)
     {
+        Console.WriteLine("TTTT");
         await userService.CreateAsync(createUserVm);
         return Created();
     }

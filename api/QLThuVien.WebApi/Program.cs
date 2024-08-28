@@ -40,7 +40,7 @@ builder.Services.AddScoped<IPenaltyService, PenaltyService>();
 #endregion
 
 var app = builder.Build();
-
+app.UseCors();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
