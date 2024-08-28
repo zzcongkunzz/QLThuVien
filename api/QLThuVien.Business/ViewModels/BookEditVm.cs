@@ -8,9 +8,10 @@ namespace QLThuVien.Business.ViewModels;
 
 public class BookEditVm
 {
-    public string AuthorName { get; set; }
-    public string Title { get; set; }
-    public string Description { get; set; }
-    public DateTime? PublishDate { get; set; }
-    public string CategoryName { get; set; }
+    public required string AuthorName { get; set; }
+    public required string Title { get; set; }
+    public string? Description { get; set; }
+    public required string PublisherName { get; set; }
+    public required DateOnly PublishDate { get; set; }
+    public required string CategoryName { get; set; }
 }

@@ -14,4 +14,5 @@ public class User : IdentityUser<Guid>
     public IEnumerable<Role> Roles { get; set; }
     public IEnumerable<Book> BorrowingBooks { get; set; }
     public IEnumerable<Category> FavoriteCategories { get; set; }
+    public IEnumerable<Rating> Ratings { get; set; }
 }

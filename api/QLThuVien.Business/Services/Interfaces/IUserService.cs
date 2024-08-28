@@ -6,6 +6,7 @@ namespace QLThuVien.Business.Services.Interfaces;
 
 public interface IUserService : IDataService<User>
 {
+    Task<IEnumerable<UserVm>> GetAllAsyncVms();
     Task CreateAsync(UserCreateVm userCreateVm);
     Task DeleteAsync(Guid id);
     Task UpdateAsync(Guid id, UserEditVm userEditVm);

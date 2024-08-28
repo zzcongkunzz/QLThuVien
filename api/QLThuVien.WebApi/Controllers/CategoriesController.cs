@@ -9,34 +9,40 @@ namespace QLThuVien.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CategoriesController 
+public class CategoriesController
     (ICategoryService categoryService)
     : ControllerBase
 {
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Category>>> Get()
+    [HttpGet("get-all-categories")]
+    public async Task<ActionResult<IEnumerable<Category>>> GetAllCategories()
     {
         return Ok(await categoryService.GetAllAsync());
     }
 
-    [HttpPost]
-    public async Task<ActionResult> Add(CategoryEditVm categoryEditVm)
+    [HttpPost("add-category")]
+    public async Task<ActionResult> AddCategory(CategoryEditVm categoryEditVm)
     {
         await categoryService.AddAsync(categoryEditVm);
-        return Ok();
+        return Created();
     }
 
-    [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete(Guid id)
+    [HttpDelete("get-category-by-id/{id}")]
+    public async Task<ActionResult<Category>> GetCategoryById(Guid id)
+    {
+        return Ok(await categoryService.GetByIdAsync(id));
+    }
+
+    [HttpDelete("delete-category/{id}")]
+    public async Task<ActionResult> DeleteCategory(Guid id)
     {
         await categoryService.DeleteAsync(id);
-        return Ok();
+        return NoContent();
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult> Update(Guid id, CategoryEditVm category)
+    [HttpPut("update-category/{id}")]
+    public async Task<ActionResult> UpdateCategory(Guid id, CategoryEditVm category)
     {
         await categoryService.UpdateAsync(id, category);
-        return Ok();
+        return NoContent();
     }
 }

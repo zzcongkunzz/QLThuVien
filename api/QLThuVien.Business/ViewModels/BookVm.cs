@@ -1,4 +1,5 @@
 ﻿using QLThuVien.Business.Models;
+using QLThuVien.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,10 +11,12 @@ namespace QLThuVien.Business.ViewModels;
 
 public class BookVm
 {
-    public Guid Id { get; set; }
-    public string AuthorName { get; set; }
-    public string Title { get; set; }
-    public string Description { get; set; }
-    public DateTime? PublishDate { get; set; }
-    public string CategoryName { get; set; }
+    public required Guid Id { get; set; }
+    public required string AuthorName { get; set; }
+    public required string Title { get; set; }
+    public required string? Description { get; set; }
+    public required string PublisherName { get; set; }
+    public required DateOnly PublishDate { get; set; }
+    public required string CategoryName { get; set; }
+    public required float? AverageRating { get; set; }
 }

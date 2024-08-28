@@ -13,42 +13,20 @@ public class UsersController
     (IUserService userService)
     : ControllerBase
 {
-    [HttpPost]
-    public async Task<ActionResult> CreateUser(UserCreateVm createUserVm)
+    [HttpGet("get-all-users")]
+    public async Task<ActionResult<IEnumerable<UserVm>>> GetAllUsers()
     {
-        await userService.CreateAsync(createUserVm);
-        return Created();
+        return Ok(await userService.GetAllAsyncVms());
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult> UpdateUser(Guid id, UserEditVm userVm)
-    {
-        await userService.UpdateAsync(id, userVm);
-        return Ok();
-    }
-
-    [HttpPut("{id}/change-password")]
-    public async Task<ActionResult> ChangePassword(Guid id, ChangePasswordVm changePasswordVm)
-    {
-        await userService.ChangePasswordAsync(id, changePasswordVm.CurrentPassword, changePasswordVm.NewPassword);
-        return Ok();
-    }
-
-    [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteUser(Guid id)
-    {
-        await userService.DeleteAsync(id);
-        return Ok();
-    }
-
-    [HttpGet("{id}")]
-    public async Task<ActionResult<UserVm>> GetById(Guid id)
+    [HttpGet("get-user-by-id/{id}")]
+    public async Task<ActionResult<UserVm>> GetUserById(Guid id)
     {
         return Ok(await userService.GetByIdAsyncVm(id));
     }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserVm>>> Get(
+    [HttpGet("query-users")]
+    public async Task<ActionResult<IEnumerable<UserVm>>> QueryUser(
         [FromQuery] int pageIndex = 1,
         [FromQuery] int pageSize = 10,
         [FromQuery] string name = "",
@@ -67,4 +45,33 @@ public class UsersController
                 }
             ));
     }
+
+    [HttpPost("add-user")]
+    public async Task<ActionResult> AddUser(UserCreateVm createUserVm)
+    {
+        await userService.CreateAsync(createUserVm);
+        return Created();
+    }
+
+    [HttpPut("update-user/{id}")]
+    public async Task<ActionResult> UpdateUser(Guid id, UserEditVm userVm)
+    {
+        await userService.UpdateAsync(id, userVm);
+        return Ok();
+    }
+
+    [HttpPut("change-password/{id}")]
+    public async Task<ActionResult> ChangePassword(Guid id, ChangePasswordVm changePasswordVm)
+    {
+        await userService.ChangePasswordAsync(id, changePasswordVm.CurrentPassword, changePasswordVm.NewPassword);
+        return Ok();
+    }
+
+    [HttpDelete("delete-user/{id}")]
+    public async Task<ActionResult> DeleteUser(Guid id)
+    {
+        await userService.DeleteAsync(id);
+        return Ok();
+    }
+
 }

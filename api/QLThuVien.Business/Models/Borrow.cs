@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 using QLThuVien.Data.Models;
 
 namespace QLThuVien.Business.Models;
@@ -6,15 +8,19 @@ namespace QLThuVien.Business.Models;
 public class Borrow
 {
     public Guid Id { get; set; }
-    [Required]
+    public Guid UserId { get; set; }
+    public Guid BookId { get; set; }
     public User User { get; set; }
-    [Required]
     public Book Book { get; set; }
     [Required]
-    public string Status { get; set; }
+    public required DateTime StartTime { get; set; }
     [Required]
-    public DateTime StartDate { get; set; }
+    public required DateTime ExpectedReturnTime { get; set; }
+    public DateTime? ActualReturnTime { get; set; }
     [Required]
-    public DateTime ExpectedReturnDate { get; set; }
-    public DateTime? ActualReturnDate { get; set; }
+    public required int Count { get; set; }
+    [Required, DefaultValue(0f)]
+    public required float IssuedPenalties { get; set; }
+    [Required, DefaultValue(0f)]
+    public required float PaidPenalties { get; set; }
 }

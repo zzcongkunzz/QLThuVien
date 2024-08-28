@@ -7,7 +7,6 @@ using QLThuVien.Business.ViewModels;
 using QLThuVien.Data.Infrastructure;
 using QLThuVien.Data.Models;
 using System.Data;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace QLThuVien.Business.Services.Implementations;
@@ -21,6 +20,13 @@ public class UserService
     ) 
     : DataService<User>(unitOfWork, logger), IUserService 
 {
+    public async Task<IEnumerable<UserVm>> GetAllAsyncVms()
+    {
+        return (await unitOfWork.GetRepository<User>()
+                    .GetQuery().Include(user => user.Roles)
+                    .ToListAsync()).Select(user => ToUserVm(user));
+    }
+
     public async Task CreateAsync(UserCreateVm userCreateVm)
     {
         if ((await userManager.FindByEmailAsync(userCreateVm.Email)) != null)
@@ -142,5 +148,18 @@ public class UserService
                     Role = user.Roles.First().Name!
                 })
             , pageIndex, pageSize);
+    }
+
+    protected UserVm ToUserVm(User user)
+    {
+        return new UserVm()
+        {
+            Id = user.Id,
+            Email = user.Email,
+            DateOfBirth = user.DateOfBirth,
+            FullName = user.FullName,
+            Gender = user.Gender,
+            Role = user.Roles.First().Name!
+        };
     }
 }

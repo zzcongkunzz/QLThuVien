@@ -16,7 +16,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options)
     public DbSet<Rating> Ratings { get; set; }
     public DbSet<FavoriteCategory> FavoriteCategories { get; set; }
     public DbSet<Borrow> Borrows { get; set; }
-    public DbSet<Penalty> Penalties { get; set; }
 
     #endregion
 
@@ -46,6 +45,13 @@ public class AppDbContext(DbContextOptions<AppDbContext> options)
             .HasMany(u => u.FavoriteCategories)
             .WithMany()
             .UsingEntity<FavoriteCategory>();
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Ratings)
+            .WithOne(r => r.User);
+        modelBuilder.Entity<Book>()
+            .HasMany(b => b.Ratings)
+            .WithOne(r => r.Book);
         #endregion
 
         SeedData.Seed(modelBuilder, this);

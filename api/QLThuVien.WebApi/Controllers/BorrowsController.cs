@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using QLThuVien.Business.Exceptions;
 using QLThuVien.Business.Models;
+using QLThuVien.Business.Services.Implementations;
 using QLThuVien.Business.Services.Interfaces;
+using QLThuVien.Business.ViewModels;
 
 namespace QLThuVien.WebApi.Controllers;
 
@@ -16,74 +19,73 @@ public class BorrowsController : ControllerBase
         _borrowService = borrowService;
         _logger = logger;
     }
-    
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
+
+    [HttpGet("get-all-borrows")]
+    public async Task<ActionResult<IEnumerable<BorrowVm>>> GetAllBorrows()
     {
-        var borrows = await _borrowService.GetAllAsync();
-        return Ok(borrows);
+        return Ok(await _borrowService.GetAllVm());
     }
 
-    [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetById(Guid id)
+    [HttpGet("get-borrow-filters")]
+    public ActionResult<IEnumerable<string>> GetBorrowFilters()
     {
-        var borrow = await _borrowService.GetByIdAsync(id);
-        if (borrow == null)
-        {
-            _logger.LogWarning($"Borrow with id {id} not found.");
-            return NotFound();
-        }
-        return Ok(borrow);
+        return Ok(new string[] {"all", "returned", "non-returned", "penalties-unpaid"});
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Add(Borrow borrow)
+
+    [HttpGet("query-borrows")]
+    public async Task<ActionResult<IEnumerable<BorrowVm>>> QueryBorrows(
+        [FromQuery] int pageIndex = 1,
+        [FromQuery] int pageSize = 10,
+        [FromQuery] string filter = "all",
+        [FromQuery] string order = "StartTime"
+        )
     {
-        try
-        {
-            _borrowService.AddAsync(borrow);
-            return CreatedAtAction(nameof(GetById), new { id = borrow.Id }, borrow);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error occurred while adding borrow.");
-            return BadRequest(ex.Message);
-        }
+        return Ok(await _borrowService.GetAsyncVm
+            (
+                pageIndex,
+                pageSize,
+                filter switch
+                {
+                    "returned" => (borrow => borrow.ActualReturnTime!= null
+                                        && borrow.ActualReturnTime < DateTime.Now),
+                    "non-returned" => (borrow => borrow.ActualReturnTime == null
+                                        || borrow.ActualReturnTime > DateTime.Now),
+                    "penalties-unpaid" => (borrow => borrow.PaidPenalties < borrow.IssuedPenalties),
+                    "all" => (_ => true),
+                    _ => throw new BadRequestException("Unrecognized filter")
+                },
+                q => order switch
+                {
+                    _ => q.OrderBy(b => b.StartTime)
+                }
+            ));
     }
 
-    [HttpPut("{id:guid}")]
-    public async Task<IActionResult> Update(Guid id, Borrow borrow)
+    [HttpGet("get-borrow-by-id/{id:guid}")]
+    public async Task<ActionResult<BorrowVm>> GetBorrowById(Guid id)
     {
-        if (id != borrow.Id)
-        {
-            _logger.LogWarning("Mismatch between URL id and borrow id.");
-            return BadRequest("Id mismatch");
-        }
-
-        try
-        {
-            _borrowService.UpdateAsync(borrow);
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error occurred while updating borrow.");
-            return BadRequest(ex.Message);
-        }
+        return Ok(await _borrowService.GetByIdAsyncVm(id));
     }
 
-    [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> Delete(Guid id)
+    [HttpPost("add-borrow")]
+    public async Task<ActionResult> AddBorrow(BorrowEditVm borrowEditVm)
     {
-        try
-        {
-             _borrowService.DeleteAsync(id);
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error occurred while deleting borrow.");
-            return BadRequest(ex.Message);
-        }
+        await _borrowService.AddAsync(borrowEditVm);
+        return Created();
+    }
+
+    [HttpPut("update-borrow/{id:guid}")]
+    public async Task<ActionResult> UpdateBorrow(Guid id, BorrowEditVm borrowEditVm)
+    {
+        await _borrowService.UpdateAsync(id, borrowEditVm);
+        return NoContent();
+    }
+
+    [HttpDelete("delete-borrow/{id:guid}")]
+    public async Task<ActionResult> DeleteBorrow(Guid id)
+    {
+        await _borrowService.DeleteAsync(id);
+        return NoContent();
     }
 }

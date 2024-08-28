@@ -12,19 +12,24 @@ public class BooksController
     (IBookService bookService)
     : ControllerBase
 {
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<BookVm>>> Get(
+    [HttpGet("get-all-books")]
+    public async Task<ActionResult<IEnumerable<BookVm>>> GetAllBooks()
+    {
+        return Ok(await bookService.GetAll());
+    }
+
+    [HttpGet("query-books")]
+    public async Task<ActionResult<PaginatedResult<BookVm>>> QueryBooks(
         [FromQuery] int pageIndex = 1,
         [FromQuery] int pageSize = 10,
         [FromQuery] string title = "",
         [FromQuery] string order = "Title"
         )
     {
-        return Ok(await bookService.GetAsyncVm
+        return Ok(await bookService.QueryAsyncVm
             (
                 pageIndex,
                 pageSize,
-                "Category",
                 u => u.Title.Contains(title),
                 q => order switch
                 {
@@ -33,31 +38,31 @@ public class BooksController
             ));
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<BookVm>> GetById(Guid id)
+    [HttpGet("get-book-by-id/{id}")]
+    public async Task<ActionResult<BookVm>> GetBookById(Guid id)
     {
 
         return Ok(await bookService.GetByIdAsyncVm(id));
     }
 
-    [HttpPost]
-    public async Task<ActionResult> CreateBook(BookEditVm bookEditVm)
+    [HttpPost("add-book")]
+    public async Task<ActionResult> AddBook(BookEditVm bookEditVm)
     {
         await bookService.AddAsync(bookEditVm);
         return Created();
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("delete-book/{id}")]
     public async Task<ActionResult> DeleteBook(Guid id)
     {
         await bookService.DeleteAsync(id);
-        return Ok();
+        return NoContent();
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("update-book/{id}")]
     public async Task<ActionResult> UpdateBook(Guid id, BookEditVm bookEditVm)
     {
         await bookService.UpdateAsync(id, bookEditVm);
-        return Ok();
+        return NoContent();
     }
 }

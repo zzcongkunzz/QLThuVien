@@ -7,12 +7,16 @@ public class Book
 {
     public Guid Id { get; set; }
     [Required]
-    public string AuthorName { get; set; }
+    public required string AuthorName { get; set; }
     [Required]
-    public string Title { get; set; }
-    public string Description { get; set; }
-    public DateTime? PublishDate { get; set; }
+    public required string Title { get; set; }
+    public string? Description { get; set; }
     [Required]
+    public required string PublisherName { get; set; }
+    [Required]
+    public required DateOnly PublishDate { get; set; }
     public Category Category { get; set; }
     public IEnumerable<User> BorrowingUsers { get; set; }
+    public IEnumerable<Rating> Ratings { get; set; }
+
 }

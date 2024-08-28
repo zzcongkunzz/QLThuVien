@@ -11,6 +11,6 @@ public class Rating
     
     public Book Book { get; set; }
     
-    [Required]
+    [Required, Range(0d, 5d)]
     public float Value { get; set; }
 }

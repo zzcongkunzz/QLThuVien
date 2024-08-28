@@ -9,11 +9,11 @@ namespace QLThuVien.Business.Services.Interfaces;
 
 public interface IBookService : IDataService<Book>
 {
-    Task<PaginatedResult<BookVm>> GetAsyncVm
+    Task<IEnumerable<BookVm>> GetAll();
+    Task<PaginatedResult<BookVm>> QueryAsyncVm
         (
             int pageIndex = 1,
             int pageSize = 10,
-            string includeProperties = "",
             Expression<Func<Book, bool>>? filter = null,
             Func<IQueryable<Book>, IOrderedQueryable<Book>>? orderBy = null
         );

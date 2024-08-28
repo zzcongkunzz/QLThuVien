@@ -11,7 +11,7 @@ public class RolesController
     (IRoleService roleService)
     : ControllerBase
 {
-    [HttpGet]
+    [HttpGet("get-all-roles")]
     public async Task<ActionResult<IEnumerable<RoleVm>>> GetRoles()
     {
         return Ok(await roleService.GetAllAsyncVm());

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using QLThuVien.Business.Exceptions;
 using QLThuVien.Business.Models;
 using QLThuVien.Business.Services.Interfaces;
@@ -15,42 +16,35 @@ public class BookService
         ILogger<BookService> logger
     ) : DataService<Book>(unitOfWork, logger), IBookService
 {
-    public async Task<PaginatedResult<BookVm>> GetAsyncVm
+    public async Task<IEnumerable<BookVm>> GetAll()
+    {
+        return (await unitOfWork.GetRepository<Book>()
+                    .GetQuery().Include(book => book.Category).Include(book => book.Ratings)
+                    .ToListAsync()).Select(book => ToBookVm(book));
+    }
+
+    public async Task<PaginatedResult<BookVm>> QueryAsyncVm
         (
             int pageIndex = 1,
             int pageSize = 10,
-            string includeProperties = "Category",
             Expression<Func<Book, bool>>? filter = null,
             Func<IQueryable<Book>, IOrderedQueryable<Book>>? orderBy = null
         )
     {
         var query = unitOfWork.GetRepository<Book>()
-            .Get(filter, orderBy, includeProperties)
-            .Select(book => new BookVm
-            {
-                Id = book.Id,
-                AuthorName = book.AuthorName,
-                CategoryName = book.Category.Name,
-                Description = book.Description,
-                PublishDate = book.PublishDate,
-                Title = book.Title
-            });
+            .Get(filter, orderBy, "Category,Ratings")
+            .Select(book => ToBookVm(book));
 
         return await PaginatedResult<BookVm>.CreateAsync(query, pageIndex, pageSize);
     }
 
     public async Task<BookVm> GetByIdAsyncVm(Guid id)
     {
-        var book = await GetByIdAsync(id);
-        return new BookVm()
-        {
-            Id = book.Id,
-            Title = book.Title,
-            CategoryName = book.Category.Name,
-            Description = book.Description,
-            PublishDate = book.PublishDate,
-            AuthorName = book.AuthorName,
-        };
+        return await unitOfWork.GetRepository<Book>()
+            .Get(book => book.Id == id, null, "Category,Ratings")
+            .Select(book => ToBookVm(book))
+            .FirstOrDefaultAsync()
+            ?? throw new NotFoundException("Id not found");
     }
 
     public async Task AddAsync(BookEditVm bookEditVm)
@@ -64,6 +58,7 @@ public class BookService
         {
             AuthorName = bookEditVm.AuthorName,
             Category = category,
+            PublisherName = bookEditVm.PublisherName,
             PublishDate = bookEditVm.PublishDate,
             Description = bookEditVm.Description,
             Title = bookEditVm.Title
@@ -83,9 +78,31 @@ public class BookService
             Id = id,
             AuthorName = bookEditVm.AuthorName,
             Description = bookEditVm.Description,
+            PublisherName = bookEditVm.PublisherName,
             PublishDate = bookEditVm.PublishDate,
             Title = bookEditVm.Title,
             Category = category
         });
+    }
+
+    protected BookVm ToBookVm(Book book)
+    {
+        float? avgRating = (
+            book.Ratings != null && book.Ratings.Any()
+            ? book.Ratings.Average(book => book.Value)
+            : null
+            );
+
+        return new BookVm()
+        {
+            Id = book.Id,
+            Title = book.Title,
+            CategoryName = book.Category.Name,
+            Description = book.Description,
+            PublisherName = book.PublisherName,
+            PublishDate = book.PublishDate,
+            AuthorName = book.AuthorName,
+            AverageRating = avgRating
+        };
     }
 }
