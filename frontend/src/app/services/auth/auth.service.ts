@@ -12,7 +12,6 @@ import {AuthResult} from "../../view-models/auth-result";
 })
 export class AuthService {
   public _response: any;
-  public apiUrl = 'http://localhost:5228/api/authentication/login';
   private _localStorage: Storage | undefined;
 
   private _user: User | undefined;
@@ -47,7 +46,7 @@ export class AuthService {
   ): Promise<AuthResult | undefined> {
     this._localStorage?.setItem('returnUrl', returnUrl);
     return this.httpClient
-      .post<AuthResult>(this.apiUrl, model)
+      .post<AuthResult>("/api/authentication/login", model)
       .toPromise()
       .then((response) => {
         console.log(response);
@@ -96,13 +95,18 @@ export class AuthService {
     return user ? user : null;
   }
 
-  public isManager(): boolean {
+  public isAdmin(): boolean {
     const userJSON = this._localStorage?.getItem('userInformation');
     const user: any = userJSON ? JSON.parse(userJSON) : null;
-    var result =
-      user?.roles.includes('Admin');
 
-    return result ? true : false;
+    return !!user?.roles.includes('admin');
+  }
+
+  public isMember(): boolean {
+    const userJSON = this._localStorage?.getItem('userInformation');
+    const user: any = userJSON ? JSON.parse(userJSON) : null;
+
+    return !!user?.roles.includes('member');
   }
 }
 
