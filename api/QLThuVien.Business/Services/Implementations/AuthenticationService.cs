@@ -30,7 +30,7 @@ public class AuthenticationService : IAuthenticationService
 
     public async Task<AuthResultVM> Login(LoginVM payload)
     {
-        var user = await _userManager.FindByEmailAsync(payload.Email);
+        var user = await _userManager.FindByEmailAsync(payload.Email).in;
         
         if (user != null && await _userManager.CheckPasswordAsync(user, payload.Password))
         {
@@ -79,7 +79,16 @@ public class AuthenticationService : IAuthenticationService
         {
             Token = jwtToken,
             RefreshToken = refreshToken.Token,
-            ExpiresAt = token.ValidTo
+            ExpiresAt = token.ValidTo,
+            UserInformation = new UserVm()
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Gender = user.Gender,
+                // Role = user?.Roles.ToString(),
+                FullName = user.FullName,
+                DateOfBirth = user.DateOfBirth,
+            }
         };
         return response;
     }
