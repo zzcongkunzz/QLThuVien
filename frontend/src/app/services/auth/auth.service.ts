@@ -96,13 +96,18 @@ export class AuthService {
     return user ? user : null;
   }
 
-  public isManager(): boolean {
+  public isAdmin(): boolean {
     const userJSON = this._localStorage?.getItem('userInformation');
     const user: any = userJSON ? JSON.parse(userJSON) : null;
-    var result =
-      user?.roles.includes('Admin');
 
-    return result ? true : false;
+    return !!user?.roles.includes('admin');
+  }
+
+  public isMember(): boolean {
+    const userJSON = this._localStorage?.getItem('userInformation');
+    const user: any = userJSON ? JSON.parse(userJSON) : null;
+
+    return !!user?.roles.includes('member');
   }
 }
 
