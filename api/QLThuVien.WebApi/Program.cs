@@ -26,10 +26,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
-    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
-        option.UseSqlServer(builder.Configuration.GetConnectionString("WindowsConnection"));
-    } else {
+    if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
         option.UseSqlServer(builder.Configuration.GetConnectionString("LinuxConnection"));
+    } else {
+        option.UseSqlServer(builder.Configuration.GetConnectionString("WindowsConnection"));
     }
 });
 
@@ -123,7 +123,6 @@ app.UseCors("AllowAllOrigins");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    Console.WriteLine("EEEEE");
     app.UseSwagger();
     app.UseSwaggerUI();
 }

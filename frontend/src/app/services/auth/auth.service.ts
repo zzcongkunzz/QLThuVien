@@ -103,14 +103,14 @@ export class AuthService {
     const userJSON = this._localStorage?.getItem('userInformation');
     const user: any = userJSON ? JSON.parse(userJSON) : null;
 
-    return !!user?.roles.includes('admin');
+    return user?.role === 'admin';
   }
 
   public isMember(): boolean {
     const userJSON = this._localStorage?.getItem('userInformation');
     const user: any = userJSON ? JSON.parse(userJSON) : null;
 
-    return !!user?.roles.includes('member');
+    return user?.role === 'member';
   }
 
 
