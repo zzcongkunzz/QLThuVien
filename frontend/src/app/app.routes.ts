@@ -1,10 +1,8 @@
 import {Routes} from '@angular/router';
 import {BaseLayoutComponent} from './modules/shared/layouts/base-layout/base-layout.component';
-import {AuthenticatedUserGuard} from "./guards/authenticated-user.guard";
 
 export const routes: Routes = [
   {
-
     // for no-users
     path: 'auth',
     loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule),
