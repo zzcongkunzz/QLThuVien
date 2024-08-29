@@ -12,8 +12,8 @@ import {AuthResult} from "../../view-models/auth-result";
 })
 export class AuthService {
   public _response: any;
-  // public apiUrl = 'http://localhost:5228/api/authentication/login';
-  public apiUrl = '/api/authentication/login';
+  public apiUrl = 'http://localhost:5228/api/authentication/login';
+  // public apiUrl = '/api/authentication/login';
 
   private _localStorage: Storage | undefined;
 
@@ -107,6 +107,8 @@ export class AuthService {
 
     return result ? true : false;
   }
+
+
 }
 
 
