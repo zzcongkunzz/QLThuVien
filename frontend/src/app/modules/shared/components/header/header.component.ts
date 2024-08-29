@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {User} from "../../../../view-models/user";
 import {FormsModule} from "@angular/forms";
 import {DateTimePipe} from "../../../../pipes/date-time/date-time.pipe";
+import {AuthService} from "../../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -19,7 +20,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
   }
 
@@ -33,7 +35,8 @@ export class HeaderComponent implements OnInit {
   }
 
   dangXuat(): void {
-    this._localStorage?.clear();
-    this.router.navigate(['auth/login']);
+    // this._localStorage?.clear();
+    // this.router.navigate(['auth/login']);
+    this.authService.logout();
   }
 }

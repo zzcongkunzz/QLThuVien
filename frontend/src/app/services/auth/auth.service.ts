@@ -90,6 +90,7 @@ export class AuthService {
     this._localStorage?.removeItem('returnUrl');
     this._localStorage?.removeItem('userInformation');
     this._user = undefined;
+    this.router.navigate(['auth', 'login']);
     return true;
   }
 

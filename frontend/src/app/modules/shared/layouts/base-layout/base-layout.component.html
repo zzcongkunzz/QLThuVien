@@ -8,10 +8,10 @@
         <div class="navbar-nav">
           <a class="nav-item nav-link" routerLink="/">Trang chủ</a>
           <a class="nav-item nav-link" routerLink="/books/search">Tìm kiếm</a>
-          <a class="nav-item nav-link" routerLink="/books/add">Thêm sách</a>
+          <a class="nav-item nav-link" routerLink="/books/add" *ngIf="isAdmin()">Thêm sách</a>
           <a class="nav-item nav-link" routerLink="/books/detail/123">Chi tiết sách(cho member)</a>
           <a class="nav-item nav-link" routerLink="/" *ngIf="isMember()">Kệ sách của tôi</a>
-          <a class="nav-item nav-link" routerLink="/users/manage">Quản lý người dùng</a>
+          <a class="nav-item nav-link" routerLink="/users/manage" *ngIf="isAdmin()">Quản lý người dùng</a>
         </div>
       </div>
     </nav>
