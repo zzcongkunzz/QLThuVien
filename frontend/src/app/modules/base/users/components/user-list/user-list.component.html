@@ -7,6 +7,8 @@
     <th>Giới tính</th>
     <th>Ngày sinh</th>
   </tr>
+  </thead>
+  <tbody>
     @for (user of users; track user.id) {
       <tr>
         <td>{{ user.fullName }}</td>
@@ -16,5 +18,5 @@
         <td>{{ user.dateOfBirth | dateOnly }}</td>
       </tr>
     }
-  </thead>
+  </tbody>
 </table>
