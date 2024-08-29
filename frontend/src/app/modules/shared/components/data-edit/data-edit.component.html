@@ -1,20 +1,20 @@
-<form (ngSubmit)="submit($event)" [formGroup]="formGroup">
+<form class="app-form" (ngSubmit)="submit($event)" [formGroup]="formGroup">
 
-	<ng-content></ng-content>
+  <ng-content></ng-content>
 
-	<div class="d-flex justify-content-around mb-0">
-		@if (!isUpdating) {
-			<button type="button" class="btn btn-primary update-btn" (click)="isUpdating = true;">
-				Update
-			</button>
-		} @else {
-			<button type="submit" class="btn btn-success save-btn" [disabled]="!formGroup.valid || isSaving">
-				Save
-			</button>
-		}
-		<button type="submit" class="btn btn-danger delete-btn" [disabled]="isSaving">
-			Delete
-		</button>
-	</div>
+  <div class="d-flex justify-content-around mb-0">
+    @if (!isUpdating) {
+      <button type="button" class="btn btn-primary update-btn" (click)="enableUpdate()">
+        Update
+      </button>
+    } @else {
+      <button type="submit" class="btn btn-success save-btn" [disabled]="!formGroup.valid || isSaving">
+        Save
+      </button>
+    }
+    <button type="submit" class="btn btn-danger delete-btn" [disabled]="isSaving">
+      Delete
+    </button>
+  </div>
 
 </form>

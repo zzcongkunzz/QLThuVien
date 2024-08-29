@@ -1,5 +1,5 @@
-import { Component, Input, output } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {Component, EventEmitter, Input, Output, output} from '@angular/core';
+import {FormGroup, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-data-edit',
@@ -9,8 +9,9 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './data-edit.component.scss',
 })
 export class DataEditComponent {
-  @Input({ required: true }) formGroup: FormGroup<any> = new FormGroup({});
-  @Input({ required: true }) isUpdating = false;
+  @Input({required: true}) formGroup: FormGroup<any> = new FormGroup({});
+  @Input() isUpdating = false;
+  @Output() isUpdatingChange = new EventEmitter<boolean>();
 
   update = output();
   delete = output();
@@ -18,6 +19,10 @@ export class DataEditComponent {
   isSaving = false;
 
   submit(event: SubmitEvent) {
+    if (this.isSaving) {
+      alert("Cannot submit another request while saving!");
+      return;
+    }
     try {
       this.isSaving = true;
       if (event.submitter?.classList.contains('update-btn')) {
@@ -25,11 +30,17 @@ export class DataEditComponent {
       } else if (event.submitter?.classList.contains('save-btn')) {
         this.update.emit();
         this.isUpdating = false;
+        this.isUpdatingChange.emit(false);
       } else throw new Error('Unexpected submission');
     } catch (error) {
       alert(error);
     } finally {
       this.isSaving = false;
     }
+  }
+
+  enableUpdate() {
+    this.isUpdating = true;
+    this.isUpdatingChange.emit(true);
   }
 }

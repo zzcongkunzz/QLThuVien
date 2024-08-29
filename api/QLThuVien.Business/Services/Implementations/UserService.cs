@@ -67,9 +67,6 @@ public class UserService
 
     public async Task UpdateAsync(Guid id, UserEditVm userEditVm)
     {
-        var role = await roleManager.FindByNameAsync(userEditVm.Role)
-            ?? throw new BadRequestException($"Role {userEditVm.Role} does not exist");
-
         await userManager.UpdateAsync(
             new User()
             {
@@ -79,7 +76,6 @@ public class UserService
                 DateOfBirth = userEditVm.DateOfBirth,
                 FullName = userEditVm.FullName,
                 Gender = userEditVm.Gender,
-                Roles = [role]
             });
     }
 

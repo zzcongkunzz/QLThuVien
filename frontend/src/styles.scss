@@ -2,12 +2,10 @@
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 //@import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
 
-:root {
-  --grad: linear-gradient(280deg, #FA7C54 -8.64%, #EC2C5A 121.84%);;
-}
 
 .bg-grad {
-  background: var(--grad);
+  background: linear-gradient(280deg, #FA7C54 -8.64%, #EC2C5A 80.84%);
+  //@extend .bg-danger;
 }
 
 body, html {
@@ -54,6 +52,10 @@ body, html {
     @extend .form-control;
   }
 
+  input[type="text"].disabled, input[type="email"].disabled, input[type="password"].disabled, input[type="date"].disabled, textarea.disabled {
+    @extend .form-control;
+  }
+
   select {
     @extend .form-select;
   }
@@ -78,5 +80,13 @@ body, html {
   thead > tr {
     @extend .table-danger;
   }
+}
+
+i {
+  z-index: 1000;
+}
+
+a {
+  text-decoration: none;
 }
 
