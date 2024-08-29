@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component} from '@angular/core';
 import {UserCreate} from '../../../view-models/user-create';
 import {FormsModule} from '@angular/forms';
 import {NgFor} from '@angular/common';
@@ -13,7 +13,7 @@ import {AuthService} from '../../../services/auth/auth.service';
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
-  constructor(@Inject('AUTH_SERVICE_INJECTOR') private userService: AuthService) {
+  constructor(private userService: AuthService) {
   }
 
   userInfo: UserCreate =

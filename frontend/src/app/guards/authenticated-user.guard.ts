@@ -1,16 +1,16 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
+import {DOCUMENT} from '@angular/common';
+import {Inject, Injectable} from '@angular/core';
 import {
-  CanActivate,
   ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  UrlTree,
+  CanActivate,
   CanLoad,
   Route,
-  UrlSegment,
   Router,
+  RouterStateSnapshot,
+  UrlSegment,
+  UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +48,7 @@ export class AuthenticatedUserGuard implements CanActivate, CanLoad {
     }
 
     // if not authenticated
-    this.router.navigate(['auth/login'], { queryParams: { returnUrl: state.url } });
+    this.router.navigate(['auth/login'], {queryParams: {returnUrl: state.url}});
     return false;
   }
 
@@ -67,15 +67,14 @@ export class AuthenticatedUserGuard implements CanActivate, CanLoad {
    * */
   protected hasUserAuthenticated(): boolean {
     const loginResult = this.localStorage?.getItem('loginResult');
-    return loginResult ? true : false;
+    return !!loginResult;
   }
 
   private isManager(): boolean {
     const userInformation = this.localStorage?.getItem('userInformation');
     if (userInformation) {
       const user = JSON.parse(userInformation);
-      var result = user.roles.includes('Admin') || user.roles.includes('Editor');
-      return result;
+      return user.roles.includes('Admin') || user.roles.includes('Editor');
     }
 
     return false;

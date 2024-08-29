@@ -69,7 +69,6 @@ public class UserService
 
     public async Task UpdateAsync(Guid id, UserEditVm userEditVm)
     {
-        //await unitOfWork.SaveChangesAsync();
         var user = await userManager.FindByIdAsync(id.ToString()) 
             ?? throw new BadRequestException("id not found");
 
