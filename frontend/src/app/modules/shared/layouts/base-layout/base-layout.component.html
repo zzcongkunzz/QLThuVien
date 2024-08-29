@@ -1,12 +1,10 @@
 <div class="d-flex bg-light h-100">
-  <nav class="navbar navbar-dark bg-danger flex-column h-100">
+  <nav class="navbar navbar-dark bg-grad flex-column h-100">
     <div class="container-fluid">
       <a class="navbar-brand" routerLink="/">
         <strong><em>Thư viện số</em></strong>
       </a>
       <div class="navbar-nav">
-        <a class="nav-item nav-link" routerLink="/auth/login">Đăng nhập</a>
-        <a class="nav-item nav-link" routerLink="/auth/register">Đăng ký</a>
         <a class="nav-item nav-link" routerLink="/">Trang chủ</a>
         <a class="nav-item nav-link" routerLink="/books/search">Tìm kiếm</a>
         <a class="nav-item nav-link" routerLink="/books/detail/123">Chi tiết sách(cho member)</a>
@@ -19,7 +17,7 @@
     <app-header></app-header>
     <router-outlet></router-outlet>
   </main>
-  <!--  <footer class="bg-light" style="position:absolute;width:100%;height:300px">-->
-
-  <!--  </footer>-->
 </div>
+<footer class="navbar-light" style="margin-top: 15rem">
+  <div class="text-center text-info-emphasis"><i>Được phát triển bởi nhóm 4</i></div>
+</footer>
