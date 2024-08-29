@@ -5,3 +5,46 @@
 body, html {
   height: 100%;
 }
+
+form {
+  @extend .m-auto;
+  @extend .border-danger-subtle;
+  @extend .p-4;
+  @extend .rounded-3;
+  @extend .border;
+  @extend .mb-3;
+  min-width: 20em;
+  max-width: 35em;
+
+  & > *:not(:last-child) {
+    @extend .mb-3;
+  }
+
+  .form-row {
+    @extend .row;
+    @extend .gx-1;
+
+    & > div:first-child {
+      @extend .col-4;
+    }
+
+    & > div:not(:first-child) {
+      @extend .col;
+    }
+  }
+
+  fieldset {
+    @extend .border;
+    @extend .px-3;
+
+    & > * {
+      @extend .mb-3;
+    }
+  }
+
+  .vflex {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+  }
+}
