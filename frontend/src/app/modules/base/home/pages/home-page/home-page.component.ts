@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AuthService} from "../../../../../services/auth/auth.service";
 import {Router} from "@angular/router";
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'app-home-page',
@@ -11,17 +12,29 @@ import {Router} from "@angular/router";
   styleUrl: './home-page.component.scss'
 })
 export class HomePageComponent implements OnInit{
-  private localStorage: Storage | undefined;
+  private _localStorage: Storage | undefined;
 
   constructor(
-    @Inject('AUTH_SERVICE_INJECTOR') private authService: AuthService,
+    @Inject(DOCUMENT) private document: Document,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-     if(!this.authService.isAuthenticated()){
-       this.router.navigate(['auth/login']);
-     }
+    this._localStorage = document.defaultView?.localStorage;
+    const loginResult: any = this._localStorage?.getItem('loginResult');
+    if (loginResult == null) {
+      this.router.navigate(['auth/login']);
+    }
+    else {
+      const expiresAt = new Date(loginResult.expiresAt);
+      const currentTime = new Date();
+      console.log("expiresAt", expiresAt);
+      console.log("currentTime", currentTime);
+      console.log(expiresAt <= currentTime);
+      if(loginResult.token == null && expiresAt <= currentTime) {
+        this.router.navigate(['auth/login']);
+      }
+    }
   }
 
 
