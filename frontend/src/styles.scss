@@ -1,7 +1,66 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
-@import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
+//@import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
 
 body, html {
   height: 100%;
 }
+
+.app-form {
+  @extend .m-auto;
+  @extend .border-danger-subtle;
+  @extend .p-4;
+  @extend .rounded-3;
+  @extend .border;
+  @extend .mb-3;
+  min-width: 20em;
+  max-width: 35em;
+
+  & > *:not(:last-child) {
+    @extend .mb-3;
+  }
+
+  .form-row {
+    @extend .row;
+    @extend .gx-1;
+
+    & > div:first-child {
+      @extend .col-4;
+    }
+
+    & > div:not(:first-child) {
+      @extend .col;
+    }
+  }
+
+  fieldset {
+    @extend .border;
+    @extend .px-3;
+
+    & > * {
+      @extend .mb-3;
+    }
+  }
+
+  .vflex {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+  }
+}
+
+.app-table {
+  @extend .table;
+  @extend .table-striped;
+  @extend .table-hover;
+  @extend .table-bordered;
+
+  //tr:hover {
+  //  cursor: pointer;
+  //}
+
+  thead > tr {
+    @extend .table-danger;
+  }
+}
+
