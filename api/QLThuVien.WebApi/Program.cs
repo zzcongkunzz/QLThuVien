@@ -90,6 +90,18 @@ Enter 'Bearer' [space] and then your token in the text input below.
     });
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200", "http://localhost:5228", "http://localhost:5001")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials();
+        });
+});
+
 #region RegisterServices
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -101,7 +113,7 @@ builder.Services.AddScoped<IBorrowService, BorrowService>();
 #endregion
 
 var app = builder.Build();
-app.UseCors();
+app.UseCors("AllowAllOrigins");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
