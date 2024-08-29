@@ -13,6 +13,7 @@ using QLThuVien.Data.Infrastructure;
 using QLThuVien.Data.Models;
 using QLThuVien.Data.Repositories;
 using QLThuVien.WebApi.Conventions;
+using System.Runtime.InteropServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +26,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
-    option.UseSqlServer(builder.Configuration.GetConnectionString("WindowsConnection"));
+    if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
+        option.UseSqlServer(builder.Configuration.GetConnectionString("LinuxConnection"));
+    } else {
+        option.UseSqlServer(builder.Configuration.GetConnectionString("WindowsConnection"));
+    }
 });
 
 builder.Services.AddIdentity<User, Role>()

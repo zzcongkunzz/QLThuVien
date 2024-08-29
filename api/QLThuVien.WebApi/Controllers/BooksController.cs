@@ -25,6 +25,7 @@ public class BooksController
         [FromQuery] int pageIndex = 1,
         [FromQuery] int pageSize = 10,
         [FromQuery] string title = "",
+        [FromQuery] string category = "",
         [FromQuery] string order = "Title"
         )
     {
@@ -32,7 +33,7 @@ public class BooksController
             (
                 pageIndex,
                 pageSize,
-                u => u.Title.Contains(title),
+                u => u.Title.Contains(title) && (category.Length == 0 || u.Category.Name.Equals(category)),
                 q => order switch
                 {
                     _ => q.OrderBy(b => b.Title)

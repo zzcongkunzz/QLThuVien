@@ -8,4 +8,8 @@
   </td>
   <td style="font-size:24px;color:grey">{{ book.averageRatings }}/5</td>
   <td style="font-size:24px;color:black">{{ book.categoryName }}</td>
+  <td *ngIf="true">
+    <a [routerLink]="getEditLink()">edit</a>
+    <a [routerLink]="getInfoLink()">info</a>
+  </td>
 </tr>

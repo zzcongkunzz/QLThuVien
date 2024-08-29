@@ -1,6 +1,9 @@
 $row-border-radius: 18px;
 
-#entry-row {
+#entry-row > td > a {
+  margin-left: 8px;
+  margin-right: 2px;
+  font-size: 18px;
 }
 
 td {
@@ -17,7 +20,7 @@ td:last-child {
 
 #column-title > * {
   display: inline-block;
-  text-align: center;
+  text-align: left;
 
   margin-right: 32px;
 }
