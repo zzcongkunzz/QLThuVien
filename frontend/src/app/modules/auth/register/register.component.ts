@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {UserCreate} from '../../../view-models/user-create';
 import {FormsModule} from '@angular/forms';
 import {NgFor} from '@angular/common';
@@ -8,12 +8,12 @@ import {AuthService} from '../../../services/auth/auth.service';
   selector: 'app-register',
   standalone: true,
   imports: [FormsModule, NgFor],
-  providers: [AuthService],
+  // providers: [AuthService],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
-  constructor(private userService: AuthService) {
+  constructor(@Inject('AUTH_SERVICE_INJECTOR') private userService: AuthService) {
   }
 
   userInfo: UserCreate =

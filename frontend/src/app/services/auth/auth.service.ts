@@ -13,6 +13,8 @@ import {AuthResult} from "../../view-models/auth-result";
 export class AuthService {
   public _response: AuthResult | undefined;
   public apiUrl = 'http://localhost:5228/api/authentication/login';
+  // public apiUrl = '/api/authentication/login';
+
   private _localStorage: Storage | undefined;
 
   private _user: User | undefined;
@@ -41,7 +43,8 @@ export class AuthService {
     });
   }
 
-  public login(
+
+  public async login(
     returnUrl: string,
     model: Login
   ): Promise<AuthResult | undefined> {
@@ -109,6 +112,8 @@ export class AuthService {
 
     return !!user?.roles.includes('member');
   }
+
+
 }
 
 

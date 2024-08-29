@@ -1,0 +1,14 @@
+<form>
+  <input type="text" placeholder="Title" name="title" [(ngModel)]="bookInfo.title"><br>
+  <input type="text" placeholder="Author" name="author" [(ngModel)]="bookInfo.authorName"><br>
+  <textarea placeholder="Description" name="description" [(ngModel)]="bookInfo.description" rows=20></textarea><br>
+  <input type="text" placeholder="Publisher Name" name="publisherName" [(ngModel)]="bookInfo.publisherName"><br>
+  <input type="date" placeholder="Publish Date" name="publishDate" [(ngModel)]="bookInfo.publishDate"><br>
+  <input type="text" list="categories" placeholder="Category" name="categoryName" [(ngModel)]="bookInfo.categoryName">
+  <datalist id="categories" >
+    <option *ngFor="let cat of getCategories()" [value]="cat">
+  </datalist>
+  <br>
+  <input type="number" placeholder="Count" name="count" [(ngModel)]="bookInfo.count"><br>
+  <button name="add-book" (click)="addBook()">Add book</button>
+</form>
