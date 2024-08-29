@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
 using QLThuVien.Data.Models;
 
 namespace QLThuVien.Business.Models;

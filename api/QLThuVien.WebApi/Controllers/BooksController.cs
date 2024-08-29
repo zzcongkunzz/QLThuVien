@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using QLThuVien.Business.Services.Implementations;
+﻿using Microsoft.AspNetCore.Mvc;
 using QLThuVien.Business.Services.Interfaces;
 using QLThuVien.Business.ViewModels;
 
@@ -67,5 +64,12 @@ public class BooksController
     {
         await bookService.UpdateAsync(id, bookEditVm);
         return NoContent();
+    }
+
+    [HttpPut("give-rating")]
+    [EndpointDescription("Return new avg rating of same book")]
+    public async Task<ActionResult<float?>> GiveRating(RatingVm ratingVm)
+    {
+        return Ok(await bookService.GiveRating(ratingVm));
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using QLThuVien.Data.Models;
+﻿using QLThuVien.Data.Models;
 
 namespace QLThuVien.Business.Models;
 

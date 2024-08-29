@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using QLThuVien.Business.ViewModels;
-using QLThuVien.Data.Models;
+﻿using QLThuVien.Business.ViewModels;
 
 namespace QLThuVien.Business.Services.Interfaces;
 
 public interface IAuthenticationService
 {
-    Task<AuthResultVM> Login(LoginVM payload);
+    Task<AuthResultVm> Login(LoginVm payload);
 }

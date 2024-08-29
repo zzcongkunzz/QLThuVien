@@ -20,8 +20,4 @@
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.8" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\QLThuVien.Business\QLThuVien.Business.csproj" />
-    </ItemGroup>
-
 </Project>

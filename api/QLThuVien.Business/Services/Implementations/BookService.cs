@@ -5,7 +5,6 @@ using QLThuVien.Business.Models;
 using QLThuVien.Business.Services.Interfaces;
 using QLThuVien.Business.ViewModels;
 using QLThuVien.Data.Infrastructure;
-using QLThuVien.Data.Models;
 using System.Linq.Expressions;
 
 namespace QLThuVien.Business.Services.Implementations;
@@ -111,5 +110,25 @@ public class BookService
             ImageUrl = "/images/book.png",
             AverageRating = avgRating
         };
+    }
+
+    public async Task<float?> GiveRating(RatingVm ratingVm)
+    {
+        unitOfWork.GetRepository<Rating>().Add(new Rating()
+        {
+            UserId = ratingVm.UserId,
+            BookId = ratingVm.BookId,
+            Value = ratingVm.Value
+        });
+        await unitOfWork.SaveChangesAsync();
+
+        var book = await unitOfWork.GetRepository<Book>()
+            .Get(book => book.Id == ratingVm.BookId, null, "Ratings")
+            .FirstOrDefaultAsync()
+            ?? throw new ConflictException("Book has been deleted");
+
+        return book.Ratings != null && book.Ratings.Any()
+            ? book.Ratings.Average(book => book.Value)
+            : null;
     }
 }

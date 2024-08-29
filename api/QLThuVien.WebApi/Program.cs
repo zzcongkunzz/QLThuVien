@@ -5,13 +5,11 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using QLThuVien.Business.Models;
 using QLThuVien.Business.Services.Implementations;
 using QLThuVien.Business.Services.Interfaces;
 using QLThuVien.Data.Data;
 using QLThuVien.Data.Infrastructure;
 using QLThuVien.Data.Models;
-using QLThuVien.Data.Repositories;
 using QLThuVien.WebApi.Conventions;
 using System.Runtime.InteropServices;
 

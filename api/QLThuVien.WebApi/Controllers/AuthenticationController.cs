@@ -1,14 +1,6 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using QLThuVien.Business.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using QLThuVien.Business.Services.Interfaces;
 using QLThuVien.Business.ViewModels;
-using QLThuVien.Data.Data;
-using QLThuVien.Data.Models;
 
 namespace QLThuVien.WebApi.Controllers;
 
@@ -24,13 +16,13 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginVM payload)
+    public async Task<IActionResult> Login([FromBody] LoginVm payload)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest("Please, provide all required fields");
         }
-        AuthResultVM result = await _authenticationService.Login(payload);
+        AuthResultVm result = await _authenticationService.Login(payload);
         if (result.Token == null)
         {
             return Unauthorized();
