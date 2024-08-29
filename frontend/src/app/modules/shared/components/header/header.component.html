@@ -1,4 +1,9 @@
 <nav class="navbar navbar-light bg-light">
-  <span>Xin chào {{user?.fullName}}</span>
-  <span (click)="dangXuat()">đăng xuất</span>
+  <div class="d-flex justify-content-between w-100">
+    <span>Ngày {{ date | dateTime }}</span>
+    <h4><i>Xin chào, {{ user?.fullName }}</i></h4>
+    <button type="button" class="btn btn-danger" (click)="dangXuat()">
+      Đăng xuất
+    </button>
+  </div>
 </nav>
