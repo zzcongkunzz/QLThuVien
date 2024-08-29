@@ -30,7 +30,7 @@ public class AuthenticationService : IAuthenticationService
 
     public async Task<AuthResultVM> Login(LoginVM payload)
     {
-        var user = await _userManager.FindByEmailAsync(payload.Email).in;
+        var user = await _userManager.FindByEmailAsync(payload.Email);
         
         if (user != null && await _userManager.CheckPasswordAsync(user, payload.Password))
         {
