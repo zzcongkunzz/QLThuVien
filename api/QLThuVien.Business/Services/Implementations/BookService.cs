@@ -32,19 +32,22 @@ public class BookService
         )
     {
         var query = unitOfWork.GetRepository<Book>()
-            .Get(filter, orderBy, "Category,Ratings")
-            .Select(book => ToBookVm(book));
+            .Get(filter, orderBy, "Category,Ratings");
 
-        return await PaginatedResult<BookVm>.CreateAsync(query, pageIndex, pageSize);
+        var pgBook = await PaginatedResult<Book>.CreateAsync(query, pageIndex, pageSize);
+
+        return new PaginatedResult<BookVm>(
+            pgBook.Items.Select(ToBookVm).ToList(), 
+            pgBook.TotalPages, pageIndex, pageSize);
     }
 
     public async Task<BookVm> GetByIdAsyncVm(Guid id)
     {
-        return await unitOfWork.GetRepository<Book>()
+        var book = await unitOfWork.GetRepository<Book>()
             .Get(book => book.Id == id, null, "Category,Ratings")
-            .Select(book => ToBookVm(book))
             .FirstOrDefaultAsync()
             ?? throw new NotFoundException("Id not found");
+        return ToBookVm(book);
     }
 
     public async Task AddAsync(BookEditVm bookEditVm)

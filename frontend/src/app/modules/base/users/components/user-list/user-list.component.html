@@ -11,7 +11,7 @@
   <tbody>
     @for (user of users; track user.id) {
       <tr>
-        <td>{{ user.fullName }}</td>
+        <td><a [href]="'/users/edit/'+user.id" title="Truy cập hồ sơ người dùng">{{ user.fullName }}</a></td>
         <td>{{ user.email }}</td>
         <td>{{ user.role | role }}</td>
         <td>{{ user.gender | gender }}</td>

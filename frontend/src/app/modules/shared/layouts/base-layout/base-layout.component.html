@@ -12,13 +12,15 @@
         <a class="nav-item nav-link" routerLink="/" *ngIf="isMember()">Kệ sách của tôi</a>
         <a class="nav-item nav-link" routerLink="/users/manage">Quản lý người dùng</a>
       </div>
+    </nav>
+    <div class="container d-flex flex-column justify-content-between min-vh-100">
+      <main>
+        <app-header></app-header>
+        <router-outlet></router-outlet>
+      </main>
+      <footer class="navbar-light" style="margin-top: 5rem;margin-bottom: 1rem">
+        <i class="text-info-emphasis text-center d-block">Được phát triển bởi nhóm 4</i>
+      </footer>
     </div>
-  </nav>
-  <main class="container">
-    <app-header></app-header>
-    <router-outlet></router-outlet>
-  </main>
+  </div>
 </div>
-<footer class="navbar-light" style="margin-top: 15rem">
-  <div class="text-center text-info-emphasis"><i>Được phát triển bởi nhóm 4</i></div>
-</footer>

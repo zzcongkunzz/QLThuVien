@@ -1,0 +1,43 @@
+<app-data-edit [formGroup]="formGroup"
+               (update)="onUpdate()" (delete)="onDelete()"
+               [isUpdating]="isUpdating" (isUpdatingChange)="onIsUpdatingChange($event)">
+  <h3>Hồ sơ người dùng</h3>
+  <div>
+    <label for="full-name-add" class="form-label">Họ và tên:</label>
+    <input type="text" id="full-name-add" formControlName="fullName"
+           [readOnly]="!isUpdating" [disabled]="!isUpdating">
+  </div>
+  <div>
+    <label for="email-add" class="form-label">Email:</label>
+    <input type="email" id="email-add" formControlName="email"
+           [readOnly]="!isUpdating" [disabled]="!isUpdating">
+  </div>
+  <div>
+    Vai trò: {{ user?.role | role }}
+  </div>
+  <div>
+    <div style="margin-bottom: 0.2rem">Giới tính:</div>
+    <span style="margin-right: 2rem">
+      <input id="male-add" type="radio" formControlName="gender" value="male"
+             [readOnly]="!isUpdating" [disabled]="!isUpdating"
+             [className]="isUpdating?'form-check-inline':'form-check-inline disabled'">
+      <label for="male-add" class="form-check-label">Nam</label>
+    </span>
+    <span>
+      <input id="female-add" type="radio" formControlName="gender" value="female"
+             [readOnly]="!isUpdating" [disabled]="!isUpdating"
+             [className]="isUpdating?'form-check-inline':'form-check-inline disabled'">
+      <label for="female-add" class="form-check-label">Nữ</label>
+    </span>
+  </div>
+  <div>
+    <label for="birthday-add" class="form-label">Ngày sinh:</label>
+    <input type="date" name="birthday" id="birthday-add" formControlName="dateOfBirth"
+           [readOnly]="!isUpdating" [disabled]="!isUpdating"
+           [className]="isUpdating?'':'disabled'">
+  </div>
+  <!--  <div>-->
+  <!--    <label for="password-add" class="form-label">Mật khẩu:</label>-->
+  <!--    <input type="password" id="password-add" formControlName="password">-->
+  <!--  </div>-->
+</app-data-edit>

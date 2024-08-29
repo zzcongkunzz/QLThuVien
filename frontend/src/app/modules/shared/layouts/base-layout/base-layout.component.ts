@@ -18,11 +18,11 @@ export class BaseLayoutComponent {
   }
 
   isMember(): boolean {
-    return true;
+    return this.authService.isMember();
   }
 
   isAdmin(): boolean {
-    return true;
+    return this.authService.isAdmin();
   }
 
 }
