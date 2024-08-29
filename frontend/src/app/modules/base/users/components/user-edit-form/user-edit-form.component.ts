@@ -71,6 +71,14 @@ export class UserEditFormComponent implements OnInit {
       fullName: this.formGroup.value.fullName,
       gender: this.formGroup.value.gender,
       dateOfBirth: this.formGroup.value.dateOfBirth,
+    }).subscribe({
+      complete: () => {
+        if (!this.user) {
+          alert("User undefined!");
+          return;
+        } else alert("Update succesful.")
+        this.loadData(this.user.id);
+      }
     });
   }
 

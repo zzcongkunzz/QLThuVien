@@ -8,6 +8,8 @@ using QLThuVien.Data.Infrastructure;
 using QLThuVien.Data.Models;
 using System.Data;
 using System.Linq.Expressions;
+using System.Reflection;
+using System.Security;
 
 namespace QLThuVien.Business.Services.Implementations;
 
@@ -67,16 +69,23 @@ public class UserService
 
     public async Task UpdateAsync(Guid id, UserEditVm userEditVm)
     {
-        await userManager.UpdateAsync(
-            new User()
-            {
-                Id = id,
-                UserName = userEditVm.Email,
-                Email = userEditVm.Email,
-                DateOfBirth = userEditVm.DateOfBirth,
-                FullName = userEditVm.FullName,
-                Gender = userEditVm.Gender,
-            });
+        //await unitOfWork.SaveChangesAsync();
+        var user = await userManager.FindByIdAsync(id.ToString()) 
+            ?? throw new BadRequestException("id not found");
+
+        user.Id = id;
+        user.UserName = userEditVm.Email;
+        user.Email = userEditVm.Email;
+        user.DateOfBirth = userEditVm.DateOfBirth;
+        user.FullName = userEditVm.FullName;
+        user.Gender = userEditVm.Gender;
+
+        var result = await userManager.UpdateAsync(user);
+
+        if (!result.Succeeded)
+            throw new BadRequestException(string.Concat(
+                result.Errors.Select(err => err.Description + '\n')
+                ));
     }
 
     public async Task ChangePasswordAsync(Guid id, string currentPassword, string newPassword)
