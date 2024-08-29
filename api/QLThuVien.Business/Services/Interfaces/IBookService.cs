@@ -17,6 +17,7 @@ public interface IBookService : IDataService<Book>
     Task<BookVm> GetByIdAsyncVm(Guid id);
     Task AddAsync(BookEditVm bookEditVm);
     Task UpdateAsync(Guid id, BookEditVm bookVm);
+    BookVm ToBookVm(Book book);
     // trả về avg rating mới của book
     Task<float?> GiveRating(RatingVm ratingVm);
 }

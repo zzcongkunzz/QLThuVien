@@ -89,7 +89,7 @@ public class BookService
         });
     }
 
-    protected BookVm ToBookVm(Book book)
+    public BookVm ToBookVm(Book book)
     {
         float? avgRating = (
             book.Ratings != null && book.Ratings.Any()
