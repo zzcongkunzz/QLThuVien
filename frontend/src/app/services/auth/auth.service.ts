@@ -12,7 +12,9 @@ import {AuthResult} from "../../view-models/auth-result";
 })
 export class AuthService {
   public _response: any;
-  public apiUrl = 'http://localhost:5228/api/authentication/login';
+  // public apiUrl = 'http://localhost:5228/api/authentication/login';
+  public apiUrl = '/api/authentication/login';
+
   private _localStorage: Storage | undefined;
 
   private _user: User | undefined;
@@ -41,7 +43,8 @@ export class AuthService {
     });
   }
 
-  public login(
+
+  public async login(
     returnUrl: string,
     model: Login
   ): Promise<AuthResult | undefined> {
@@ -100,7 +103,7 @@ export class AuthService {
     const userJSON = this._localStorage?.getItem('userInformation');
     const user: any = userJSON ? JSON.parse(userJSON) : null;
     var result =
-      user?.roles.includes('Admin');
+      user?.roles.includes('admin');
 
     return result ? true : false;
   }

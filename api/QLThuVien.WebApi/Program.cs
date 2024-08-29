@@ -118,6 +118,7 @@ app.UseCors("AllowAllOrigins");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    Console.WriteLine("EEEEE");
     app.UseSwagger();
     app.UseSwaggerUI();
 }

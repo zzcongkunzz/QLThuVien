@@ -7,13 +7,13 @@ import {AuthService} from "../../../services/auth/auth.service";
   selector: 'app-login',
   standalone: true,
   imports: [ FormsModule ],
-  providers: [{ provide: 'AUTH_SERVICE_INJECTOR', useClass: AuthService }],
+  // providers: [{ provide: 'AUTH_SERVICE_INJECTOR', useClass: AuthService }],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  username: string     = "username"
-  password: string     = "password"
+  username: string     = ""
+  password: string     = ""
   remember_me: boolean = false
 
   public dialogTitle: string = '';
@@ -26,20 +26,20 @@ export class LoginComponent {
   ) {}
 
   onSubmit(): void {
-    alert(`username: ${this.username}\npassword: ${this.password}\nremember me: ${this.remember_me}`)
+
 
     this.authService.login('/', {
       email: this.username,
       password: this.password
-    })
-      .then((response: any) => {
+    }).then((response: any) => {
       if (response) {
         if (response.error) {
           this.dialogTitle = 'Login Failed';
           this.dialogMessage = response.error.detail;
           this.isShowDialog = true;
         } else {
-          window.location.href = '/';
+          this.router.navigate(['/']);
+          // window.location.href = '/';
         }
       }
     });
