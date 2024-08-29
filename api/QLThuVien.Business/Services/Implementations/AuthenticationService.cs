@@ -19,18 +19,20 @@ public class AuthenticationService : IAuthenticationService
     private readonly RoleManager<Role> _roleManager;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IConfiguration _configuration;
+    private readonly IUserService _userService;
 
-    public AuthenticationService(UserManager<User> userManager, RoleManager<Role> roleManager, IUnitOfWork unitOfWork, IConfiguration configuration)
+    public AuthenticationService(UserManager<User> userManager, RoleManager<Role> roleManager, IUnitOfWork unitOfWork, IConfiguration configuration, IUserService userService)
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _unitOfWork = unitOfWork;
         _configuration = configuration;
+        _userService = userService;
     }
 
     public async Task<AuthResultVM> Login(LoginVM payload)
     {
-        var user = await _userManager.FindByEmailAsync(payload.Email).in;
+        var user = await _userManager.FindByEmailAsync(payload.Email);
         
         if (user != null && await _userManager.CheckPasswordAsync(user, payload.Password))
         {
@@ -80,15 +82,7 @@ public class AuthenticationService : IAuthenticationService
             Token = jwtToken,
             RefreshToken = refreshToken.Token,
             ExpiresAt = token.ValidTo,
-            UserInformation = new UserVm()
-            {
-                Id = user.Id,
-                Email = user.Email,
-                Gender = user.Gender,
-                // Role = user?.Roles.ToString(),
-                FullName = user.FullName,
-                DateOfBirth = user.DateOfBirth,
-            }
+            UserInformation = await _userService.GetByIdAsyncVm(user.Id)
         };
         return response;
     }
