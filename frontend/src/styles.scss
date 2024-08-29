@@ -48,3 +48,19 @@ body, html {
     row-gap: 1rem;
   }
 }
+
+.app-table {
+  @extend .table;
+  @extend .table-striped;
+  @extend .table-hover;
+  @extend .table-striped;
+
+  tr:hover {
+    cursor: pointer;
+  }
+
+  thead {
+    background-color: coral;
+  }
+}
+

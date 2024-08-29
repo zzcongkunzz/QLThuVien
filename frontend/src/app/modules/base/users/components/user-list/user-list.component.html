@@ -1,0 +1,20 @@
+<table class="app-table">
+  <thead>
+  <tr>
+    <th>Họ và tên</th>
+    <th>Email</th>
+    <th>Vai trò</th>
+    <th>Giới tính</th>
+    <th>Ngày sinh</th>
+  </tr>
+    @for (user of users; track user.id) {
+      <tr>
+        <td>{{ user.fullName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role | role }}</td>
+        <td>{{ user.gender | gender }}</td>
+        <td>{{ user.dateOfBirth | dateOnly }}</td>
+      </tr>
+    }
+  </thead>
+</table>
