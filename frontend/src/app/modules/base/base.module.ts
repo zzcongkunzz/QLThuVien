@@ -11,6 +11,11 @@ const routes: Routes = [
       import('./books/books.module').then((m) => m.BooksModule),
   },
   {
+    path: 'users',
+    loadChildren: () =>
+      import('./users/users.module').then((m) => m.UsersModule),
+  },
+  {
     path: '',
     pathMatch: 'full',
     component: HomePageComponent,

@@ -11,7 +11,7 @@
         <a class="nav-item nav-link" routerLink="/books/search">Tìm kiếm</a>
         <a class="nav-item nav-link" routerLink="/books/detail/123">Chi tiết sách(cho member)</a>
         <a class="nav-item nav-link" routerLink="/" *ngIf="(user.role == 'member')">Kệ sách của tôi</a>
-        <a class="nav-item nav-link" routerLink="/" *ngIf="user.role == 'admin'">Quản lý người dùng</a>
+        <a class="nav-item nav-link" routerLink="/users/manage">Quản lý người dùng</a>
       </div>
     </div>
   </nav>
