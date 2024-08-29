@@ -42,6 +42,14 @@ body, html {
     }
   }
 
+  input[type="text"], input[type="email"], input[type="password"], input[type="date"], textarea {
+    @extend .form-control;
+  }
+
+  select {
+    @extend .form-select;
+  }
+
   .vflex {
     display: flex;
     flex-direction: column;

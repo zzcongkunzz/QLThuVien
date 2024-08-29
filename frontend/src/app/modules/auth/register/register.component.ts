@@ -22,7 +22,7 @@ export class RegisterComponent {
       , password: ""
       , gender: ""
       , dateOfBirth: new Date()
-      , fullname: ""
+      , fullName: ""
       , role: "member"
     };
   repeatPassword: string = "";

@@ -10,7 +10,7 @@ namespace QLThuVien.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+//[Authorize]
 public class CategoriesController
     (ICategoryService categoryService)
     : ControllerBase

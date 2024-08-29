@@ -3,6 +3,6 @@ export class UserCreate {
   password: string = "";
   gender: string = "";
   dateOfBirth: Date = new Date();
-  fullname: string = "";
+  fullName: string = "";
   role: "member" | "admin" = "member";
 }
