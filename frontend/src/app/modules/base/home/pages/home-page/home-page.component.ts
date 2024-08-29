@@ -21,7 +21,8 @@ export class HomePageComponent implements OnInit{
 
   ngOnInit(): void {
     this._localStorage = document.defaultView?.localStorage;
-    const loginResult: any = this._localStorage?.getItem('loginResult');
+    const loginResultString = this._localStorage?.getItem('loginResult');
+    const loginResult = loginResultString ? JSON.parse(loginResultString) : null;
     if (loginResult == null) {
       this.router.navigate(['auth/login']);
     }
