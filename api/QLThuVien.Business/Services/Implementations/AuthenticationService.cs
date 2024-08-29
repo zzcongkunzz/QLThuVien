@@ -19,13 +19,15 @@ public class AuthenticationService : IAuthenticationService
     private readonly RoleManager<Role> _roleManager;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IConfiguration _configuration;
+    private readonly IUserService _userService;
 
-    public AuthenticationService(UserManager<User> userManager, RoleManager<Role> roleManager, IUnitOfWork unitOfWork, IConfiguration configuration)
+    public AuthenticationService(UserManager<User> userManager, RoleManager<Role> roleManager, IUnitOfWork unitOfWork, IConfiguration configuration, IUserService userService)
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _unitOfWork = unitOfWork;
         _configuration = configuration;
+        _userService = userService;
     }
 
     public async Task<AuthResultVM> Login(LoginVM payload)
@@ -79,7 +81,8 @@ public class AuthenticationService : IAuthenticationService
         {
             Token = jwtToken,
             RefreshToken = refreshToken.Token,
-            ExpiresAt = token.ValidTo
+            ExpiresAt = token.ValidTo,
+            UserInformation = await _userService.GetByIdAsyncVm(user.Id)
         };
         return response;
     }

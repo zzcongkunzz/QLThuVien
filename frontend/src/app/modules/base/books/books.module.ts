@@ -4,6 +4,8 @@ import {RouterModule, Routes} from "@angular/router";
 import {SearchPageComponent} from "./pages/search-page/search-page.component";
 import {BookItemComponent} from "./pages/book-item/book-item.component";
 import { AddBookPageComponent } from './pages/add-book-page/add-book-page.component';
+import { CategoryService } from '../../../services/category/category.service';
+import { EditBookPageComponent } from './pages/edit-book-page/edit-book-page.component';
 
 const routes: Routes = [
   {
@@ -15,6 +17,10 @@ const routes: Routes = [
     component: AddBookPageComponent,
   },
   {
+    path: "edit/:id"
+  , component: EditBookPageComponent,
+  },
+  {
     path: "detail/:id",
     component: BookItemComponent,
   },
@@ -22,6 +28,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [],
+  providers: [ CategoryService ],
   imports: [CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule],
 })

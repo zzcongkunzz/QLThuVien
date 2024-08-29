@@ -11,7 +11,7 @@ import {AuthResult} from "../../view-models/auth-result";
   providedIn: 'root'
 })
 export class AuthService {
-  public _response: any;
+  public _response: AuthResult | undefined;
   public apiUrl = 'http://localhost:5228/api/authentication/login';
   // public apiUrl = '/api/authentication/login';
 
@@ -56,7 +56,7 @@ export class AuthService {
         console.log(response);
         this._response = response;
         this._localStorage?.setItem('loginResult', JSON.stringify(response));
-        this._user = JSON.parse(this._response?.userInformation);
+        this._user = response?.userInformation;
         this._localStorage?.setItem(
           'userInformation',
           JSON.stringify(this._user)
@@ -72,7 +72,7 @@ export class AuthService {
     return (
       this._response != null &&
       this._response.token != null &&
-      this._response.expires != null
+      this._response.expiresAt != null
     );
   }
 
@@ -85,7 +85,7 @@ export class AuthService {
   }
 
   public logout(): boolean {
-    this._response = null;
+    this._response = undefined;
     this._localStorage?.removeItem('loginResult');
     this._localStorage?.removeItem('returnUrl');
     this._localStorage?.removeItem('userInformation');
@@ -99,13 +99,18 @@ export class AuthService {
     return user ? user : null;
   }
 
-  public isManager(): boolean {
+  public isAdmin(): boolean {
     const userJSON = this._localStorage?.getItem('userInformation');
     const user: any = userJSON ? JSON.parse(userJSON) : null;
-    var result =
-      user?.roles.includes('admin');
 
-    return result ? true : false;
+    return !!user?.roles.includes('admin');
+  }
+
+  public isMember(): boolean {
+    const userJSON = this._localStorage?.getItem('userInformation');
+    const user: any = userJSON ? JSON.parse(userJSON) : null;
+
+    return !!user?.roles.includes('member');
   }
 
 

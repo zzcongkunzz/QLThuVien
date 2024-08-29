@@ -39,7 +39,7 @@ export class LoginComponent {
           this.isShowDialog = true;
         } else {
           this.router.navigate(['/']);
-          // window.location.href = '/';
+          alert(this.authService.getAccessToken());
         }
       }
     });

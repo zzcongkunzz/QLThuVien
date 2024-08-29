@@ -8,21 +8,21 @@ import { AuthModule } from '../../../auth/auth.module';
 @Component({
   selector: 'app-base-layout',
   standalone: true,
-  // providers: [{ provide: 'AUTH_SERVICE_INJECTOR', useClass: AuthService }],
   imports: [HeaderComponent, RouterOutlet, RouterModule, CommonModule, AuthModule],
   templateUrl: './base-layout.component.html',
   styleUrl: './base-layout.component.scss',
 })
 export class BaseLayoutComponent {
+  // NOTE: Current AuthService have no way of telling if the user is admin or member
   constructor(@Inject('AUTH_SERVICE_INJECTOR') private authService: AuthService) {
   }
 
   isMember(): boolean {
-    alert(this.authService.isAuthenticated());
-    return this.authService.getCurrentUser()?.role == 'admin';
+    return true;
   }
 
   isAdmin(): boolean {
-    return false;
+    return true;
   }
+
 }

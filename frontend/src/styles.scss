@@ -2,6 +2,14 @@
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 //@import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
 
+:root {
+  --grad: linear-gradient(280deg, #FA7C54 -8.64%, #EC2C5A 121.84%);;
+}
+
+.bg-grad {
+  background: var(--grad);
+}
+
 body, html {
   height: 100%;
 }
