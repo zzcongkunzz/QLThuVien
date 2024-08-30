@@ -1,9 +1,14 @@
-<nav class="navbar navbar-light bg-light">
+<nav class="navbar navbar-light bg-light sticky-top">
   <div class="d-flex justify-content-between w-100">
-    <span>Ngày {{ date | dateTime }}</span>
+    <i>Ngày {{ date | dateTime }}</i>
     <h4><i>Xin chào, {{ user?.fullName }}</i></h4>
-    <button type="button" class="btn btn-danger" (click)="dangXuat()">
-      Đăng xuất
-    </button>
+    <div>
+      <a type="button" class="btn btn-success me-2" href="/users/profile">
+        Hồ sơ cá nhân
+      </a>
+      <button type="button" class="btn btn-outline-danger" (click)="dangXuat()">
+        Đăng xuất
+      </button>
+    </div>
   </div>
 </nav>

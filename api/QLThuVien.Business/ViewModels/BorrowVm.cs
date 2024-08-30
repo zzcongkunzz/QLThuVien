@@ -1,9 +1,4 @@
-﻿using QLThuVien.Business.Models;
-using QLThuVien.Data.Models;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
-
-namespace QLThuVien.Business.ViewModels;
+﻿namespace QLThuVien.Business.ViewModels;
 
 public class BorrowVm
 {

@@ -18,13 +18,13 @@ export class UserService {
   addUser(userCreate: UserCreate) {
     let request = this.http.post("/api/users/add-user", userCreate);
     request.subscribe({
-      complete: () => {
-        this.getAllUsers().subscribe(users => {
-          this.changed.emit(users);
-        })
+      next: () => {
+        this.triggerChange();
       },
       error: (err: Error) => {
         alert(JSON.stringify(err));
+      }, complete: () => {
+        this.triggerChange();
       }
     });
     return request;
@@ -42,12 +42,13 @@ export class UserService {
     let request = this.http.put("/api/users/update-user/" + id, userEdit);
     request.subscribe({
       error: (err: Error) => {
-        alert(JSON.stringify(err));
+        console.log(JSON.stringify(err));
+      },
+      next: () => {
+        this.triggerChange();
       },
       complete: () => {
-        this.getAllUsers().subscribe(users => {
-          this.changed.emit(users);
-        })
+        this.triggerChange();
       }
     });
     return request;
@@ -67,9 +68,21 @@ export class UserService {
     let request = this.http.delete("/api/users/delete-user/" + id);
     request.subscribe({
       error: (err: Error) => {
-        alert(JSON.stringify(err));
+        console.log(JSON.stringify(err));
       },
+      next: () => {
+        this.triggerChange();
+      },
+      complete: () => {
+        this.triggerChange();
+      }
     });
     return request;
+  }
+
+  triggerChange() {
+    this.getAllUsers().subscribe(users => {
+      this.changed.emit(users);
+    })
   }
 }

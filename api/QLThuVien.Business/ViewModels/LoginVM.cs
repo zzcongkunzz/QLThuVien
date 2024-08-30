@@ -2,7 +2,7 @@
 
 namespace QLThuVien.Business.ViewModels;
 
-public class LoginVM
+public class LoginVm
 {
     [Required(ErrorMessage = "Email is required")]
     public string Email { get; set; }

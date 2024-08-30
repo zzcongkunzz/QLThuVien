@@ -1,10 +1,7 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using QLThuVien.Business.Services.Implementations;
+using QLThuVien.Business.Models;
 using QLThuVien.Business.Services.Interfaces;
 using QLThuVien.Business.ViewModels;
-using QLThuVien.Data.Models;
 
 namespace QLThuVien.WebApi.Controllers;
 
@@ -59,21 +56,48 @@ public class UsersController
     public async Task<ActionResult> UpdateUser(Guid id, UserEditVm userVm)
     {
         await userService.UpdateAsync(id, userVm);
-        return Ok();
+        return NoContent();
     }
 
     [HttpPut("change-password/{id}")]
     public async Task<ActionResult> ChangePassword(Guid id, ChangePasswordVm changePasswordVm)
     {
         await userService.ChangePasswordAsync(id, changePasswordVm.CurrentPassword, changePasswordVm.NewPassword);
-        return Ok();
+        return NoContent();
     }
 
     [HttpDelete("delete-user/{id}")]
     public async Task<ActionResult> DeleteUser(Guid id)
     {
         await userService.DeleteAsync(id);
-        return Ok();
+        return NoContent();
     }
 
+    [HttpPost("add-favorite-category")]
+    public async Task<ActionResult> AddFavoriteCategory(
+        [FromQuery] Guid userId,
+        [FromQuery] Guid categoryId
+        )
+    {
+        await userService.AddFavoriteCategoryAsync(userId, categoryId);
+        return NoContent();
+    }
+
+    [HttpDelete("delete-favorite-category")]
+    public async Task<ActionResult> DeleteFavoriteCategory(
+        [FromQuery] Guid userId,
+        [FromQuery] Guid categoryId
+        )
+    {
+        await userService.DeleteFavoriteCategoryAsync(userId, categoryId);
+        return NoContent();
+    }
+
+    [HttpGet("get-favorite-categories/{userId}")]
+    public async Task<ActionResult<Category>> GetFavoriteCategories(Guid userId)
+    {
+        return Ok(await userService.GetFavoriteCategoriesAsync(userId));
+    }
 }
+
+

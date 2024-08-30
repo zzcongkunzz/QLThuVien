@@ -5,7 +5,6 @@ using QLThuVien.Business.Models;
 using QLThuVien.Business.Services.Interfaces;
 using QLThuVien.Business.ViewModels;
 using QLThuVien.Data.Infrastructure;
-using QLThuVien.Data.Models;
 using System.Linq.Expressions;
 
 namespace QLThuVien.Business.Services.Implementations;
@@ -90,7 +89,15 @@ public class BookService
         });
     }
 
-    protected BookVm ToBookVm(Book book)
+    public async Task<int> GetRemainingCountAsync(Guid id)
+    {
+        var book = (await GetByIdAsync(id)) ?? throw new NotFoundException("id not found");
+        return book.Count - await unitOfWork.GetRepository<Borrow>()
+            .Get(borrow => borrow.BookId == id 
+                && borrow.ActualReturnTime == null).SumAsync(borrow => borrow.Count);
+    }
+
+    public BookVm ToBookVm(Book book)
     {
         float? avgRating = (
             book.Ratings != null && book.Ratings.Any()
@@ -112,4 +119,24 @@ public class BookService
             AverageRating = avgRating
         };
     }
+    public async Task<float?> GiveRating(RatingVm ratingVm)
+    {
+        unitOfWork.GetRepository<Rating>().Add(new Rating()
+        {
+            UserId = ratingVm.UserId,
+            BookId = ratingVm.BookId,
+            Value = ratingVm.Value
+        });
+        await unitOfWork.SaveChangesAsync();
+
+        var book = await unitOfWork.GetRepository<Book>()
+            .Get(book => book.Id == ratingVm.BookId, null, "Ratings")
+            .FirstOrDefaultAsync()
+            ?? throw new ConflictException("Book has been deleted");
+
+        return book.Ratings != null && book.Ratings.Any()
+            ? book.Ratings.Average(book => book.Value)
+            : null;
+    }
+
 }

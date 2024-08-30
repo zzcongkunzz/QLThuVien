@@ -1,8 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
-using QLThuVien.Business.Models;
-using QLThuVien.Business.Services.Implementations;
+﻿using QLThuVien.Business.Models;
 using QLThuVien.Business.ViewModels;
-using QLThuVien.Data.Infrastructure;
 using System.Linq.Expressions;
 
 namespace QLThuVien.Business.Services.Interfaces;
@@ -20,4 +17,8 @@ public interface IBookService : IDataService<Book>
     Task<BookVm> GetByIdAsyncVm(Guid id);
     Task AddAsync(BookEditVm bookEditVm);
     Task UpdateAsync(Guid id, BookEditVm bookVm);
+    Task<int> GetRemainingCountAsync(Guid id);
+    BookVm ToBookVm(Book book);
+    // trả về avg rating mới của book
+    Task<float?> GiveRating(RatingVm ratingVm);
 }

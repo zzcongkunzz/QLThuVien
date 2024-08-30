@@ -25,13 +25,13 @@ export class DataEditComponent {
     }
     try {
       this.isSaving = true;
-      if (event.submitter?.classList.contains('update-btn')) {
+      if (event.submitter?.classList.contains('delete-btn')) {
         this.delete.emit();
       } else if (event.submitter?.classList.contains('save-btn')) {
         this.update.emit();
         this.isUpdating = false;
         this.isUpdatingChange.emit(false);
-      } else throw new Error('Unexpected submission');
+      } else alert("Unexpected submission");
     } catch (error) {
       alert(error);
     } finally {

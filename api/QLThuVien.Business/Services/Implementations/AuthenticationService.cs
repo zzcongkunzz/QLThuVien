@@ -2,7 +2,6 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using QLThuVien.Business.Models;
@@ -30,7 +29,7 @@ public class AuthenticationService : IAuthenticationService
         _userService = userService;
     }
 
-    public async Task<AuthResultVM> Login(LoginVM payload)
+    public async Task<AuthResultVm> Login(LoginVm payload)
     {
         var user = await _userManager.FindByEmailAsync(payload.Email);
         
@@ -39,14 +38,14 @@ public class AuthenticationService : IAuthenticationService
             var tokenValue = await GenerateJwtToken(user);
             return tokenValue;
         }
-        return new AuthResultVM 
+        return new AuthResultVm 
         {
             Token = null,
             RefreshToken = null
         };
     }
     
-    private async Task<AuthResultVM> GenerateJwtToken(User user)
+    private async Task<AuthResultVm> GenerateJwtToken(User user)
     {
         var authClaims = new List<Claim>()
         {
@@ -77,7 +76,7 @@ public class AuthenticationService : IAuthenticationService
         };
         _unitOfWork.GetRepository<RefreshToken>().Add(refreshToken);
         await _unitOfWork.SaveChangesAsync();
-        var response = new AuthResultVM()
+        var response = new AuthResultVm()
         {
             Token = jwtToken,
             RefreshToken = refreshToken.Token,

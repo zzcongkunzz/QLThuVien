@@ -22,7 +22,7 @@ export class UserAddFormComponent {
     email: ['', [Validators.required, Validators.email]],
     role: ['', Validators.required],
     gender: ['', Validators.required],
-    password: ['', Validators.required],
+    password: ['', [Validators.required, Validators.minLength(6)]],
     dateOfBirth: [new Date(), Validators.required],
   });
 

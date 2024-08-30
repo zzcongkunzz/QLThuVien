@@ -56,11 +56,12 @@ public class BorrowService(IUnitOfWork unitOfWork, ILogger<DataService<Borrow>> 
         await UpdateAsync(borrow);
     }
 
-    public async Task ReturnBorrow(Guid id, DateTime returnTime)
+    public async Task<DateTime> ReturnBorrow(Guid id)
     {
         var borrow = await GetByIdAsync(id) ?? throw new BadRequestException("Id not found");
-        borrow.ActualReturnTime = returnTime;
+        borrow.ActualReturnTime = DateTime.Now;
         await UpdateAsync(borrow);
+        return borrow.ActualReturnTime ?? throw new ConflictException("Actual return time null");
     }
 
     public async Task UndoReturnBorrow(Guid id)

@@ -1,12 +1,12 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, Input, OnInit} from '@angular/core';
 import {DataAddComponent} from "../../../../shared/components/data-add/data-add.component";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {DataEditComponent} from "../../../../shared/components/data-edit/data-edit.component";
 import {UserService} from "../../../../../services/user/user.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../../../../view-models/user";
-import {Location} from "@angular/common";
 import {RolePipe} from "../../../../../pipes/role/role.pipe";
+import {AuthService} from "../../../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-user-edit-form',
@@ -24,7 +24,10 @@ export class UserEditFormComponent implements OnInit {
   private fb = inject(FormBuilder);
   private _userService: UserService = inject(UserService);
   private _activeRoute: ActivatedRoute = inject(ActivatedRoute);
-  private _location: Location = inject(Location);
+  private _router: Router = inject(Router);
+  private _authService: AuthService = inject(AuthService);
+
+  @Input() isProfile = false;
 
   isUpdating: boolean = false;
 
@@ -53,7 +56,10 @@ export class UserEditFormComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    const id = this._activeRoute.snapshot.params['id'];
+    let id: string | undefined;
+    
+    if (this.isProfile) id = this._authService.getCurrentUser()?.id;
+    else id = this._activeRoute.snapshot.params['id'];
 
     if (typeof (id) !== 'string')
       alert('id must be a string');
@@ -72,13 +78,26 @@ export class UserEditFormComponent implements OnInit {
       gender: this.formGroup.value.gender,
       dateOfBirth: this.formGroup.value.dateOfBirth,
     }).subscribe({
-      complete: () => {
+      next: () => {
         if (!this.user) {
           alert("User undefined!");
           return;
         } else alert("Update succesful.")
         this.loadData(this.user.id);
-      }
+      },
+      error: err => {
+        if (!this.user) {
+          alert("User undefined!");
+          return;
+        }
+        this.loadData(this.user.id);
+      }, complete: () => {
+        if (!this.user) {
+          alert("User undefined!");
+          return;
+        } else alert("Update succesful.")
+        this.loadData(this.user.id);
+      },
     });
   }
 
@@ -88,11 +107,14 @@ export class UserEditFormComponent implements OnInit {
       return;
     }
     this._userService.deleteUser(this.user.id).subscribe({
-      complete: () => {
-        alert("User has been deleted");
-        this._location.back();
-      }
-    })
+      error: err => {
+        console.log(JSON.stringify(err));
+      },
+    });
+    if (this.isProfile)
+      this._authService.logout();
+    else
+      this._router.navigate(['users', 'manage']);
   }
 
   loadData(id: string) {

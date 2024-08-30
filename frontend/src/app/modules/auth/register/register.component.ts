@@ -3,6 +3,7 @@ import {UserCreate} from '../../../view-models/user-create';
 import {FormsModule} from '@angular/forms';
 import {NgFor} from '@angular/common';
 import {AuthService} from '../../../services/auth/auth.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ import {AuthService} from '../../../services/auth/auth.service';
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
-  constructor(private userService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   userInfo: UserCreate =
@@ -31,7 +32,8 @@ export class RegisterComponent {
     if (this.userInfo.password != this.repeatPassword) {
       alert("Miss match password");
     } else {
-      this.userService.registerUser(this.userInfo);
+      this.authService.registerUser(this.userInfo);
+      this.router.navigate(["/"]);
     }
   }
 }

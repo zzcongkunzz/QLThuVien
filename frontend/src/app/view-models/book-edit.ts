@@ -1,4 +1,4 @@
-export class Book {
+export class BookEdit {
   title: string = 'Book Title';
   authorName: string = 'Unkown Author';
   publisherName: string = 'Unkown Publisher';

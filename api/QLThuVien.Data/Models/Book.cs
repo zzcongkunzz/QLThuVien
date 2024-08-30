@@ -18,6 +18,7 @@ public class Book
     public required DateOnly PublishDate { get; set; }
     [DefaultValue(0)]
     public required int Count { get; set; }
+    public Guid CategoryId { get; set; }
     public Category Category { get; set; }
     public IEnumerable<User> BorrowingUsers { get; set; }
     public IEnumerable<Rating> Ratings { get; set; }

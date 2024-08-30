@@ -18,10 +18,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.8" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\QLThuVien.Business\QLThuVien.Business.csproj" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
     </ItemGroup>
 
 </Project>

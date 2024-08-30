@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace QLThuVien.Business.ViewModels;
+﻿namespace QLThuVien.Business.ViewModels;
 
 public class UserCreateVm
 {

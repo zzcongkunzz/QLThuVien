@@ -1,14 +1,6 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using QLThuVien.Business.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using QLThuVien.Business.Services.Interfaces;
 using QLThuVien.Business.ViewModels;
-using QLThuVien.Data.Data;
-using QLThuVien.Data.Models;
 
 namespace QLThuVien.WebApi.Controllers;
 
@@ -17,20 +9,45 @@ namespace QLThuVien.WebApi.Controllers;
 public class AuthenticationController : ControllerBase
 {
     private readonly IAuthenticationService _authenticationService;
+    private readonly IUserService _userService;
 
-    public AuthenticationController(IAuthenticationService authenticationService)
+    public AuthenticationController(IAuthenticationService authenticationService, IUserService userService)
     {
         _authenticationService = authenticationService;
+        _userService = userService;
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginVM payload)
+    public async Task<IActionResult> Login([FromBody] LoginVm loginVm)
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest("Please, provide all required fields");
+            return BadRequest("Invalid login");
         }
-        AuthResultVM result = await _authenticationService.Login(payload);
+        AuthResultVm result = await _authenticationService.Login(loginVm);
+        if (result.Token == null)
+        {
+            return Unauthorized();
+        }
+        return Ok(result);
+    }
+
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] UserCreateVm userCreateVm)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest("Invalid register");
+        }
+
+        userCreateVm.Role = "member";
+        await _userService.CreateAsync(userCreateVm);
+
+        AuthResultVm result = await _authenticationService.Login(new LoginVm()
+        {
+            Email = userCreateVm.Email,
+            Password = userCreateVm.Password
+        });
         if (result.Token == null)
         {
             return Unauthorized();

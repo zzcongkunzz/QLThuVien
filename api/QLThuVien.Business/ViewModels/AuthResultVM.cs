@@ -1,8 +1,6 @@
-﻿using QLThuVien.Data.Models;
+﻿namespace QLThuVien.Business.ViewModels;
 
-namespace QLThuVien.Business.ViewModels;
-
-public class AuthResultVM
+public class AuthResultVm
 {
     public string? Token { get; set; }
     public string? RefreshToken { get; set; }

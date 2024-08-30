@@ -1,6 +1,7 @@
 <app-data-edit [formGroup]="formGroup"
                (update)="onUpdate()" (delete)="onDelete()"
-               [isUpdating]="isUpdating" (isUpdatingChange)="onIsUpdatingChange($event)">
+               [isUpdating]="isUpdating"
+               (isUpdatingChange)="onIsUpdatingChange($event)">
   <h3>Hồ sơ người dùng</h3>
   <div>
     <label for="full-name-add" class="form-label">Họ và tên:</label>

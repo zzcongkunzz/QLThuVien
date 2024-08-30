@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using QLThuVien.Business.Exceptions;
-using QLThuVien.Business.Models;
-using QLThuVien.Business.Services.Implementations;
 using QLThuVien.Business.Services.Interfaces;
 using QLThuVien.Business.ViewModels;
 
@@ -89,5 +86,17 @@ public class BorrowsController : ControllerBase
     {
         await _borrowService.DeleteAsync(id);
         return NoContent();
+    }
+
+    [HttpPut("return-borrow/{id:guid}")]
+    public async Task<ActionResult> ReturnBorrow(Guid id)
+    {
+        return Ok(await _borrowService.ReturnBorrow(id));
+    }
+
+    [HttpPut("undo-return-borrow/{id:guid}")]
+    public async Task<ActionResult> UndoReturnBorrow(Guid id)
+    {
+        return Ok(await _borrowService.ReturnBorrow(id));
     }
 }

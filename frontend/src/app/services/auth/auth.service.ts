@@ -12,7 +12,6 @@ import {AuthResult} from "../../view-models/auth-result";
 })
 export class AuthService {
   public _response: AuthResult | undefined;
-  public apiUrl = 'http://localhost:5228/api/authentication/login';
   // public apiUrl = '/api/authentication/login';
 
   private _localStorage: Storage | undefined;
@@ -35,9 +34,15 @@ export class AuthService {
   }
 
   public registerUser(userInfo: UserCreate) {
-    this.httpClient.post("/api/auth/register", userInfo).subscribe({
-      next: respond => {
-        this.router.navigate(["/"]);
+    this.httpClient.post<AuthResult | undefined>("/api/authentication/register", userInfo).subscribe({
+      next: response => {
+        this._response = response;
+        this._localStorage?.setItem('loginResult', JSON.stringify(response));
+        this._user = response?.userInformation;
+        this._localStorage?.setItem(
+          'userInformation',
+          JSON.stringify(this._user)
+        );
       },
       error: error => alert(JSON.stringify(error.error))
     });
@@ -50,7 +55,7 @@ export class AuthService {
   ): Promise<AuthResult | undefined> {
     this._localStorage?.setItem('returnUrl', returnUrl);
     return this.httpClient
-      .post<AuthResult>(this.apiUrl, model)
+      .post<AuthResult>("/api/authentication/login", model)
       .toPromise()
       .then((response) => {
         console.log(response);
@@ -90,6 +95,7 @@ export class AuthService {
     this._localStorage?.removeItem('returnUrl');
     this._localStorage?.removeItem('userInformation');
     this._user = undefined;
+    this.router.navigate(['auth', 'login']);
     return true;
   }
 

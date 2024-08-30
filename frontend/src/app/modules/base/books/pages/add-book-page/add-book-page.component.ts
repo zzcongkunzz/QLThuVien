@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Book } from '../../../../../view-models/book-edit';
+import { BookEdit } from '../../../../../view-models/book-edit';
 import { CategoryService } from '../../../../../services/category/category.service';
 import { NgFor } from '@angular/common';
 import { BookService } from '../../../../../services/book/book.service';
@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './add-book-page.component.scss'
 })
 export class AddBookPageComponent {
-  bookInfo: Book = {
+  bookInfo: BookEdit = {
     title: ""
   , description: ""
   , authorName: ""

@@ -5,14 +5,13 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using QLThuVien.Business.Models;
 using QLThuVien.Business.Services.Implementations;
 using QLThuVien.Business.Services.Interfaces;
 using QLThuVien.Data.Data;
 using QLThuVien.Data.Infrastructure;
 using QLThuVien.Data.Models;
-using QLThuVien.Data.Repositories;
 using QLThuVien.WebApi.Conventions;
+using System.Runtime.InteropServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +24,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
-    option.UseSqlServer(builder.Configuration.GetConnectionString("WindowsConnection"));
+    if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
+        option.UseSqlServer(builder.Configuration.GetConnectionString("LinuxConnection"));
+    } else {
+        option.UseSqlServer(builder.Configuration.GetConnectionString("WindowsConnection"));
+    }
 });
 
 builder.Services.AddIdentity<User, Role>()
@@ -110,6 +113,7 @@ builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IBorrowService, BorrowService>();
+builder.Services.AddScoped<IRecommenderService, RecommenderService>();
 #endregion
 
 var app = builder.Build();
