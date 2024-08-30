@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QLThuVien.Business.Models;
 using QLThuVien.Business.Services.Interfaces;
@@ -7,7 +8,7 @@ namespace QLThuVien.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[Authorize]
+[Authorize]
 public class UsersController 
     (IUserService userService)
     : ControllerBase
