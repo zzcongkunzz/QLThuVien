@@ -104,7 +104,7 @@ body {
 }
 
 .book-options .available::before {
-  background: #28a745; /* Xanh lá cây */
+  background: #28a745;
 }
 
 .book-options li {
@@ -113,8 +113,8 @@ body {
 
 .book-actions {
   display: flex;
-  justify-content: center; /* Căn giữa các nút theo chiều ngang */
-  gap: 10px; /* Khoảng cách giữa các nút */
+  justify-content: center;
+  gap: 10px;
   margin-top: 20px;
 }
 
@@ -125,7 +125,7 @@ body {
   border-radius: 5px;
   padding: 10px 20px;
   font-size: 1rem;
-  width: 45%; /* Đặt chiều rộng của các nút sao cho chúng chiếm gần 1/2 chiều rộng của phần chứa */
+  width: 45%;
   cursor: pointer;
 }
 
@@ -140,8 +140,8 @@ body {
 .book-right {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Căn giữa theo chiều dọc */
-  align-items: center; /* Căn giữa theo chiều ngang */
+  justify-content: center;
+  align-items: center;
 }
 
 .author-section {
@@ -149,7 +149,7 @@ body {
   border-radius: 10px;
   padding: 20px;
   background-color: #f9f9f9;
-  width: 100%; /* Chiếm toàn bộ chiều rộng của phần chứa */
-  max-width: 500px; /* Đặt chiều rộng tối đa */
+  width: 100%;
+  max-width: 500px;
   box-sizing: border-box;
 }

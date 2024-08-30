@@ -27,7 +27,7 @@ header {
   padding: 20px;
   margin-bottom: 30px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 15px; /* Bo góc mềm mại hơn */
+  border-radius: 15px;
   position: relative;
 }
 
@@ -43,8 +43,8 @@ header {
   text-align: right;
   color: #777;
   position: absolute;
-  bottom: 10px; /* Đưa tác giả xuống dưới */
-  right: 10px; /* Căn phải */
+  bottom: 10px;
+  right: 10px;
   margin: 0;
 }
 
