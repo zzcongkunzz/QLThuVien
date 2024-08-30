@@ -85,8 +85,8 @@ export class AuthService {
     return this.isLoggedIn();
   }
 
-  public getAccessToken(): string {
-    return this._response ? this._response.token : '';
+  public getAccessToken() {
+    return this._response?.token;
   }
 
   public logout(): boolean {
