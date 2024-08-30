@@ -28,7 +28,7 @@ public class RecommenderService
 
         return (await unitOfWork.GetRepository<Book>()
             .Get(book => favCategoryIds.Contains(book.CategoryId), null, "Category,Ratings")
-            .OrderBy(book => book.Ratings.Sum(rating => rating.Value))
+            .OrderByDescending(book => book.Ratings.Sum(rating => rating.Value))
             .Take(5)
             .ToListAsync())
             .Select(bookService.ToBookVm);
@@ -38,7 +38,7 @@ public class RecommenderService
     {
         return (await unitOfWork.GetRepository<Book>()
             .Get(null, null, "Category,Ratings")
-            .OrderBy(book => book.Ratings.Sum(rating => rating.Value))
+            .OrderByDescending(book => book.Ratings.Sum(rating => rating.Value))
             .Take(5)
             .ToListAsync())
             .Select(bookService.ToBookVm);

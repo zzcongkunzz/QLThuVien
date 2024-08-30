@@ -89,6 +89,14 @@ public class BookService
         });
     }
 
+    public async Task<int> GetRemainingCountAsync(Guid id)
+    {
+        var book = (await GetByIdAsync(id)) ?? throw new NotFoundException("id not found");
+        return book.Count - await unitOfWork.GetRepository<Borrow>()
+            .Get(borrow => borrow.BookId == id 
+                && borrow.ActualReturnTime == null).SumAsync(borrow => borrow.Count);
+    }
+
     public BookVm ToBookVm(Book book)
     {
         float? avgRating = (
@@ -111,7 +119,6 @@ public class BookService
             AverageRating = avgRating
         };
     }
-
     public async Task<float?> GiveRating(RatingVm ratingVm)
     {
         unitOfWork.GetRepository<Rating>().Add(new Rating()
@@ -131,4 +138,5 @@ public class BookService
             ? book.Ratings.Average(book => book.Value)
             : null;
     }
+
 }

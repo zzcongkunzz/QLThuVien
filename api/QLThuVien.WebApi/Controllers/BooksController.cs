@@ -72,4 +72,10 @@ public class BooksController
     {
         return Ok(await bookService.GiveRating(ratingVm));
     }
+
+    [HttpGet("get-remaining-count/{id}")]
+    public async Task<ActionResult<int>> GetRemainingCount(Guid id)
+    {
+        return Ok(await bookService.GetRemainingCountAsync(id));
+    }
 }

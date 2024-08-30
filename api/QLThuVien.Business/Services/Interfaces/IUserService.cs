@@ -1,4 +1,5 @@
-﻿using QLThuVien.Business.ViewModels;
+﻿using QLThuVien.Business.Models;
+using QLThuVien.Business.ViewModels;
 using QLThuVien.Data.Models;
 using System.Linq.Expressions;
 
@@ -19,4 +20,7 @@ public interface IUserService : IDataService<User>
         Expression<Func<User, bool>>? filter = null,
         Func<IQueryable<User>, IOrderedQueryable<User>>? orderBy = null
         );
+    Task AddFavoriteCategoryAsync(Guid userId, Guid categoryId);
+    Task DeleteFavoriteCategoryAsync(Guid userId, Guid categoryId);
+    Task<IEnumerable<Category>> GetFavoriteCategoriesAsync(Guid userId);
 }

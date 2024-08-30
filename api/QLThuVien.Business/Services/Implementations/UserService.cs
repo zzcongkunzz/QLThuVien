@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using QLThuVien.Business.Exceptions;
+using QLThuVien.Business.Models;
 using QLThuVien.Business.Services.Interfaces;
 using QLThuVien.Business.ViewModels;
 using QLThuVien.Data.Infrastructure;
@@ -152,7 +153,30 @@ public class UserService
             , pageIndex, pageSize);
     }
 
-    protected UserVm ToUserVm(User user)
+    public async Task AddFavoriteCategoryAsync(Guid userId, Guid categoryId)
+    {
+        unitOfWork.GetRepository<FavoriteCategory>().Add(new FavoriteCategory()
+        {
+            UserId = userId,
+            CategoryId = categoryId
+        });
+        await unitOfWork.SaveChangesAsync();
+    }
+
+    public async Task DeleteFavoriteCategoryAsync(Guid userId, Guid categoryId)
+    {
+        unitOfWork.GetRepository<FavoriteCategory>().Delete(userId, categoryId);
+        await unitOfWork.SaveChangesAsync();
+    }
+
+    public async Task<IEnumerable<Category>> GetFavoriteCategoriesAsync(Guid userId)
+    {
+        return await unitOfWork.GetRepository<FavoriteCategory>()
+            .Get(fc => fc.UserId == userId, null, "Category")
+            .Select(fc => fc.Category).ToListAsync();
+    }
+
+    public UserVm ToUserVm(User user)
     {
         return new UserVm()
         {

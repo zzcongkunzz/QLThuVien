@@ -87,4 +87,16 @@ public class BorrowsController : ControllerBase
         await _borrowService.DeleteAsync(id);
         return NoContent();
     }
+
+    [HttpPut("return-borrow/{id:guid}")]
+    public async Task<ActionResult> ReturnBorrow(Guid id)
+    {
+        return Ok(await _borrowService.ReturnBorrow(id));
+    }
+
+    [HttpPut("undo-return-borrow/{id:guid}")]
+    public async Task<ActionResult> UndoReturnBorrow(Guid id)
+    {
+        return Ok(await _borrowService.ReturnBorrow(id));
+    }
 }

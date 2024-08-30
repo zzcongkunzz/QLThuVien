@@ -17,4 +17,6 @@ public interface IBorrowService : IDataService<Borrow>
     Task<BorrowVm> GetByIdAsyncVm(Guid id);
     Task AddAsync(BorrowEditVm borrowEditVm);
     Task UpdateAsync(Guid id, BorrowEditVm borrowEditVm);
+    Task<DateTime> ReturnBorrow(Guid id);
+    Task UndoReturnBorrow(Guid id);
 }

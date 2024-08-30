@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using QLThuVien.Business.Models;
 using System.ComponentModel.DataAnnotations;
 namespace QLThuVien.Data.Models;
 
+[Index(nameof(Email), IsUnique = true)]
 public class User : IdentityUser<Guid>
 {
     [Required]
