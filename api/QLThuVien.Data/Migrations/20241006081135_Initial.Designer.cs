@@ -12,8 +12,8 @@ using QLThuVien.Data.Data;
 namespace QLThuVien.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240830002602_UpdateIndex")]
-    partial class UpdateIndex
+    [Migration("20241006081135_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -147,6 +147,9 @@ namespace QLThuVien.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateOnly>("PublishDate")
                         .HasColumnType("date");
 
@@ -248,8 +251,8 @@ namespace QLThuVien.Data.Migrations
                     b.Property<Guid>("BookId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<float>("Value")
-                        .HasColumnType("real");
+                    b.Property<double>("Value")
+                        .HasColumnType("float");
 
                     b.HasKey("UserId", "BookId");
 
@@ -468,13 +471,13 @@ namespace QLThuVien.Data.Migrations
             modelBuilder.Entity("QLThuVien.Business.Models.Borrow", b =>
                 {
                     b.HasOne("QLThuVien.Business.Models.Book", "Book")
-                        .WithMany()
+                        .WithMany("Borrows")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("QLThuVien.Data.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Borrows")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -535,11 +538,15 @@ namespace QLThuVien.Data.Migrations
 
             modelBuilder.Entity("QLThuVien.Business.Models.Book", b =>
                 {
+                    b.Navigation("Borrows");
+
                     b.Navigation("Ratings");
                 });
 
             modelBuilder.Entity("QLThuVien.Data.Models.User", b =>
                 {
+                    b.Navigation("Borrows");
+
                     b.Navigation("Ratings");
                 });
 #pragma warning restore 612, 618

@@ -7,6 +7,6 @@ export class Book {
   categoryName: string = 'Uncategorized';
   imageUrl: string = '/images/book.png';
   publishDate: Date = new Date();
-  averageRatings: number = 3;
+  averageRating: number = 3;
   count: number = 0;
 }

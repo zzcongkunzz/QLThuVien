@@ -12,6 +12,8 @@ using QLThuVien.Data.Infrastructure;
 using QLThuVien.Data.Models;
 using QLThuVien.WebApi.Conventions;
 using System.Runtime.InteropServices;
+using QLThuVien.Business.MLModules;
+using QLThuVien.Business.ML;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -114,6 +116,9 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IBorrowService, BorrowService>();
 builder.Services.AddScoped<IRecommenderService, RecommenderService>();
+builder.Services.AddScoped<FeatureExtractor>();
+builder.Services.AddScoped<BookRatingDataset>();
+builder.Services.AddSingleton<ModelManager>();
 #endregion
 
 var app = builder.Build();

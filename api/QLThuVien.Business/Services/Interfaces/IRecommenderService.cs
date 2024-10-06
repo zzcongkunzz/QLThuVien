@@ -9,6 +9,8 @@ namespace QLThuVien.Business.Services.Interfaces;
 
 public interface IRecommenderService
 {
-    Task<IEnumerable<BookVm>> GetRecommendedBooks(Guid userId);
-    Task<IEnumerable<BookVm>> GetHighestRatedBooks();
+    Task<IEnumerable<BookVm>>  GetRecommendedBooksFromCandidates(Guid userId, int count);
+    Task<IEnumerable<BookVm>> GetSimilarBookVms(Guid bookId, int count);
+    Task<IEnumerable<BookVm>> GetRecommendedBooksBaselineVm(Guid userId, int count);
+    Task<IEnumerable<BookVm>> GetHighestRatedBooksVm(int count);
 }

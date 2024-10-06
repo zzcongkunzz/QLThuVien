@@ -99,9 +99,9 @@ public class BookService
 
     public BookVm ToBookVm(Book book)
     {
-        float? avgRating = (
+        double? avgRating = (
             book.Ratings != null && book.Ratings.Any()
-            ? book.Ratings.Average(book => book.Value)
+            ? book.Ratings.Average(rating => rating.Value)
             : null
             );
 
@@ -115,18 +115,30 @@ public class BookService
             PublishDate = book.PublishDate,
             AuthorName = book.AuthorName,
             Count = book.Count,
-            ImageUrl = "/images/book.png",
+            ImageUrl = book.ImageUrl ?? "/images/book.png",
             AverageRating = avgRating
         };
     }
-    public async Task<float?> GiveRating(RatingVm ratingVm)
+    public async Task<double?> GiveRating(RatingVm ratingVm)
     {
-        unitOfWork.GetRepository<Rating>().Add(new Rating()
+        var repo = unitOfWork.GetRepository<Rating>();
+        var old = await repo.GetByIdAsync(ratingVm.UserId, ratingVm.BookId);
+
+        if (old != null)
         {
-            UserId = ratingVm.UserId,
-            BookId = ratingVm.BookId,
-            Value = ratingVm.Value
-        });
+            old.Value = ratingVm.Value;
+            repo.Update(old);
+        }
+        else
+        {
+            repo.Add(new Rating()
+            {
+                UserId = ratingVm.UserId,
+                BookId = ratingVm.BookId,
+                Value = ratingVm.Value
+            });
+        }
+
         await unitOfWork.SaveChangesAsync();
 
         var book = await unitOfWork.GetRepository<Book>()
@@ -138,5 +150,4 @@ public class BookService
             ? book.Ratings.Average(book => book.Value)
             : null;
     }
-
 }

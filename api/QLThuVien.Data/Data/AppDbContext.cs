@@ -16,9 +16,11 @@ public class AppDbContext : IdentityDbContext<User, Role, Guid>
     public DbSet<FavoriteCategory> FavoriteCategories { get; set; }
     public DbSet<Borrow> Borrows { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
-    
+    //public DbSet<RawMLModel> MLModels { get; set; }
+    //public DbSet<RawFeatureExtractor> RawFeatureExtractors { get; set; }
+    //public DbSet<CategoryIndex> CategoryIndices { get; set; }
     #endregion
-    
+
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
@@ -40,9 +42,11 @@ public class AppDbContext : IdentityDbContext<User, Role, Guid>
             .UsingEntity<IdentityUserRole<Guid>>();
 
         modelBuilder.Entity<User>()
-            .HasMany(u => u.BorrowingBooks)
-            .WithMany(b => b.BorrowingUsers)
-            .UsingEntity<Borrow>();
+            .HasMany(u => u.Borrows)
+            .WithOne(b => b.User);
+        modelBuilder.Entity<Book>()
+            .HasMany(b => b.Borrows)
+            .WithOne(b => b.Book);
 
         modelBuilder.Entity<User>()
             .HasMany(u => u.FavoriteCategories)
@@ -55,6 +59,13 @@ public class AppDbContext : IdentityDbContext<User, Role, Guid>
         modelBuilder.Entity<Book>()
             .HasMany(b => b.Ratings)
             .WithOne(r => r.Book);
+
+        //modelBuilder.Entity<RawMLModel>()
+        //    .HasOne(m => m.RawFeatureExtractor)
+        //    .WithOne(e => e.RawMLModel);
+        //modelBuilder.Entity<RawFeatureExtractor>()
+        //    .HasMany(e => e.CategoryIndices)
+            //.WithOne();
         #endregion
     }
     

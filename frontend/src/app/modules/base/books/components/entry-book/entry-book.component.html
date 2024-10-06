@@ -6,7 +6,7 @@
       <div id="book-author">{{ book.authorName }}, {{ book.publishDate.getFullYear() }}</div>
     </div>
   </td>
-  <td style="font-size:24px;color:grey">{{ book.averageRatings }}/5</td>
+  <td style="font-size:24px;color:grey">{{ book.averageRating }}/5</td>
   <td style="font-size:24px;color:black">{{ book.categoryName }}</td>
   <td *ngIf="true">
     <a [routerLink]="getEditLink()" *ngIf="authService.isAdmin()">edit</a>

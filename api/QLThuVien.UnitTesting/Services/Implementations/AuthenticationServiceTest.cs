@@ -44,7 +44,7 @@ public class AuthenticationServiceTest
     public async Task Login_ShouldReturnAuthResult_WhenUserExistsAndPasswordIsCorrect()
     {
         // Arrange
-        var payload = new LoginVM
+        var payload = new LoginVm
         {
             Email = "admin@gmail.com",
             Password = "Admin_123"
@@ -95,7 +95,7 @@ public class AuthenticationServiceTest
     public async Task Login_ShouldReturnNullToken_WhenUserDoesNotExistOrPasswordIsIncorrect()
     {
         // Arrange
-        var payload = new LoginVM
+        var payload = new LoginVm
         {
             Email = "nonexistent@example.com",
             Password = "InvalidPassword"

@@ -12,6 +12,7 @@ public class Book
     [Required]
     public required string Title { get; set; }
     public string? Description { get; set; }
+    public string? ImageUrl { get; set; }
     [Required]
     public required string PublisherName { get; set; }
     [Required]
@@ -20,6 +21,6 @@ public class Book
     public required int Count { get; set; }
     public Guid CategoryId { get; set; }
     public Category Category { get; set; }
-    public IEnumerable<User> BorrowingUsers { get; set; }
+    public IEnumerable<Borrow> Borrows { get; set; }
     public IEnumerable<Rating> Ratings { get; set; }
 }

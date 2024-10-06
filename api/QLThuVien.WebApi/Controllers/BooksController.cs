@@ -69,7 +69,7 @@ public class BooksController
 
     [HttpPut("give-rating")]
     [EndpointDescription("Return new avg rating of same book")]
-    public async Task<ActionResult<float?>> GiveRating(RatingVm ratingVm)
+    public async Task<ActionResult<double?>> GiveRating(RatingVm ratingVm)
     {
         return Ok(await bookService.GiveRating(ratingVm));
     }

@@ -20,5 +20,5 @@ public interface IBookService : IDataService<Book>
     Task<int> GetRemainingCountAsync(Guid id);
     BookVm ToBookVm(Book book);
     // trả về avg rating mới của book
-    Task<float?> GiveRating(RatingVm ratingVm);
+    Task<double?> GiveRating(RatingVm ratingVm);
 }
