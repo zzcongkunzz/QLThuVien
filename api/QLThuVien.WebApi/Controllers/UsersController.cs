@@ -99,6 +99,14 @@ public class UsersController
     {
         return Ok(await userService.GetFavoriteCategoriesAsync(userId));
     }
+
+    [HttpPut("update-favorite-categories/{userId}")]
+    public async Task<ActionResult> UpdateFavoriteCategories(
+        Guid userId, [FromBody] Guid[] favCategoryIds)
+    {
+        await userService.UpdateFavoriteCategoriesAsync(userId, favCategoryIds);
+        return Ok();
+    }
 }
 
 

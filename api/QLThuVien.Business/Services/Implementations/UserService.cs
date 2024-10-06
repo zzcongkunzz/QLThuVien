@@ -176,6 +176,24 @@ public class UserService
             .Select(fc => fc.Category).ToListAsync();
     }
 
+    public async Task UpdateFavoriteCategoriesAsync(Guid userId, Guid[] favCategoryIds)
+    {
+        var repo = unitOfWork.GetRepository<FavoriteCategory>();
+        var oldFavCategories = await GetFavoriteCategoriesAsync(userId);
+
+        foreach (var newCatId in favCategoryIds.Except(oldFavCategories.Select(c => c.Id)))
+            repo.Add(new FavoriteCategory()
+            {
+                UserId = userId,
+                CategoryId = newCatId,
+            });
+
+        foreach (var deletedFavCat in oldFavCategories.ExceptBy(favCategoryIds, c => c.Id))
+            repo.Delete(userId, deletedFavCat.Id);
+
+        await unitOfWork.SaveChangesAsync();
+    }
+
     public UserVm ToUserVm(User user)
     {
         return new UserVm()

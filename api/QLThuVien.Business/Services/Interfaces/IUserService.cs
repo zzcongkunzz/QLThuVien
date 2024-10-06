@@ -23,4 +23,5 @@ public interface IUserService : IDataService<User>
     Task AddFavoriteCategoryAsync(Guid userId, Guid categoryId);
     Task DeleteFavoriteCategoryAsync(Guid userId, Guid categoryId);
     Task<IEnumerable<Category>> GetFavoriteCategoriesAsync(Guid userId);
+    Task UpdateFavoriteCategoriesAsync(Guid userId, Guid[] favCategoryIds);
 }
