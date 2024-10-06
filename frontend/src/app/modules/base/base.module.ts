@@ -16,6 +16,11 @@ const routes: Routes = [
       import('./users/users.module').then((m) => m.UsersModule),
   },
   {
+    path: 'recommender',
+    loadChildren: () =>
+      import('./recommender/recommender.module').then((m) => m.RecommenderModule),
+  },
+  {
     path: '',
     pathMatch: 'full',
     component: HomePageComponent,

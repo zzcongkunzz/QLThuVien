@@ -323,7 +323,7 @@ public static class SeedData
                 Category = social,
                 CategoryId = social.Id,
                 Description = "Cung cấp thông tin về xu hướng dân số Việt Nam.",
-                ImageUrl = "https://www.google.com/url?sa=i&url=http%3A%2F%2Fcantholib.org.vn%2Fchinh-tri-xa-hoi%2Fnhung-xu-huong-bien-doi-dan-so-o-viet-nam-sach-chuyen-khao-nguyen-dinh-cu-h-nong-nghiep-2007-395tr-21cm-441.html&psig=AOvVaw1IpqJjXtU0ENA2lWnbqQbE&ust=1728288330200000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOC-7PKl-YgDFQAAAAAdAAAAABAE"
+                ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-9t12nm3dOBoVwGunTcpzuPbXvBig52KuqQ&s"
             });
             await unitOfWork.SaveChangesAsync();
         }

@@ -1,0 +1,8 @@
+<li class="book-item">
+  <a [href]="'/books/detail/'+this.book.id">
+    <img [src]="book.imageUrl" alt="thumbnail" height="250px" width="180px">
+    <h3>{{ book.title }}</h3>
+    <p>{{ book.categoryName }}</p>
+    <p>{{ book.averageRating | number:'1.0-1' }}/5</p>
+  </a>
+</li>

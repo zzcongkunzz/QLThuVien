@@ -37,7 +37,7 @@ public class BookService
 
         return new PaginatedResult<BookVm>(
             pgBook.Items.Select(ToBookVm).ToList(), 
-            pgBook.TotalPages, pageIndex, pageSize);
+            await query.CountAsync(), pageIndex, pageSize);
     }
 
     public async Task<BookVm> GetByIdAsyncVm(Guid id)

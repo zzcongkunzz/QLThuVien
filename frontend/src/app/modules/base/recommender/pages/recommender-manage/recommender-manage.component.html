@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="input-group mb-3">
+    <button type="button" class="btn btn-outline-success" (click)="loadModel()">Load mô hình</button>
+    @if (invalidLoad()) {
+      <span class="ms-3"> {{ modelSize | json }} </span>
+    } @else {
+      <span class="ms-3">Đã load {{ modelSize }} bytes lên server backend.</span>
+    }
+  </div>
+
+  <div class="input-group mb-3 w-75">
+    <span class="input-group-text" id="">Kích thước dữ liệu giả (0 để  bỏ qua):</span>
+    <input type="number" min="0" step="1" [(ngModel)]="synthSize" class="form-control inline">
+    <div class="input-group-append">
+      <button type="button" class="btn btn-outline-secondary" (click)="trainModel()">Huấn luyện mô hình</button>
+    </div>
+  </div>
+  <div>
+  </div>
+  <pre>
+    {{ trainResult | json }}
+  </pre>
+</div>

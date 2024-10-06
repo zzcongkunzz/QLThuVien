@@ -12,6 +12,7 @@
           <!--          <a class="nav-item nav-link" routerLink="/books/detail/123">Chi tiết sách(cho member)</a>-->
           <a class="nav-item nav-link" routerLink="/" *ngIf="isMember()">Kệ sách của tôi</a>
           <a class="nav-item nav-link" routerLink="/users/manage" *ngIf="isAdmin()">Quản lý người dùng</a>
+          <a class="nav-item nav-link" routerLink="/recommender" *ngIf="isAdmin()">Quản lý Hệ gợi ý</a>
         </div>
       </div>
     </nav>

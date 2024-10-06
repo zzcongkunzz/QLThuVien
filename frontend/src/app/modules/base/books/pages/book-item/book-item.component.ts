@@ -1,22 +1,40 @@
-import { Component, Input } from '@angular/core';
-import { Book } from '../../../../../view-models/book';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BookService } from '../../../../../services/book/book.service';
+import {Component, OnInit} from '@angular/core';
+import {Book} from '../../../../../view-models/book';
+import {ActivatedRoute, Router} from '@angular/router';
+import {BookService} from '../../../../../services/book/book.service';
+import {DecimalPipe} from "@angular/common";
+import {AuthService} from "../../../../../services/auth/auth.service";
+import {FormsModule} from "@angular/forms";
+import {BackButtonComponent} from "../../../../shared/components/back-button/back-button.component";
+import {HomeBookItemComponent} from "../../../home/components/home-book-item/home-book-item.component";
 
 @Component({
   selector: 'app-book-item',
   standalone: true,
-  imports: [],
+  imports: [
+    DecimalPipe,
+    FormsModule,
+    BackButtonComponent,
+    HomeBookItemComponent
+  ],
   templateUrl: './book-item.component.html',
-  styleUrl: './book-item.component.scss'
+  styleUrls: ['./book-item.component.scss', '../../../home/pages/home-page/home-page.component.scss']
 })
-export class BookItemComponent {
-  book!: Book
+export class BookItemComponent implements OnInit {
+  book!: Book;
+  ratingValue: number | undefined;
+  similarBooks: Book[] = []
 
-  constructor(private activatedRoute: ActivatedRoute, private bookService: BookService, private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute, private bookService: BookService,
+              private router: Router, private authService: AuthService) {
+  }
 
   ngOnInit() {
-    let bookId: string | null = this.activatedRoute.snapshot.paramMap.get("id");
+    this.loadBook()
+  }
+
+  loadBook() {
+    let bookId = this.activatedRoute.snapshot.paramMap.get("id");
     if (bookId == null) {
       alert("id missing");
       this.router.navigate(["/"])
@@ -24,11 +42,44 @@ export class BookItemComponent {
     }
 
     this.bookService.getBook(bookId).subscribe({
-      next: response => this.book = response
-    , error: err => {
+      next: response => {
+        this.book = response
+      }
+      , error: err => {
         alert(JSON.stringify(err))
         this.router.navigate(["/"])
       }
+    })
+
+    this.bookService.getSimilarBooks(bookId).subscribe({
+      next: (books: Book[]) => {
+        this.similarBooks = books;
+      },
+      error: err => {
+        alert(JSON.stringify(err));
+      }
+    })
+  }
+
+  giveRating() {
+    let user = this.authService.getCurrentUser()
+    if (user === undefined) {
+      alert("undefined user")
+      return
+    }
+    if (this.ratingValue === undefined) {
+      alert("undefined value")
+      return
+    }
+    this.bookService.giveRating({
+      bookId: this.book.id,
+      userId: user.id,
+      value: this.ratingValue
+    }).subscribe({
+      next: value => {
+        this.book.averageRating = value;
+      },
+      error: error => alert(JSON.stringify(error))
     })
   }
 }

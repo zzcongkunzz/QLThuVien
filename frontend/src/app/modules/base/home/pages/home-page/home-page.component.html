@@ -2,75 +2,28 @@
   <!-- Phần Today's Quote -->
   <section class="quote-container">
     <blockquote class="quote">
-      "Có một người đi qua hoa cúc. Bỏ lại sau lưng cả tuổi thơ mình. Có hai người đi qua hoa
-      cúc. Bỏ lại sau lưng cả một mối tình."
+      Thư viện số dùng cho các trường học, tổ chức
     </blockquote>
-    <cite class="author">- Nguyễn Nhật Ánh</cite>
+    <cite class="author">- Nhóm 4</cite>
   </section>
 
   <!-- Phần Recommended for you -->
   <section class="category">
-    <h2>Đề xuất</h2>
+    <h2>Gợi ý cho bạn</h2>
     <ul class="book-list">
-      <!-- Các sách đề xuất -->
-      <li class="book-item">
-        <img src="https://vcdn1-giaitri.vnecdn.net/2018/03/20/co-gai-den-tu-hom-qua3-2984-14-6777-2518-1521549733.jpg?w=460&h=0&q=100&dpr=2&fit=crop&s=u8TzC1ZXZ6dyPZfTp3J_3Q" alt="Sách Đề Xuất 1">
-        <h3>Sách Đề Xuất 1</h3>
-        <p>Tác giả: Tác giả 1</p>
-      </li>
-      <li class="book-item">
-        <img src="https://www.khaitam.com/Data/Sites/1/Product/4563/ngoi-khoc-tren-cay-ban-dac-biet.jpg" alt="Sách Đề Xuất 2">
-        <h3>Sách Đề Xuất 2</h3>
-        <p>Tác giả: Tác giả 2</p>
-      </li>
-      <li class="book-item">
-        <img src="https://vcdn1-giaitri.vnecdn.net/2018/03/20/toi-thay-hoa-vang-tren-co-xanh-4619-5701-1521549732.jpg?w=460&h=0&q=100&dpr=2&fit=crop&s=SKhFLo9Dohftd2qt35vQNg" alt="Sách Đề Xuất 3">
-        <h3>Sách Đề Xuất 3</h3>
-        <p>Tác giả: Tác giả 3</p>
-      </li>
-      <li class="book-item">
-        <img src="https://isach.info/images/story/cover/trai_hoa_vang__nguyen_nhat_anh.jpg" alt="Sách Đề Xuất 4">
-        <h3>Sách Đề Xuất 4</h3>
-        <p>Tác giả: Tác giả 4</p>
-      </li>
-      <li class="book-item">
-        <img src="https://www.dtv-ebook.com/images/Cover/38539169516_31997df938_o.jpg" alt="Sách Đề Xuất 5">
-        <h3>Sách Đề Xuất 5</h3>
-        <p>Tác giả: Tác giả 5</p>
-      </li>
+      @for (book of recommendedBooks; track book.id) {
+        <app-home-book-item [book]="book"></app-home-book-item>
+      }
     </ul>
   </section>
 
-  <!-- Phần Recent Readings -->
+  <!-- higest ratings -->
   <section class="category">
-    <h2>Đang đọc</h2>
+    <h2>Đánh giá cao nhất</h2>
     <ul class="book-list">
-      <!-- Các sách đang đọc -->
-      <li class="book-item">
-        <img src="https://lh6.googleusercontent.com/zfwc2sK1dbXcyljhkfELScpPH46SawQkkoSUKdg2wwO7is6FqwObOrGmE2SaHbrnAK_PA8fwiVOhARdbrvp15N-p4WMqv7BYpOQpF-EmCyoJbb6YFGWeEVIcE6koJYu9JFDFx7Y" alt="Sách Đang Đọc 1">
-        <h3>Sách Đang Đọc 1</h3>
-        <p>Tác giả: Tác giả 1</p>
-      </li>
-      <li class="book-item">
-        <img src="https://lh5.googleusercontent.com/57RRXrqRCkSHGjh3WWjwe8redYnAk73Sas35EIhx3wEjOyTLtkTblC7rPmofnYCAZUpy9Tr6rp1K1ZBM2kr-hwhO7jOmT4kJ8nHXa85p0e1-BbWBOveDaMfVmHTOd-n3Nu2jnaA" alt="Sách Đang Đọc 2">
-        <h3>Sách Đang Đọc 2</h3>
-        <p>Tác giả: Tác giả 2</p>
-      </li>
-      <li class="book-item">
-        <img src="https://toplist.vn/images/800px/trai-hoa-vang-1013301.jpg" alt="Sách Đang Đọc 3">
-        <h3>Sách Đang Đọc 3</h3>
-        <p>Tác giả: Tác giả 3</p>
-      </li>
-      <li class="book-item">
-        <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1691147319i/11273677.jpg" alt="Sách Đang Đọc 4">
-        <h3>Sách Đang Đọc 4</h3>
-        <p>Tác giả: Tác giả 4</p>
-      </li>
-      <li class="book-item">
-        <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1695444549i/199109794.jpg" alt="Sách Đang Đọc 5">
-        <h3>Sách Đang Đọc 5</h3>
-        <p>Tác giả: Tác giả 5</p>
-      </li>
+      @for (book of highestRatedBooks; track book.id) {
+        <app-home-book-item [book]="book"></app-home-book-item>
+      }
     </ul>
   </section>
 </main>

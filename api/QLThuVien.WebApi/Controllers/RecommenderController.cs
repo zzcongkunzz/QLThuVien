@@ -9,6 +9,7 @@ namespace QLThuVien.WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class RecommenderController 
     (IRecommenderService recommenderService)
     : ControllerBase

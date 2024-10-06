@@ -2,9 +2,9 @@ import {CommonModule, NgFor} from '@angular/common';
 import {Component} from '@angular/core';
 import {EntryBookComponent} from '../../components/entry-book/entry-book.component';
 import {Book} from '../../../../../view-models/book';
-import { BookService } from '../../../../../services/book/book.service';
-import { FormsModule } from '@angular/forms';
-import { CategoryService } from '../../../../../services/category/category.service';
+import {BookService} from '../../../../../services/book/book.service';
+import {FormsModule} from '@angular/forms';
+import {CategoryService} from '../../../../../services/category/category.service';
 
 @Component({
   selector: 'app-search-page',
@@ -24,7 +24,8 @@ export class SearchPageComponent {
 
   page: number = 1
 
-  constructor(private bookService: BookService, private categoryService: CategoryService) { }
+  constructor(private bookService: BookService, private categoryService: CategoryService) {
+  }
 
   ngOnInit() {
     this.page = 1
@@ -38,11 +39,11 @@ export class SearchPageComponent {
   search() {
     this.bookService.queryBooks(this.page, 6, this.searchQuery, this.searchCategory).subscribe({
       next: res => {
-        this.allBooks = res.items
-        this.hasNextPage = res.hasNextPage
-        this.hasPrevPage = res.hasPreviousPage
+        this.allBooks = res.items;
+        this.hasNextPage = res.hasNextPage;
+        this.hasPrevPage = res.hasPreviousPage;
       }
-    , error: err => alert(JSON.stringify(err))
+      , error: err => alert(JSON.stringify(err))
     })
   }
 

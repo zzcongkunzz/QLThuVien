@@ -1,15 +1,16 @@
 <tr id="entry-row">
   <td id="column-title">
-    <img src="{{ book.imageUrl }}" alt="{{ book.title }}" id="book-img">
+    <a [routerLink]="getInfoLink()">
+      <img src="{{ book.imageUrl }}" alt="{{ book.title }}" id="book-img">
+    </a>
     <div>
-      <div id="book-title">{{ book.title }}</div>
+      <a id="book-title" class="link-danger" [routerLink]="getInfoLink()">{{ book.title }}</a>
       <div id="book-author">{{ book.authorName }}, {{ book.publishDate.getFullYear() }}</div>
     </div>
   </td>
-  <td style="font-size:24px;color:grey">{{ book.averageRating }}/5</td>
+  <td style="font-size:24px;color:grey">{{ book.averageRating | number:'1.0-1' }}/5</td>
   <td style="font-size:24px;color:black">{{ book.categoryName }}</td>
   <td *ngIf="true">
-    <a [routerLink]="getEditLink()" *ngIf="authService.isAdmin()">edit</a>
-    <a [routerLink]="getInfoLink()">info</a>
+    <a [routerLink]="getEditLink()" *ngIf="authService.isAdmin()">Chỉnh sửa</a>
   </td>
 </tr>

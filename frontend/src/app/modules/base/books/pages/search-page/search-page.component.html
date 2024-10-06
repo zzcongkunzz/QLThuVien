@@ -1,6 +1,6 @@
 <form id="search-form">
   <input type="text" name="searchQuery" [(ngModel)]="searchQuery">
-  <button (click)="search()" id="search-button">Search</button>
+  <button (click)="search()" id="search-button">Tìm kiếm</button>
 </form>
 
 <form id="category-form">
@@ -16,10 +16,10 @@
     <th>Rating</th>
     <th>Category</th>
   </tr>
-  <app-entry-book *ngFor="let book of allBooks" [book]="book" style="display:contents" />
+  <app-entry-book *ngFor="let book of allBooks" [book]="book" style="display:contents"/>
 </table>
 
 <footer style="margin-top:auto">
-  <button style="float:left" (click)="previousPage()">Previous</button>
-  <button style="float:right" (click)="nextPage()">Next</button>
+  <button type="button" style="float:left" (click)="previousPage()">Prev</button>
+  <button type="button" style="float:right" (click)="nextPage()">Next</button>
 </footer>

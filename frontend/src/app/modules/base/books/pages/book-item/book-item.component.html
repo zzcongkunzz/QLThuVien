@@ -7,36 +7,54 @@
   <link rel="stylesheet" href="book-item.component.scss">
 </head>
 <body>
-
-  <div class="book-container">
-    <div class="book-left">
-      <div class="book-header">
-        <img src="{{ book.imageUrl }}" alt="Ảnh Sách" class="book-image">
-        <div class="book-title-container">
-          <h1 class="book-title">{{ book.title }}</h1>
-        </div>
-      </div>
-
-      <div class="book-content">
-        <div class="book-intro">
-          {{ book.description }}
-        </div>
-        <div class="book-actions">
-          <button class="borrow-button">Borrow</button>
-          <button class="read-now-button">Read Now</button>
+<app-back-button></app-back-button>
+<div class="book-container me-4">
+  <div class="book-left">
+    <div class="book-header">
+      <img src="{{ book.imageUrl }}" alt="Ảnh Sách" class="book-image">
+      <div class="book-title-container">
+        <h1 class="book-title">{{ book.title }}</h1>
+        <h3 style="font-size:24px;color:grey">{{ book.averageRating | number:'1.0-1' }}
+          / 5<i class="fa-thin fa-star"></i>
+        </h3>
+        <div class="d-flex flex-row">
+          <input type="number" name="rating" id="rating" [max]="5" [min]="0"
+                 [(ngModel)]="ratingValue">
+          <button type="submit" class="btn btn-danger ms-2" (click)="giveRating()"
+                  [disabled]="ratingValue===undefined||ratingValue==null||ratingValue<0||ratingValue>5">
+            Đánh giá
+          </button>
         </div>
       </div>
     </div>
 
-    <div class="book-right">
-      <div class="author-section">
-        <h2>Tác Giả: {{ book.authorName }}</h2>
-        <p>Xuất Bản: {{ book.publishDate }} Bởi {{ book.publisherName }}</p>
-        <p>Thể Loại: {{ book.categoryName }}</p>
-        <p>{{ book.averageRatings }}/5</p>
+    <div class="book-content">
+      <div class="book-intro">
+        {{ book.description }}
+      </div>
+      <div class="book-actions">
+        <button class="borrow-button">Borrow</button>
+        <button class="read-now-button">Read Now</button>
       </div>
     </div>
   </div>
 
+  <div class="book-right">
+    <div class="author-section">
+      <h4>Tác Giả: {{ book.authorName }}</h4>
+      <p><strong>Xuất Bản:</strong> {{ book.publishDate }} Bởi {{ book.publisherName }}</p>
+      <p><strong>Thể Loại:</strong> {{ book.categoryName }}</p>
+    </div>
+  </div>
+</div>
+
+<section class="category pb-4">
+  <h2 class="mb-4">Giống với sách này</h2>
+  <ul class="book-list">
+    @for (book of similarBooks; track book.id) {
+      <app-home-book-item [book]="book"></app-home-book-item>
+    }
+  </ul>
+</section>
 </body>
 </html>
