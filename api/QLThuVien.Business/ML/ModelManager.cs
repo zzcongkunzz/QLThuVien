@@ -16,12 +16,12 @@ namespace QLThuVien.Business.ML;
 public class ModelManager
 {
     private readonly IServiceScopeFactory _scopeFactory;
-    private StandardScaler? _userScaler = null;
-    private StandardScaler? _bookScaler = null;
+    public StandardScaler? UserScaler { get; private set; } = null;
+    public StandardScaler? BookScaler { get; private set; } = null;
     public FeatureExtractor? FeatureExtractor { get; private set; } = null;
     public TwoTowerModule? Module { get; private set; } = null;
     public bool IsInitialized => 
-        Module != null && FeatureExtractor != null && _userScaler != null && _bookScaler != null;
+        Module != null && FeatureExtractor != null && UserScaler != null && BookScaler != null;
 
     public ModelManager(IServiceScopeFactory scopeFactory)
     {
@@ -41,8 +41,8 @@ public class ModelManager
             dataset.Extractor.BookTensorLength
             );
         FeatureExtractor = dataset.Extractor;
-        _userScaler = dataset.UserScaler;
-        _bookScaler = dataset.BookScaler;
+        UserScaler = dataset.UserScaler;
+        BookScaler = dataset.BookScaler;
 
         var startTime = DateTime.Now;
         var costs = Module.fit(dataset);
@@ -70,17 +70,17 @@ public class ModelManager
 
     public void SaveModelToDisk()
     {
-        if (Module == null || _userScaler == null || _bookScaler == null
+        if (Module == null || UserScaler == null || BookScaler == null
             || FeatureExtractor == null)
             throw new ArgumentNullException("Model must be loaded");
 
         Directory.CreateDirectory("ml_data");
 
         Module.save("ml_data/two_tower_module.dat");
-        _userScaler.Mean.save("ml_data/user_mean.dat");
-        _userScaler.StandardDeviation.save("ml_data/user_standard_deviation.dat");
-        _bookScaler.Mean.save("ml_data/book_mean.dat");
-        _bookScaler.StandardDeviation.save("ml_data/book_standard_deviation.dat");
+        UserScaler.Mean.save("ml_data/user_mean.dat");
+        UserScaler.StandardDeviation.save("ml_data/user_standard_deviation.dat");
+        BookScaler.Mean.save("ml_data/book_mean.dat");
+        BookScaler.StandardDeviation.save("ml_data/book_standard_deviation.dat");
 
         using (var stream = new FileStream("ml_data/category_indices.dat", FileMode.Create, FileAccess.Write))
             JsonSerializer.Serialize(stream, FeatureExtractor.CategoryIndices);
@@ -94,12 +94,12 @@ public class ModelManager
                 JsonSerializer.Deserialize<Dictionary<Guid, int>>(stream)
                 ?? throw new OperationCanceledException("Can't deserialize category_indices.dat"));
 
-        _userScaler ??= new StandardScaler();
-        _userScaler.Mean = load("ml_data/user_mean.dat");
-        _userScaler.StandardDeviation = load("ml_data/user_standard_deviation.dat");
-        _bookScaler ??= new StandardScaler();
-        _bookScaler.Mean = load("ml_data/book_mean.dat");
-        _bookScaler.StandardDeviation = load("ml_data/book_standard_deviation.dat");
+        UserScaler ??= new StandardScaler();
+        UserScaler.Mean = load("ml_data/user_mean.dat");
+        UserScaler.StandardDeviation = load("ml_data/user_standard_deviation.dat");
+        BookScaler ??= new StandardScaler();
+        BookScaler.Mean = load("ml_data/book_mean.dat");
+        BookScaler.StandardDeviation = load("ml_data/book_standard_deviation.dat");
 
         Module = new TwoTowerModule(FeatureExtractor.UserTensorLength,
             FeatureExtractor.BookTensorLength);

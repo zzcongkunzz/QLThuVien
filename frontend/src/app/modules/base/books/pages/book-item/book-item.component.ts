@@ -36,7 +36,6 @@ export class BookItemComponent implements OnInit {
   loadBook() {
     let bookId = this.activatedRoute.snapshot.paramMap.get("id");
     if (bookId == null) {
-      alert("id missing");
       this.router.navigate(["/"])
       return
     }
@@ -45,8 +44,8 @@ export class BookItemComponent implements OnInit {
       next: response => {
         this.book = response
       }
-      , error: err => {
-        alert(JSON.stringify(err))
+      , error: _ => {
+        // alert(JSON.stringify(err))
         this.router.navigate(["/"])
       }
     })
@@ -54,9 +53,6 @@ export class BookItemComponent implements OnInit {
     this.bookService.getSimilarBooks(bookId).subscribe({
       next: (books: Book[]) => {
         this.similarBooks = books;
-      },
-      error: err => {
-        alert(JSON.stringify(err));
       }
     })
   }
@@ -64,11 +60,11 @@ export class BookItemComponent implements OnInit {
   giveRating() {
     let user = this.authService.getCurrentUser()
     if (user === undefined) {
-      alert("undefined user")
+      // alert("undefined user")
       return
     }
     if (this.ratingValue === undefined) {
-      alert("undefined value")
+      // alert("undefined value")
       return
     }
     this.bookService.giveRating({

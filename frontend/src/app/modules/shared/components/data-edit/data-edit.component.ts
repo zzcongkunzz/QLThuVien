@@ -20,7 +20,7 @@ export class DataEditComponent {
 
   submit(event: SubmitEvent) {
     if (this.isSaving) {
-      alert("Cannot submit another request while saving!");
+      // alert("Cannot submit another request while saving!");
       return;
     }
     try {
@@ -33,7 +33,7 @@ export class DataEditComponent {
         this.isUpdatingChange.emit(false);
       } else alert("Unexpected submission");
     } catch (error) {
-      alert(error);
+      // alert(error);
     } finally {
       this.isSaving = false;
     }

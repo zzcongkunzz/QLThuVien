@@ -37,13 +37,12 @@ export class SearchPageComponent {
   }
 
   search() {
-    this.bookService.queryBooks(this.page, 6, this.searchQuery, this.searchCategory).subscribe({
+    this.bookService.queryBooks(this.page, 4, this.searchQuery, this.searchCategory).subscribe({
       next: res => {
         this.allBooks = res.items;
         this.hasNextPage = res.hasNextPage;
         this.hasPrevPage = res.hasPreviousPage;
       }
-      , error: err => alert(JSON.stringify(err))
     })
   }
 

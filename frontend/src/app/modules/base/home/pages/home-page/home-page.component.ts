@@ -52,18 +52,12 @@ export class HomePageComponent implements OnInit {
       next: books => {
         this.recommendedBooks = books;
       },
-      error: err => {
-        alert(JSON.stringify(err));
-      }
     })
     // load highest rated books
     this.bookService.getHigestRatedBooks().subscribe({
       next: books => {
         this.highestRatedBooks = books;
       },
-      error: err => {
-        alert(JSON.stringify(err));
-      }
     })
   }
 

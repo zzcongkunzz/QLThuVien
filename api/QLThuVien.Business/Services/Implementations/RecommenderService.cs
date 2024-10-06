@@ -31,19 +31,21 @@ public class RecommenderService(
         // ranking
         using var scope = NewDisposeScope();
 
-        var userTensor = modelManager.FeatureExtractor!.GetTensor(
-            (await unitOfWork.GetRepository<User>()
-                .Get(u => u.Id == userId, null, FeatureExtractor.UserIncludeProperties)
-                .FirstOrDefaultAsync()) ?? throw new NotFoundException("Id not found"));
+        var userTensor = modelManager.UserScaler!.Scale_(
+            (modelManager.FeatureExtractor!.GetTensor(
+                (await unitOfWork.GetRepository<User>()
+                    .Get(u => u.Id == userId, null, FeatureExtractor.UserIncludeProperties)
+                    .FirstOrDefaultAsync()) ?? throw new NotFoundException("Id not found"))));
 
         var ratings = candidates
             .Select(b => modelManager.Module!
-                .predict(userTensor, modelManager.FeatureExtractor!.GetTensor(b)))
+                .predict(userTensor,
+                    modelManager.BookScaler!.Scale_(modelManager.FeatureExtractor!.GetTensor(b))))
             .ToArray();
 
         Array.Sort(ratings, candidates);
 
-        return candidates.Take(count).Select(bookService.ToBookVm);
+        return candidates.TakeLast(count).Reverse().Select(bookService.ToBookVm);
     }
 
     public async Task<IEnumerable<BookVm>> GetSimilarBookVms(Guid bookId, int count)
@@ -91,18 +93,20 @@ public class RecommenderService(
 
         using var scope = NewDisposeScope();
 
-        var curBookTensor = modelManager.FeatureExtractor!.GetTensor
-            (await unitOfWork.GetRepository<Book>()
-            .Get(b => b.Id == bookId, null, FeatureExtractor.BookIncludeProperties)
-            .FirstOrDefaultAsync() ?? throw new NotFoundException("Id not found"))
-            .reshape(1, -1);
+        var curBookTensor = modelManager.BookScaler!.Scale_(
+            modelManager.FeatureExtractor!.GetTensor
+                (await unitOfWork.GetRepository<Book>()
+                .Get(b => b.Id == bookId, null, FeatureExtractor.BookIncludeProperties)
+                .FirstOrDefaultAsync() ?? throw new NotFoundException("Id not found"))
+            ).reshape(1, -1);
 
         var otherBooks = await unitOfWork.GetRepository<Book>()
             .Get(b => b.Id != bookId, null, FeatureExtractor.BookIncludeProperties)
             .ToArrayAsync();
 
         var otherBookTensors = concat(otherBooks
-            .Select(b => modelManager.FeatureExtractor!.GetTensor(b).reshape(1, -1))
+            .Select(b => modelManager.BookScaler!.Scale_(
+                modelManager.FeatureExtractor!.GetTensor(b)).reshape(1, -1))
             .ToArray());
 
         var otherEmbeddings = modelManager.Module!.GetItemEmbedding(otherBookTensors);
@@ -111,6 +115,12 @@ public class RecommenderService(
         // euclidean distance
         var distances = otherEmbeddings.sub_(curEmbedding)
             .square().sum(1).flatten().data<double>().ToArray();
+
+        // cosine distance
+        //var dots = otherEmbeddings.mul(curEmbedding).sum(1);
+        //var otherNorm = otherEmbeddings.square().sum(1);
+        //var curNorm = curEmbedding.square().sum();
+        //var distances = dots.div_(otherNorm.mul_(curNorm).sqrt_()).data<double>().ToArray();
 
         Array.Sort(distances, otherBooks);
 

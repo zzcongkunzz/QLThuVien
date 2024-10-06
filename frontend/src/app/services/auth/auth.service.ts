@@ -44,7 +44,6 @@ export class AuthService {
           JSON.stringify(this._user)
         );
       },
-      error: error => alert(JSON.stringify(error.error))
     });
   }
 

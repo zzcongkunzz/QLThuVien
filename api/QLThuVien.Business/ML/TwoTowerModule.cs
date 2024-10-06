@@ -15,7 +15,7 @@ public class TwoTowerModule : Module<Tensor, Tensor, Tensor>
     private readonly Module<Tensor, Tensor> _itemNetwork;
     private readonly Tensor _weights;
     private static readonly int[] _layerSizes = [128, 64, 32];
-    private const double _l2RegFactor = 0.001;
+    private const double _l2RegFactor = 0;
 
     public bool IsValid { get; set; } = false;
 
@@ -83,8 +83,8 @@ public class TwoTowerModule : Module<Tensor, Tensor, Tensor>
                 using var batchScope = NewDisposeScope();
 
                 var J = functional.mse_loss(
-                        forward(batch["user"], batch["book"]),
-                        batch["rating"]) 
+                        forward(batch["user"], batch["book"]).flatten(),
+                        batch["rating"].flatten()) 
                     + _weights.square().sum().mul(_l2RegFactor);
 
                 zero_grad();
@@ -105,8 +105,8 @@ public class TwoTowerModule : Module<Tensor, Tensor, Tensor>
                 using var batchScope = NewDisposeScope();
 
                 var J = functional.mse_loss(
-                        forward(batch["user"], batch["book"]),
-                        batch["rating"])
+                        forward(batch["user"], batch["book"]).flatten(),
+                        batch["rating"].flatten())
                     + _weights.square().sum().mul(_l2RegFactor);
 
                 finalCost += J.item<double>();
