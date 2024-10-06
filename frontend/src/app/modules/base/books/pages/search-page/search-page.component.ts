@@ -51,7 +51,7 @@ export class SearchPageComponent {
   }
 
   getCategories(): string[] {
-    return this.categoryService.categories;
+    return this.categoryService.categoryNames;
   }
 
   nextPage() {

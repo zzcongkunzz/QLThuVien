@@ -1,0 +1,6 @@
+<input type="checkbox" class="btn-check" [id]="category.id" autocomplete="off"
+       [(ngModel)]="checked"
+       (change)="clicked()">
+<label class="btn btn-outline-secondary" [for]="category.id">
+  {{ category.name }}
+</label>

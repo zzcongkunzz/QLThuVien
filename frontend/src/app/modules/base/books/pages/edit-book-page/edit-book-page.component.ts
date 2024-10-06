@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BookService } from '../../../../../services/book/book.service';
-import { BookEdit } from '../../../../../view-models/book-edit';
-import { FormsModule } from '@angular/forms';
-import { CategoryService } from '../../../../../services/category/category.service';
+import {Component} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {BookService} from '../../../../../services/book/book.service';
+import {BookEdit} from '../../../../../view-models/book-edit';
+import {FormsModule} from '@angular/forms';
+import {CategoryService} from '../../../../../services/category/category.service';
 
 @Component({
   selector: 'app-edit-book-page',
   standalone: true,
-  imports: [ FormsModule ],
+  imports: [FormsModule],
   templateUrl: './edit-book-page.component.html',
   styleUrl: './edit-book-page.component.scss'
 })
@@ -27,7 +27,8 @@ export class EditBookPageComponent {
   constructor(private activedRoute: ActivatedRoute,
               private router: Router,
               private bookService: BookService,
-              private categoryService: CategoryService) { }
+              private categoryService: CategoryService) {
+  }
 
   ngAfterViewInit() {
     this.categoryService.refreshCategories()
@@ -48,7 +49,7 @@ export class EditBookPageComponent {
         this.bookInfo.publishDate = book.publishDate
         this.bookInfo.count = book.count
       }
-    , error: error => {
+      , error: error => {
         alert(JSON.stringify(error))
         this.router.navigate(["/"])
       }
@@ -62,11 +63,11 @@ export class EditBookPageComponent {
     }
     this.bookService.putBook(this.bookId, this.bookInfo).subscribe({
       next: _ => alert("Success")
-    , error: error => alert(JSON.stringify(error))
+      , error: error => alert(JSON.stringify(error))
     });
   }
 
   getCategories(): string[] {
-    return this.categoryService.categories;
+    return this.categoryService.categoryNames;
   }
 }

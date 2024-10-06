@@ -1,0 +1,14 @@
+<div class="app-form">
+  <h3>Thể loại ưa thích</h3>
+  <div class="d-flex flex-wrap gap-2">
+    @for (category of categories; track category.id) {
+      <app-category-checkbox [category]="category"
+                             (select)="add(category)"
+                             (deselect)="remove(category)"
+                             [checked]="selected(category)"
+      >{{ category.name }}
+      </app-category-checkbox>
+    }
+  </div>
+  <button class="btn btn-primary w-25 d-block m-auto" (click)="save()">Lưu</button>
+</div>

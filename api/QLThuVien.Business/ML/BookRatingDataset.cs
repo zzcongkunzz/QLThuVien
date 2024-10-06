@@ -161,9 +161,9 @@ public class BookRatingDataset : Dataset
                 {
                     var ratingValue = (
                             (bookTensor.Value[1] * BookScaler.StandardDeviation[1]
-                                + BookScaler.Mean[1]).item<double>() * .9
+                                + BookScaler.Mean[1]).item<double>() * .7
                             + (userTensor.Value[1] * UserScaler.StandardDeviation[1]
-                                + UserScaler.Mean[1]).item<double>() * .1);
+                                + UserScaler.Mean[1]).item<double>() * .3);
                     ratingValue *= (1 +
                             (bookTensor.Value
                                 .slice(
@@ -176,7 +176,7 @@ public class BookRatingDataset : Dataset
                                     0,
                                     FeatureExtractor.UserTensorFixedLength,
                                     userTensor.Value.shape[0] - 1,
-                                    1)).item<double>() > 0 ? normal(0.6, 0.2).item<double>() 
+                                    1)).item<double>() > 0 ? normal(0.8, 0.2).item<double>() 
                                         : normal(-0.2, 0.1).item<double>())
                             );
                     ratingValue = Math.Min(ratingValue, 5d);
