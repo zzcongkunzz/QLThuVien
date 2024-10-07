@@ -7,6 +7,7 @@ using QLThuVien.Business.Services.Interfaces;
 using QLThuVien.Business.ViewModels;
 using QLThuVien.Data.Infrastructure;
 using QLThuVien.Data.Models;
+using System.Collections.Frozen;
 using System.Collections.Immutable;
 using TorchSharp;
 using static TorchSharp.torch;
@@ -74,14 +75,15 @@ public class RecommenderService(
         candidateBooks = candidateBooks.Concat(
             await GetHighestRatedBooks(count, FeatureExtractor.BookIncludeProperties));
 
-        // foreach borrowed books, find count/2 most similar books
-        var borrowedBookIds = (await GetBookIdsBorrowedByUser(userId)).ToHashSet();
-        foreach (var bookId in borrowedBookIds)
-            candidateBooks = candidateBooks.Concat(await GetSimilarBooks(bookId, count/2));
+        // for each of count recently borrowed books, find 2 most similar books 
+        var recentlyBorrowedBookIds = await GetRecentBookIdsBorrowedByUser(userId, count);
+        foreach (var bookId in recentlyBorrowedBookIds)
+            candidateBooks = candidateBooks.Concat(await GetSimilarBooks(bookId, 2));
 
         // remove duplicates + borrowed books
+        var borrowedBookIds = (await GetBookIdsBorrowedByUser(userId)).ToFrozenSet();
         return candidateBooks
-            .Where(b => !borrowedBookIds.Contains(b.Id)).DistinctBy(b => b.Id);
+            .Where(b => !recentlyBorrowedBookIds.Contains(b.Id)).DistinctBy(b => b.Id);
     }
 
 
@@ -113,18 +115,17 @@ public class RecommenderService(
         var curEmbedding = modelManager.Module!.GetItemEmbedding(curBookTensor);
 
         // euclidean distance
-        var distances = otherEmbeddings.sub_(curEmbedding)
-            .square().sum(1).flatten().data<double>().ToArray();
+        //var euclideanDistances = otherEmbeddings.sub(curEmbedding)
+        //    .square().sum(1).flatten().data<double>().ToArray();
 
-        // cosine distance
-        //var dots = otherEmbeddings.mul(curEmbedding).sum(1);
-        //var otherNorm = otherEmbeddings.square().sum(1);
-        //var curNorm = curEmbedding.square().sum();
-        //var distances = dots.div_(otherNorm.mul_(curNorm).sqrt_()).data<double>().ToArray();
+        // scalar projection distance
+        var dots = otherEmbeddings.mul(curEmbedding).sum(1);
+        var otherNorm = otherEmbeddings.square().sum(1);
+        var distances = dots.div_(otherNorm.sqrt_()).data<double>().ToArray();
 
         Array.Sort(distances, otherBooks);
 
-        return otherBooks.Take(count);
+        return otherBooks.Reverse().Take(count);
     }
 
 
@@ -173,6 +174,18 @@ public class RecommenderService(
             .ToListAsync();
     }
 
+
+    private async Task<IEnumerable<Guid>> GetRecentBookIdsBorrowedByUser(Guid userId, int count)
+    {
+        return await unitOfWork.GetRepository<User>().GetQuery()
+            .Where(u => u.Id == userId)
+            .Include(u => u.Borrows)
+            .SelectMany(u => u.Borrows)
+            .OrderByDescending(b => b.StartTime)
+            .Take(count)
+            .Select(b => b.Id)
+            .ToArrayAsync();
+    }
 
     private async Task<IEnumerable<Guid>> GetBookIdsBorrowedByUser(Guid userId)
     {

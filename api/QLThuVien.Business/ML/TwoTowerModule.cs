@@ -15,7 +15,7 @@ public class TwoTowerModule : Module<Tensor, Tensor, Tensor>
     private readonly Module<Tensor, Tensor> _itemNetwork;
     private readonly Tensor _weights;
     private static readonly int[] _layerSizes = [128, 64, 32];
-    private const double _l2RegFactor = 0;
+    private const double _l2RegFactor = 0.001;
 
     public bool IsValid { get; set; } = false;
 
