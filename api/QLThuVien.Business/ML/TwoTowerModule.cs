@@ -133,7 +133,7 @@ public class TwoTowerModule : Module<Tensor, Tensor, Tensor>
         eval();
         using (no_grad())
         {
-            return _itemNetwork.forward(userTensor);
+            return _userNetwork.forward(userTensor);
         }
     }
 
